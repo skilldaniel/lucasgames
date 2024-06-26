@@ -21605,7 +21605,7 @@ var LogLevel = {
         Error: 3
     },
     ServerOptions = {
-        serverUrl: "https://studio.game-service.biz",
+        serverUrl: "https://gpg.emaraplay.com/",
         resourcesUrl: "https://studio.game-service.biz",
         configUri: "/gs2c/configuration.do",
         loginUri: "/gs2c/login.do",
