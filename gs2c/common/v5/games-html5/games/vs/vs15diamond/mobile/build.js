@@ -51126,7 +51126,7 @@ ServerLink.prototype.OnApplicationConfigReceived = function (param) {
     var configOptions = param;
     var secure = this.GetConfigValue(FrameworkConfiguration.isSecure, "true", configOptions);
     if (!_string.IsNullOrEmpty(secure)) ServerOptions.isSecure = _bool.Parse(secure);
-    ServerOptions.serverUrl = (ServerOptions.isSecure ? "https://" : "http://") + ServerInterface.GetDomain();
+    // ServerOptions.serverUrl = (ServerOptions.isSecure ? "https://" : "http://") + ServerInterface.GetDomain();
     ServerOptions.loginUri = this.GetConfigValue(FrameworkConfiguration.loginUri, ServerOptions.loginUri, configOptions);
     ServerOptions.logoutUri = this.GetConfigValue(FrameworkConfiguration.logoutUri,
         ServerOptions.logoutUri, configOptions);
@@ -72255,8 +72255,8 @@ ServerInterface.prototype.Start = function () {};
 ServerInterface.prototype.Update = function () {
     if (this.counter < 4) this.counter++;
     if (this.counter == 2) {
-        if (!UHT_LOCAL) ServerOptions.serverUrl = location.protocol + "//" + ServerInterface.GetDomain();
-        else ServerOptions.serverUrl = "https://" + this.domain;
+        // if (!UHT_LOCAL) ServerOptions.serverUrl = location.protocol + "//" + ServerInterface.GetDomain();
+        // else ServerOptions.serverUrl = "https://" + this.domain;
         if (UHT_LOCAL)
             if (_string.IsNullOrEmpty(this.userName) || _string.IsNullOrEmpty(this.userPass)) {
                 console.error("The username and/or password are empty!");
