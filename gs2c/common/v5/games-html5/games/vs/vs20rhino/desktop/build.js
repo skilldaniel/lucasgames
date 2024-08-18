@@ -32817,7 +32817,7 @@ var LogLevel = {
     Error: 3
 };
 var ServerOptions = {
-    serverUrl: "https://gpg.emaraplay.com",
+    serverUrl: "https://studio.game-service.biz",
     resourcesUrl: "https://studio.game-service.biz",
     configUri: "/gs2c/configuration.do",
     loginUri: "/gs2c/login.do",
