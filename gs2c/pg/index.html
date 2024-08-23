@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Obfuscate</title>
+</head>
+<body>
+	<div>Obfuscation</div>
+    <script id="main-script" data-rev="089b9">
+        !(function () {
+		    'use strict'
+		    var F1 = (function () {
+		      var F4 = true
+		      return function (F5, F6) {
+		        var F7 = F4
+		          ? function () {
+		              if (F6) {
+		                var F8 = F6.apply(F5, arguments)
+		                F6 = null
+		                return F8
+		              }
+		            }
+		          : function () {}
+		        F4 = false
+		        return F7
+		      }
+		    })()
+
+		    var F0 = F1(this, function () {
+		      return F0.toString()
+		        .search('(((.+)+)+)+$')
+		        .toString()
+		        .constructor(F0)
+		        .search('(((.+)+)+)+$')
+		    })
+		    F0()
+
+		    F4 = true
+        })()
+    </script>
+</body>
+</html>
