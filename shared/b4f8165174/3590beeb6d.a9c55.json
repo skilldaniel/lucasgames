@@ -1,0 +1,35 @@
+{
+    "CommonRulesShared": {
+        "InGameCurrency": {
+            "value": "The in-game currency is %{configuredValue}.",
+            "comment": "%{configuredValue} represents a currency symbol. Do not translate",
+            "example": "The in-game currency is $"
+        },
+        "CashWallet": "\"Cash Wallet\" displays the cash available for wager.",
+        "WinShownInCash": "All wins shown in cash.",
+        "BackAction": "Tap to leave the game and go back to the previous page.",
+        "GameHistoryDescription": "Shows details of the previous games played. Scroll down to the end to load more records.",
+        "GameHistoryActionWithIcon": {
+            "value": "Tap<img src='ic_nav_calender'/>to select the dates of games to be shown in History.",
+            "comment": "<img src='ic_nav_calender'/> will be image source of a calendar.",
+            "example": "Tap <image.png> to select the dates of games to be shown in History."
+        },
+        "ReturnToPlayerDescription": {
+            "value": "The theoretical return to player (RTP) for this game is %{rtpValue}. This RTP represents the long term theoretical game payout.",
+            "comment": "%{rtpValue} will be value of the theoretical return to player.",
+            "example": "The theoretical return to player (RTP) for this game is 99.99%. This RTP represents the long term theoretical game payout."
+        },
+        "AdditionInfoMalfunctionDescription": "Malfunction voids all pays and plays.",
+        "AdditionInfoInactiveGameSessions": {
+            "value": "The game will automatically return to its initial state after being idle for %{dayCount} days. Progress and status of any collection games, unfinished free games, and unfinished feature games etc will no longer be retained.",
+            "comment": "%{dayCount} represents a number of days.",
+            "example": ".. after being idle for 3 days."
+        },
+        "AdditionInfoInactiveGameSessionsHour": {
+            "value": "The game will automatically return to its initial state after being idle for %{hourCount} hours. Progress and status of any collection games, unfinished free games, and unfinished feature games etc will no longer be retained.",
+            "comment": "%{hourCount} represents a number of hours.",
+            "example": ".. after being idle for 24 hours."
+        },
+        "AdditionInfoDisputeHistoryDescription": "In the event of disputes over game results, all game results that are shown in the game history page are absolute and final."
+    }
+}

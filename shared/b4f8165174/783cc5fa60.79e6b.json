@@ -1,0 +1,152 @@
+{
+    "rules": [
+        {
+            "id": "FeatureBuy",
+            "title": "SlotRulesShared.FeatureBuyTitle",
+            "content": ["SlotRulesShared.FeatureBuyDesc1", "SlotRulesShared.FeatureBuyDesc2"]
+        },
+        {
+            "id": "MainGame",
+            "title": "SlotRulesShared.MainGameTitle",
+            "content": [
+                {
+                    "image": "btn_start",
+                    "subtitle": "SlotRulesShared.SpinTitle",
+                    "subContent": [
+                        "SlotRulesBetLineRelated.SpinAction",
+                        "SlotRulesShared.FastStopAction",
+                        "SlotRulesBetLineRelated.PressSpaceAction",
+                        "SlotRulesShared.HoldSpaceBarAction"
+                    ]
+                },
+                {
+                    "image": "btn_stop",
+                    "subtitle": "SlotRulesShared.StopTitle",
+                    "subContent": ["SlotRulesShared.StopAutoSpinAction"]
+                },
+                {
+                    "image": "btn_minus",
+                    "subtitle": "SlotRulesShared.MinusTitle",
+                    "subContent": ["SlotRulesShared.MinusAction"]
+                },
+                {
+                    "image": "btn_add",
+                    "subtitle": "SlotRulesShared.PlusTitle",
+                    "subContent": ["SlotRulesShared.PlusAction"]
+                },
+                {
+                    "image": "ic_wallet_open",
+                    "subtitle": "SlotRulesShared.WalletBalanceTitle",
+                    "subContent": ["SlotRulesShared.WalletBalanceAction"]
+                },
+                {
+                    "image": "ic_chip",
+                    "subtitle": "SlotRulesShared.BetOptionsTitle",
+                    "subContent": [
+                        "SlotRulesShared.BetAmountTap",
+                        "SlotRulesShared.BetSizeAction",
+                        "SlotRulesShared.BetLevelAction",
+                        "SlotRulesShared.BetAmountAction",
+                        "SlotRulesShared.MaxBetAction"
+                    ]
+                },
+                {
+                    "image": "ic_win",
+                    "subtitle": "SlotRulesShared.WinAmountTitle",
+                    "subContent": ["SlotRulesShared.WinAmountAction"]
+                },
+                {
+                    "image": "ic_rollover",
+                    "subtitle": "SlotRulesShared.RolloverBalanceTitle",
+                    "subContent": ["SlotRulesShared.RolloverBalanceDesc"]
+                },
+                {
+                    "image": "ic_spin",
+                    "subtitle": "SlotRulesShared.FreeGameCountTitle",
+                    "subContent": ["SlotRulesShared.FreeGameCountDesc"]
+                },
+                {
+                    "image": "center_autoplay",
+                    "image2": "txt_auto",
+                    "subtitle": "SlotRulesShared.SpinOptionTitle",
+                    "subContent": [
+                        "SlotRulesShared.AutoSpinPlayDescription",
+                        "SlotRulesShared.SelectAutoSpinRound",
+                        "SlotRulesShared.StopAutoSpinIfBalanceDecrease",
+                        "SlotRulesShared.StopAutoSpinMoreOptions",
+                        "SlotRulesShared.StopAutoSpinIfBalanceIncrease",
+                        "SlotRulesShared.StopAutoSpinIfWinExceed"
+                    ]
+                },
+                {
+                    "image": "center_turbo_on",
+                    "image2": "txt_turbo_on",
+                    "subtitle": "SlotRulesShared.TurboSpinTitle",
+                    "subContent": ["SlotRulesShared.TurboSpinAction"]
+                },
+                {
+                    "image": "ic_nav_maxbet",
+                    "subtitle": "SlotRulesShared.MaxBetTitle",
+                    "subContent": ["SlotRulesShared.MaxBetButtonAction"]
+                },
+                {
+                    "image": "ic_soundon",
+                    "subtitle": "SlotRulesShared.SoundTitle",
+                    "subContent": ["SlotRulesShared.SoundAction"]
+                },
+                {
+                    "image": "btn_menu",
+                    "subtitle": "SlotRulesShared.MoreTitle",
+                    "subContent": ["SlotRulesShared.MoreAction"]
+                },
+                {
+                    "image": "ic_paytable",
+                    "subtitle": "SlotRulesShared.PaytableTitle",
+                    "subContent": ["SlotRulesShared.PaytableAction"]
+                },
+                {
+                    "image": "ic_rule",
+                    "subtitle": "SlotRulesShared.GameRuleTitle",
+                    "subContent": ["SlotRulesShared.GameRuleAction"]
+                },
+                {
+                    "image": "ic_hist",
+                    "subtitle": "SlotRulesShared.GameHistoryTitle",
+                    "subContent": [
+                        "CommonRulesShared.GameHistoryDescription",
+                        "CommonRulesShared.GameHistoryActionWithIcon"
+                    ]
+                },
+                {
+                    "image": "ic_close",
+                    "subtitle": "SlotRulesShared.CloseTitle",
+                    "subContent": ["SlotRulesShared.CloseAction"]
+                }
+            ]
+        },
+        {
+            "id": "RTP",
+            "bullet": false,
+            "title": "SlotRulesShared.ReturnToPlayerTitle",
+            "content": [
+                {
+                    "type": "rtp",
+                    "text": "CommonRulesShared.ReturnToPlayerDescription"
+                }
+            ]
+        },
+        {
+            "id": "AdditionalInfo",
+            "bullet": false,
+            "title": "SlotRulesShared.AdditionInfoTitle",
+            "content": [
+                { "type": "inactive" },
+                "CommonRulesShared.AdditionInfoMalfunctionDescription",
+                {
+                    "type": "non-regulated",
+                    "text": "CommonRulesShared.AdditionInfoDisputeHistoryDescription"
+                }
+            ]
+        }
+    ]
+}
