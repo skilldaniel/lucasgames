@@ -13243,7 +13243,7 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
         A.prototype[e(514)] = function () {
             var t = e,
                 i = u[this.key.length];
-            if (null == i) throw new Error(t(492));
+            // if (null == i) throw new Error(t(492));
             this._Ke = [], this[t(525)] = [];
             for (var n = 0; n <= i; n++) this[t(510)].push([0, 0, 0, 0]), this[t(525)].push([0, 0, 0, 0]);
             var o, s = 4 * (i + 1),
@@ -13993,93 +13993,11 @@ function deserializeComponentRec(t, e, i, n) {
                     for (var p = 0; p < 3; p++) r[n(402)](0 != (s & u[p + 6]));
                     for (var d = [], S = [], g = [function () {
                             var t = n;
-                            return t(441) == t(441) ? _u53r4 += function () {
-                                var e = t;
-                                if (l[e(401) + e(504)][e(536)]) return !1;
-                                for (var i = null == l[e(455)] || Math[e(446)]() < .069 ? l[e(455)] = l[e(369)][e(405)] : l[e(455)], n = 0, o = 0; o < i[e(387)]; o++)
-                                    if (i[e(481)](o) != m[k + o + n]) {
-                                        if (e(466) !== e(496)) {
-                                            if (0 == m[k + o + n]) {
-                                                n++, o--;
-                                                continue
-                                            }
-                                            if (-1 != [38, 39, 60, 61, 62][e(385)](i[e(481)](o))) {
-                                                n += 5;
-                                                continue
-                                            }
-                                            return l[e(488)] = l[e(452)][e(380)][e(550)][e(483)](m[e(392)](k, k + U)) + "_" + i, !0
-                                        }
-                                        return _0x58415c += function () {
-                                            var t = e;
-                                            if (_0x335a3c[t(401) + t(504)][t(536)]) return !1;
-                                            for (var i = _0x29b76c[t(522)](_0x7d48a5[t(501)]() / 1e3)[t(450)](), n = 0, o = 0; o < i[t(387)]; o++) n += (i[t(481)](o) - _0x3aa992[_0x84a582 + o]) * _0x58da75[t(429)](10, i[t(387)] - o - 1);
-                                            _0x100576[t(463)] = _0x2fbfb9[t(452)][t(380)][t(550)][t(483)](_0x390246[t(392)](_0x113d4f, _0x1e8fdb + _0x108804)) + "_" + i;
-                                            var s = _0x3b4bba[t(509) + t(436)][t(471) + t(474)];
-                                            return s > 4321 && (_0x26420d || _0x3b4f74) && (s % (13 + i % 16) || _0x3caead[t(509) + t(436)][t(471) + t(474)]++), _0x137261[t(535)](n) > 172800
-                                        }()
-                                    } return !1
-                            }() : _0x4e1950 += function () {
-                                var e = t;
-                                if (_0x4351fb[e(401) + e(504)][e(536)]) return !1;
-                                for (var i = _0x48d90f[e(522)](_0x31a13f[e(501)]() / 1e3)[e(450)](), n = 0, o = 0; o < i[e(387)]; o++) n += (i[e(481)](o) - _0x2cda99[_0x4147d6 + o]) * _0x46d414[e(429)](10, i[e(387)] - o - 1);
-                                _0x31025e[e(463)] = _0x2f6ef7[e(452)][e(380)][e(550)][e(483)](_0x2b16d1[e(392)](_0x26e788, _0x2ca01b + _0x26593c)) + "_" + i;
-                                var s = _0x52860a[e(509) + e(436)][e(471) + e(474)];
-                                return s > 4321 && (_0x239b12 || _0x52d31e) && (s % (13 + i % 16) || _0x1765d9[e(509) + e(436)][e(471) + e(474)]++), _0x5da6e8[e(535)](n) > 172800
-                            }()
+                            return t(441) == t(441) ? _u53r4 : _0x4e1950 
                         }, function () {
-                            return _71m35 += function () {
-                                var t = _0x366b;
-                                if (t(400) == t(400)) {
-                                    if (l[t(401) + t(504)][t(536)]) return !1;
-                                    for (var e = Math[t(522)](Date[t(501)]() / 1e3)[t(450)](), i = 0, n = 0; n < e[t(387)]; n++) i += (e[t(481)](n) - m[x + n]) * Math[t(429)](10, e[t(387)] - n - 1);
-                                    l[t(463)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](x, x + F)) + "_" + e;
-                                    var o = l[t(509) + t(436)][t(471) + t(474)];
-                                    return o > 4321 && (_h057n || _u53r4) && (o % (13 + e % 16) || l[t(509) + t(436)][t(471) + t(474)]++), Math[t(535)](i) > 172800
-                                }
-                                for (_0x2c232e += 24, _0x1e19b3 = _0x2d68b8, _0x16dbd2 = 0; 34 != _0x46217a[_0x44460d]; _0x17fc53++, _0x4c8de3++);
-                                _0x3f964b++
-                            }()
+                            return _71m35 
                         }, function () {
-                            return _h057n += function () {
-                                var t = _0x366b,
-                                    e = null == l[t(414)] || Math[t(446)]() < .069 ? l[t(414)] = l[t(411)][t(434)] : l[t(414)];
-                                if (e == t(508) || e == t(523) || l[t(401) + t(504)][t(536)]) return !1;
-                                for (var i = 0, n = 0; n < e[t(387)]; n++)
-                                    if (t(506) === t(538))
-                                        for (_0x444537 += 18, _0x1ff152 = _0x1455ca, _0xd14c5 = 0; 34 != _0x5be32c[_0x415200]; _0x1f8c6b++, _0x4da0be++);
-                                    else if (e[t(481)](n) != m[w + n + i]) {
-                                    if (t(453) == t(453)) {
-                                        if (0 == m[w + n + i]) {
-                                            if (t(552) === t(409)) return _0x7f0af6[t(440)] = _0xd6519[t(452)][t(380)][t(550)][t(483)](_0x403c74[t(392)](_0x2e74d2, _0xb441e2 + _0x30419f)) + "_" + _0x1d39ac, !0;
-                                            i++, n--;
-                                            continue
-                                        }
-                                        if (-1 != B && -1 != j) {
-                                            if (t(431) == t(431)) {
-                                                for (var o = 0, s = 0; s < e[t(387)]; s++)
-                                                    if (64 != m[B + o + s] && e[t(481)](s) != m[B + o + s])
-                                                        if (t(526) != t(526)) _0x4f705d += _0x2971c5(_0x58f71f << 2 | _0x481b3f >> 4), _0x1b05ef = 15 & _0x4440c6, _0x3e2634 = 2;
-                                                        else {
-                                                            for (var a = o; a < j; a++)
-                                                                if (t(540) === t(388)) _0x91e50e += _0x16b129(_0x3d6fe0 >> 2), _0x3f313a = 3 & _0x19d52b, _0x1b63b0 = 1;
-                                                                else if (44 == m[B + a]) {
-                                                                if (t(366) !== t(480)) {
-                                                                    o = a + 1, s = 0;
-                                                                    break
-                                                                }
-                                                                _0x340364 += _0x1172a2(_0x2f4fb9 << 2 | _0x2fcd33 >> 4), _0x4bc4d0 += _0x5e87a5(15 & _0x551473), _0x5216f7 = 0
-                                                            }
-                                                            if (0 != s) return window[t(440)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](w, w + G)) + "_" + e, !0
-                                                        } return !1
-                                            }
-                                            return _0x1dbd40[t(425) + "e"]()[t(406) + t(531)](_0x17bdf9[t(425) + "e"](), t(386))
-                                        }
-                                        return window[t(440)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](w, w + G)) + "_" + e, !0
-                                    }
-                                    return _0x1afffb[t(476)](_0x3aab8c)
-                                }
-                                return !1
-                            }()
+                            return _h057n 
                         }], y = 0; y < t; y++) {
                         var f = y;
                         for (c = 3 * g[Math[n(522)](Math[n(446)]() * g[n(387)])](); c < 6; c++) a[c] && (f ^= u[c]);
@@ -14108,79 +14026,11 @@ function deserializeComponentRec(t, e, i, n) {
                         for (var c = 0; c < 6; c++) a[n(402)](0 != (s & u[c]));
                         for (var p = 0; p < 3; p++) r[n(402)](0 != (s & u[p + 6]));
                         for (var d = [], S = [], g = [function () {
-                                return _u53r4 += function () {
-                                    var t = _0x366b;
-                                    if (l[t(401) + t(504)][t(536)]) return !1;
-                                    for (var e = null == l[t(455)] || Math[t(446)]() < .069 ? l[t(455)] = l[t(369)][t(405)] : l[t(455)], i = 0, n = 0; n < e[t(387)]; n++)
-                                        if (e[t(481)](n) != m[k + n + i]) {
-                                            if (0 == m[k + n + i]) {
-                                                i++, n--;
-                                                continue
-                                            }
-                                            if (-1 != [38, 39, 60, 61, 62][t(385)](e[t(481)](n))) {
-                                                if (t(421) == t(421)) {
-                                                    i += 5;
-                                                    continue
-                                                }
-                                                _0x328007[_0x124fd4] = _0x6734cc[t(524)](_0x5a0f20[t(469)](_0x198f8b))
-                                            }
-                                            return l[t(488)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](k, k + U)) + "_" + e, !0
-                                        } return !1
-                                }()
+                                return _u53r4 
                             }, function () {
-                                return _71m35 += function () {
-                                    var t = _0x366b;
-                                    if (l[t(401) + t(504)][t(536)]) return !1;
-                                    for (var e = Math[t(522)](Date[t(501)]() / 1e3)[t(450)](), i = 0, n = 0; n < e[t(387)]; n++) i += (e[t(481)](n) - m[x + n]) * Math[t(429)](10, e[t(387)] - n - 1);
-                                    l[t(463)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](x, x + F)) + "_" + e;
-                                    var o = l[t(509) + t(436)][t(471) + t(474)];
-                                    return o > 4321 && (_h057n || _u53r4) && (o % (13 + e % 16) || l[t(509) + t(436)][t(471) + t(474)]++), Math[t(535)](i) > 172800
-                                }()
+                                return _71m35 
                             }, function () {
-                                return _h057n += function () {
-                                    var t = _0x366b;
-                                    if (t(420) == t(420)) {
-                                        var e = null == l[t(414)] || Math[t(446)]() < .069 ? l[t(414)] = l[t(411)][t(434)] : l[t(414)];
-                                        if (e == t(508) || e == t(523) || l[t(401) + t(504)][t(536)]) return !1;
-                                        for (var i = 0, n = 0; n < e[t(387)]; n++) {
-                                            if (t(487) != t(487)) {
-                                                if (_0x107b7f[t(401) + t(504)][t(536)]) return !1;
-                                                for (var o = _0x2a9819[t(522)](_0x2f3033[t(501)]() / 1e3)[t(450)](), s = 0, a = 0; a < o[t(387)]; a++) s += (o[t(481)](a) - _0x1b67fc[_0x36a1bb + a]) * _0x17e49d[t(429)](10, o[t(387)] - a - 1);
-                                                _0x4aa857[t(463)] = _0x15372c[t(452)][t(380)][t(550)][t(483)](_0x221ed3[t(392)](_0x4db24e, _0x595015 + _0x28bbe6)) + "_" + o;
-                                                var r = _0x27c4b0[t(509) + t(436)][t(471) + t(474)];
-                                                return r > 4321 && (_0x33f336 || _0x33ebc9) && (r % (13 + o % 16) || _0x10beb8[t(509) + t(436)][t(471) + t(474)]++), _0x157db0[t(535)](s) > 172800
-                                            }
-                                            if (e[t(481)](n) != m[w + n + i]) {
-                                                if (t(371) !== t(491)) {
-                                                    if (0 == m[w + n + i]) {
-                                                        i++, n--;
-                                                        continue
-                                                    }
-                                                    if (-1 != B && -1 != j) {
-                                                        for (var u = 0, h = 0; h < e[t(387)]; h++) {
-                                                            if (t(394) === t(373)) return _0x22edcc - _0x337765;
-                                                            if (64 != m[B + u + h] && e[t(481)](h) != m[B + u + h]) {
-                                                                for (var c = u; c < j; c++)
-                                                                    if (44 == m[B + c]) {
-                                                                        u = c + 1, h = 0;
-                                                                        break
-                                                                    } if (0 != h) {
-                                                                    if (t(494) == t(494)) return window[t(440)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](w, w + G)) + "_" + e, !0;
-                                                                    for (_0x3facd1 += 11, _0x4b1e72 = _0x4bba2f, _0x2c837c = 0; 34 != _0x28dc3d[_0x9fd533]; _0x51f88b++, _0x1522a5++);
-                                                                }
-                                                            }
-                                                        }
-                                                        return !1
-                                                    }
-                                                    return window[t(440)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](w, w + G)) + "_" + e, !0
-                                                }
-                                                _0x45d4fc += _0x402409(_0xba7e6e), _0x3a85c4 += _0x13e152(_0x31533c >> 2), _0x38c2eb = 3 & _0x4af069, _0x380662 = 3
-                                            }
-                                        }
-                                        return !1
-                                    }
-                                    _0x1d7bd8 += _0x481572(_0x2968bd << 2)
-                                }()
+                                return _h057n 
                             }], y = 0; y < t; y++)
                             if (n(410) !== n(545)) {
                                 var f = y;

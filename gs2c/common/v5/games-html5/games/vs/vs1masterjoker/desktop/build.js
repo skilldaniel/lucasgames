@@ -1,9 +1,5 @@
 ! function (t) {
-    if ("object" == typeof exports && "undefined" != typeof module) module.exports = t();
-    else if ("function" == typeof define && define.amd) define([], t);
-    else {
-        ("undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self ? self : this).PIXI = t()
-    }
+    "object" == typeof exports && "undefined" != typeof module ? module.exports = t() : "function" == typeof define && define.amd ? define([], t) : ("undefined" != typeof window ? window : "undefined" != typeof global ? global : "undefined" != typeof self ? self : this).PIXI = t()
 }((function () {
     return function t(e, i, n) {
         function o(a, r) {
@@ -19,8 +15,7 @@
                     exports: {}
                 };
                 e[a][0].call(h.exports, (function (t) {
-                    var i = e[a][1][t];
-                    return o(i || t)
+                    return o(e[a][1][t] || t)
                 }), h, h.exports, t, e, i, n)
             }
             return i[a].exports
@@ -300,7 +295,7 @@
                                 m = function () {
                                     return function (t, e, i) {
                                         return t.reduce ? t.reduce(e, i) : (l(t, (function (t, n, o) {
-                                            i = e(i, t, n, o)
+                                            i = e(i, t)
                                         })), i)
                                     }(d, (function (t, e) {
                                         return t && o.hasOwnProperty(e)
@@ -1620,9 +1615,7 @@
             }, n.prototype.containerUpdateTransform = n.prototype.updateTransform, n.prototype.getBounds = function () {
                 if (!this._currentBounds) {
                     if (0 === this.children.length) return o.Rectangle.EMPTY;
-                    for (var t, e, i, n = 1 / 0, s = 1 / 0, a = -1 / 0, r = -1 / 0, l = !1, u = 0, h = this.children.length; u < h; ++u) {
-                        this.children[u].visible && (l = !0, n = n < (t = this.children[u].getBounds()).x ? n : t.x, s = s < t.y ? s : t.y, a = a > (e = t.width + t.x) ? a : e, r = r > (i = t.height + t.y) ? r : i)
-                    }
+                    for (var t, e, i, n = 1 / 0, s = 1 / 0, a = -1 / 0, r = -1 / 0, l = !1, u = 0, h = this.children.length; u < h; ++u) this.children[u].visible && (l = !0, n = n < (t = this.children[u].getBounds()).x ? n : t.x, s = s < t.y ? s : t.y, a = a > (e = t.width + t.x) ? a : e, r = r > (i = t.height + t.y) ? r : i);
                     if (!l) return o.Rectangle.EMPTY;
                     var c = this._bounds;
                     c.x = n, c.y = s, c.width = a - n, c.height = r - s, this._currentBounds = c
@@ -1980,14 +1973,7 @@
                 }
                 for (e = o.lastIndex; e < t.graphicsData.length; e++) {
                     var r = t.graphicsData[e];
-                    if (r.type === a.SHAPES.POLY) {
-                        if (r.points = r.shape.points.slice(), r.shape.closed && (r.points[0] === r.points[r.points.length - 2] && r.points[1] === r.points[r.points.length - 1] || r.points.push(r.points[0], r.points[1])), r.fill && r.points.length >= 6)
-                            if (r.points.length < 12) {
-                                i = this.switchMode(o, 0), this.buildPoly(r, i) || (i = this.switchMode(o, 1), this.buildComplexPoly(r, i))
-                            } else i = this.switchMode(o, 1), this.buildComplexPoly(r, i);
-                        r.lineWidth > 0 && (i = this.switchMode(o, 0), this.buildLine(r, i))
-                    } else i = this.switchMode(o, 0), r.type === a.SHAPES.RECT ? this.buildRectangle(r, i) : r.type === a.SHAPES.CIRC || r.type === a.SHAPES.ELIP ? this.buildCircle(r, i) : r.type === a.SHAPES.RREC && this.buildRoundedRectangle(r, i);
-                    o.lastIndex++
+                    r.type === a.SHAPES.POLY ? (r.points = r.shape.points.slice(), r.shape.closed && (r.points[0] === r.points[r.points.length - 2] && r.points[1] === r.points[r.points.length - 1] || r.points.push(r.points[0], r.points[1])), r.fill && r.points.length >= 6 && (r.points.length < 12 ? (i = this.switchMode(o, 0), this.buildPoly(r, i) || (i = this.switchMode(o, 1), this.buildComplexPoly(r, i))) : (i = this.switchMode(o, 1), this.buildComplexPoly(r, i))), r.lineWidth > 0 && (i = this.switchMode(o, 0), this.buildLine(r, i))) : (i = this.switchMode(o, 0), r.type === a.SHAPES.RECT ? this.buildRectangle(r, i) : r.type === a.SHAPES.CIRC || r.type === a.SHAPES.ELIP ? this.buildCircle(r, i) : r.type === a.SHAPES.RREC && this.buildRoundedRectangle(r, i)), o.lastIndex++
                 }
                 for (e = 0; e < o.data.length; e++)(i = o.data[e]).dirty && i.upload()
             }, n.prototype.switchMode = function (t, e) {
@@ -3581,12 +3567,11 @@
                 s = t("../../../const"),
                 a = t("./StencilMaskStack"),
                 r = function (t, e, i, r, l, u) {
-                    (this.gl = t, this.frameBuffer = null, this.texture = null, this.size = new n.Rectangle(0, 0, 1, 1), this.resolution = l || s.RESOLUTION, this.projectionMatrix = new n.Matrix, this.transform = null, this.frame = null, this.stencilBuffer = null, this.stencilMaskStack = new a, this.filterStack = [{
+                    this.gl = t, this.frameBuffer = null, this.texture = null, this.size = new n.Rectangle(0, 0, 1, 1), this.resolution = l || s.RESOLUTION, this.projectionMatrix = new n.Matrix, this.transform = null, this.frame = null, this.stencilBuffer = null, this.stencilMaskStack = new a, this.filterStack = [{
                         renderTarget: this,
                         filter: [],
                         bounds: this.size
-                    }], this.scaleMode = r || s.SCALE_MODES.DEFAULT, this.root = u, this.root) || (this.frameBuffer = t.createFramebuffer(), this.texture = t.createTexture(), t.bindTexture(t.TEXTURE_2D, this.texture), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MAG_FILTER, r === s.SCALE_MODES.LINEAR ? t.LINEAR : t.NEAREST), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MIN_FILTER, r === s.SCALE_MODES.LINEAR ? t.LINEAR : t.NEAREST), o.isPowerOfTwo(e, i) ? (t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_S, t.REPEAT), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_T, t.REPEAT)) : (t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_S, t.CLAMP_TO_EDGE), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_T, t.CLAMP_TO_EDGE)), t.bindFramebuffer(t.FRAMEBUFFER, this.frameBuffer), t.framebufferTexture2D(t.FRAMEBUFFER, t.COLOR_ATTACHMENT0, t.TEXTURE_2D, this.texture, 0));
-                    this.resize(e, i)
+                    }], this.scaleMode = r || s.SCALE_MODES.DEFAULT, this.root = u, this.root || (this.frameBuffer = t.createFramebuffer(), this.texture = t.createTexture(), t.bindTexture(t.TEXTURE_2D, this.texture), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MAG_FILTER, r === s.SCALE_MODES.LINEAR ? t.LINEAR : t.NEAREST), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_MIN_FILTER, r === s.SCALE_MODES.LINEAR ? t.LINEAR : t.NEAREST), o.isPowerOfTwo(e, i) ? (t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_S, t.REPEAT), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_T, t.REPEAT)) : (t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_S, t.CLAMP_TO_EDGE), t.texParameteri(t.TEXTURE_2D, t.TEXTURE_WRAP_T, t.CLAMP_TO_EDGE)), t.bindFramebuffer(t.FRAMEBUFFER, this.frameBuffer), t.framebufferTexture2D(t.FRAMEBUFFER, t.COLOR_ATTACHMENT0, t.TEXTURE_2D, this.texture, 0)), this.resize(e, i)
                 };
             r.prototype.constructor = r, e.exports = r, r.prototype.clear = function (t) {
                 var e = this.gl;
@@ -3792,9 +3777,7 @@
                         var o = n.SRVB[n.SRVBidx];
                         null == o && (o = e.createBuffer(), n.SRVB.push(o)), n.SRVBidx++, e.bindBuffer(e.ARRAY_BUFFER, o);
                         var s = this.vertByteSize;
-                        e.vertexAttribPointer(this.shader.attributes.aVertexPosition, 2, e.FLOAT, !1, s, 0), e.vertexAttribPointer(this.shader.attributes.aTextureCoord, 2, e.FLOAT, !1, s, 8), e.vertexAttribPointer(this.shader.attributes.aColor, 4, e.UNSIGNED_BYTE, !0, s, 16);
-                        i = this.positions.subarray(0, this.currentBatchSize * this.vertByteSize);
-                        e.bufferData(e.ARRAY_BUFFER, i, e.STATIC_DRAW)
+                        e.vertexAttribPointer(this.shader.attributes.aVertexPosition, 2, e.FLOAT, !1, s, 0), e.vertexAttribPointer(this.shader.attributes.aTextureCoord, 2, e.FLOAT, !1, s, 8), e.vertexAttribPointer(this.shader.attributes.aColor, 4, e.UNSIGNED_BYTE, !0, s, 16), i = this.positions.subarray(0, this.currentBatchSize * this.vertByteSize), e.bufferData(e.ARRAY_BUFFER, i, e.STATIC_DRAW)
                     }
                     for (var a, r, l, u, h = 0, c = 0, p = null, d = this.renderer.blendModeManager.currentBlendMode, m = null, S = !1, g = !1, y = 0, f = this.currentBatchSize; y < f; y++) a = (u = this.sprites[y])._texture.baseTexture, S = d !== (r = u.blendMode), g = m !== (l = u.shader || this.shader), (p !== a || S || g) && (this.renderBatch(p, h, c), c = y, h = 0, p = a, S && (d = r, this.renderer.blendModeManager.setBlendMode(d)), g && ((t = (m = l).shaders ? m.shaders[e.id] : m) || (t = m.getShader(this.renderer)), this.renderer.shaderManager.setShader(t), t.uniforms.projectionMatrix.value = this.renderer.currentRenderTarget.projectionMatrix.toArray(!0), t.syncUniforms(), e.activeTexture(e.TEXTURE0))), h++;
                     this.renderBatch(p, h, c), this.currentBatchSize = 0
@@ -4045,12 +4028,12 @@
                 var o = new Image;
                 e && (o.crossOrigin = "");
                 var s = new n(o, i);
-                if (null != window.atob && null != window.Blob && null != window.XMLHttpRequest && null != window.URL && 1 != window.UHT_IMAGESLOADER_NOBLOBS && !(navigator.userAgent.indexOf("UCBrowser") > -1))
-                    if ("data:image/png" == t.slice(0, 14)) {
-                        var a = b64toBlob(t, "image/png", 22),
-                            r = URL.createObjectURL(a);
-                        o.src = r
-                    } else if ("data:image/jpeg" == t.slice(0, 15)) {
+                if (null == window.atob || null == window.Blob || null == window.XMLHttpRequest || null == window.URL || 1 == window.UHT_IMAGESLOADER_NOBLOBS || navigator.userAgent.indexOf("UCBrowser") > -1) "data:image/jpeg" == t.slice(0, 15) && (this.hasAlpha = !1), ".jpg" == t.slice(t.length - 4, t.length) && (this.hasAlpha = !1), o.src = t;
+                else if ("data:image/png" == t.slice(0, 14)) {
+                    var a = b64toBlob(t, "image/png", 22),
+                        r = URL.createObjectURL(a);
+                    o.src = r
+                } else if ("data:image/jpeg" == t.slice(0, 15)) {
                     s.hasAlpha = !1;
                     var l = b64toBlob(t, "image/jpeg", 23),
                         u = URL.createObjectURL(l);
@@ -4069,7 +4052,7 @@
                     }, c.onloadstart = function () {
                         h.downloadSizeLoaded = 0
                     }, c.send()
-                } else "data:image/jpeg" == t.slice(0, 15) && (this.hasAlpha = !1), ".jpg" == t.slice(t.length - 4, t.length) && (this.hasAlpha = !1), o.src = t;
+                }
                 return s.resolution = 1, s
             }, n.fromCanvas = function (t, e) {
                 t._pixiId || (t._pixiId = "canvas_" + o.uuid());
@@ -5265,7 +5248,7 @@
             }, n.prototype.updateTransform = function () {
                 var t = this.points;
                 if (!(t.length < 1)) {
-                    for (var e, i, n, o, s, a = t[0], r = 0, l = 0, u = this.vertices, h = t.length, c = 0; c < h; c++) i = t[c], n = 4 * c, l = -((e = c < t.length - 1 ? t[c + 1] : i).x - a.x), r = e.y - a.y, 10 * (1 - c / (h - 1)) > 1 && 1, r /= o = Math.sqrt(r * r + l * l), l /= o, r *= s = this.texture.baseTexture.height / 2, l *= s, u[n] = i.x + r, u[n + 1] = i.y + l, u[n + 2] = i.x - r, u[n + 3] = i.y - l, a = i;
+                    for (var e, i, n, o, s, a = t[0], r = 0, l = 0, u = this.vertices, h = t.length, c = 0; c < h; c++) i = t[c], n = 4 * c, l = -((e = c < t.length - 1 ? t[c + 1] : i).x - a.x), r = e.y - a.y, r /= o = Math.sqrt(r * r + l * l), l /= o, r *= s = this.texture.baseTexture.height / 2, l *= s, u[n] = i.x + r, u[n + 1] = i.y + l, u[n + 2] = i.x - r, u[n + 3] = i.y - l, a = i;
                     this.containerUpdateTransform()
                 }
             }
@@ -5713,11 +5696,7 @@ var pixi_spine, __extends = this && this.__extends || function () {
                             C = this.getCurvePercent(b / s.ENTRIES - 1, 1 - (n - T) / (c[b + s.PREV_TIME] - T));
                         m += (c[b + s.R] - m) * C, S += (c[b + s.G] - S) * C, g += (c[b + s.B] - g) * C, y += (c[b + s.A] - y) * C
                     }
-                    if (1 == r) h.color.set(m, S, g, y);
-                    else {
-                        p = h.color;
-                        l == e.setup && p.setFromColor(h.data.color), p.add((m - p.r) * r, (S - p.g) * r, (g - p.b) * r, (y - p.a) * r)
-                    }
+                    1 == r ? h.color.set(m, S, g, y) : (p = h.color, l == e.setup && p.setFromColor(h.data.color), p.add((m - p.r) * r, (S - p.g) * r, (g - p.b) * r, (y - p.a) * r))
                 }
             }, s.ENTRIES = 5, s.PREV_TIME = -5, s.PREV_R = -4, s.PREV_G = -3, s.PREV_B = -2, s.PREV_A = -1, s.R = 1, s.G = 2, s.B = 3, s.A = 4, s
         }(s);
@@ -5761,11 +5740,7 @@ var pixi_spine, __extends = this && this.__extends || function () {
                             I = this.getCurvePercent(M / s.ENTRIES - 1, 1 - (n - L) / (c[M + s.PREV_TIME] - L));
                         g += (c[M + s.R] - g) * I, y += (c[M + s.G] - y) * I, f += (c[M + s.B] - f) * I, b += (c[M + s.A] - b) * I, T += (c[M + s.R2] - T) * I, C += (c[M + s.G2] - C) * I, A += (c[M + s.B2] - A) * I
                     }
-                    if (1 == r) h.color.set(g, y, f, b), h.darkColor.set(T, C, A, 1);
-                    else {
-                        p = h.color, d = h.darkColor;
-                        l == e.setup && (p.setFromColor(h.data.color), d.setFromColor(h.data.darkColor)), p.add((g - p.r) * r, (y - p.g) * r, (f - p.b) * r, (b - p.a) * r), d.add((T - d.r) * r, (C - d.g) * r, (A - d.b) * r, 0)
-                    }
+                    1 == r ? (h.color.set(g, y, f, b), h.darkColor.set(T, C, A, 1)) : (p = h.color, d = h.darkColor, l == e.setup && (p.setFromColor(h.data.color), d.setFromColor(h.data.darkColor)), p.add((g - p.r) * r, (y - p.g) * r, (f - p.b) * r, (b - p.a) * r), d.add((T - d.r) * r, (C - d.g) * r, (A - d.b) * r, 0))
                 }
             }, s.ENTRIES = 8, s.PREV_TIME = -8, s.PREV_R = -7, s.PREV_G = -6, s.PREV_B = -5, s.PREV_A = -4, s.PREV_R2 = -3, s.PREV_G2 = -2, s.PREV_B2 = -1, s.R = 1, s.G = 2, s.B = 3, s.A = 4, s.R2 = 5, s.G2 = 6, s.B2 = 7, s
         }(s);
@@ -5790,7 +5765,7 @@ var pixi_spine, __extends = this && this.__extends || function () {
                             h.setAttachment(null == p ? null : t.getAttachment(this.slotIndex, p))
                         }
                     } else {
-                        var d = 0;
+                        var d;
                         d = s >= c[c.length - 1] ? c.length - 1 : o.binarySearch(c, s, 1) - 1;
                         var m = this.attachmentNames[d];
                         t.slots[this.slotIndex].setAttachment(null == m ? null : t.getAttachment(this.slotIndex, m))
@@ -5834,25 +5809,23 @@ var pixi_spine, __extends = this && this.__extends || function () {
                                     var y = t.Utils.setArraySize(p, m);
                                     if (null == g.bones)
                                         for (var f = g.vertices, b = 0; b < m; b++) y[b] += (f[b] - y[b]) * r;
-                                    else {
-                                        r = 1 - r;
-                                        for (b = 0; b < m; b++) y[b] *= r
-                                    }
+                                    else
+                                        for (r = 1 - r, b = 0; b < m; b++) y[b] *= r
                             }
                         } else {
                             var T = t.Utils.setArraySize(p, m);
                             if (s >= S[S.length - 1]) {
                                 var C = d[S.length - 1];
                                 if (1 == r) t.Utils.arrayCopy(C, 0, T, 0, m);
-                                else if (l == e.setup) {
+                                else if (l == e.setup)
                                     if (null == (g = c).bones)
                                         for (f = g.vertices, b = 0; b < m; b++) {
                                             var A = f[b];
                                             T[b] = A + (C[b] - A) * r
                                         } else
-                                            for (b = 0; b < m; b++) T[b] = C[b] * r
-                                } else
-                                    for (b = 0; b < m; b++) T[b] += (C[b] - T[b]) * r
+                                            for (b = 0; b < m; b++) T[b] = C[b] * r;
+                                    else
+                                        for (b = 0; b < m; b++) T[b] += (C[b] - T[b]) * r
                             } else {
                                 var v = o.binarySearch(S, s),
                                     M = d[v - 1],
@@ -5863,21 +5836,13 @@ var pixi_spine, __extends = this && this.__extends || function () {
                                     for (b = 0; b < m; b++) {
                                         var R = M[b];
                                         T[b] = R + (L[b] - R) * P
-                                    } else if (l == e.setup) {
+                                    } else if (l == e.setup)
                                         if (null == (g = c).bones)
-                                            for (f = g.vertices, b = 0; b < m; b++) {
-                                                R = M[b], A = f[b];
-                                                T[b] = A + (R + (L[b] - R) * P - A) * r
-                                            } else
-                                                for (b = 0; b < m; b++) {
-                                                    R = M[b];
-                                                    T[b] = (R + (L[b] - R) * P) * r
-                                                }
-                                    } else
-                                        for (b = 0; b < m; b++) {
-                                            R = M[b];
-                                            T[b] += (R + (L[b] - R) * P - T[b]) * r
-                                        }
+                                            for (f = g.vertices, b = 0; b < m; b++) R = M[b], A = f[b], T[b] = A + (R + (L[b] - R) * P - A) * r;
+                                        else
+                                            for (b = 0; b < m; b++) R = M[b], T[b] = (R + (L[b] - R) * P) * r;
+                                else
+                                    for (b = 0; b < m; b++) R = M[b], T[b] += (R + (L[b] - R) * P - T[b]) * r
                             }
                         }
                     }
@@ -5928,7 +5893,7 @@ var pixi_spine, __extends = this && this.__extends || function () {
                     var d = this.frames;
                     if (a < d[0]) u == e.setup && t.Utils.arrayCopy(n.slots, 0, n.drawOrder, 0, n.slots.length);
                     else {
-                        var m = 0;
+                        var m;
                         m = a >= d[d.length - 1] ? d.length - 1 : o.binarySearch(d, a) - 1;
                         var S = this.drawOrders[m];
                         if (null == S) t.Utils.arrayCopy(p, 0, c, 0, p.length);
@@ -6002,10 +5967,7 @@ var pixi_spine, __extends = this && this.__extends || function () {
                             T = this.getCurvePercent(f / s.ENTRIES - 1, 1 - (n - b) / (h[f + s.PREV_TIME] - b));
                         d += (h[f + s.ROTATE] - d) * T, m += (h[f + s.TRANSLATE] - m) * T, S += (h[f + s.SCALE] - S) * T, g += (h[f + s.SHEAR] - g) * T
                     }
-                    if (l == e.setup) {
-                        p = c.data;
-                        c.rotateMix = p.rotateMix + (d - p.rotateMix) * r, c.translateMix = p.translateMix + (m - p.translateMix) * r, c.scaleMix = p.scaleMix + (S - p.scaleMix) * r, c.shearMix = p.shearMix + (g - p.shearMix) * r
-                    } else c.rotateMix += (d - c.rotateMix) * r, c.translateMix += (m - c.translateMix) * r, c.scaleMix += (S - c.scaleMix) * r, c.shearMix += (g - c.shearMix) * r
+                    l == e.setup ? (p = c.data, c.rotateMix = p.rotateMix + (d - p.rotateMix) * r, c.translateMix = p.translateMix + (m - p.translateMix) * r, c.scaleMix = p.scaleMix + (S - p.scaleMix) * r, c.shearMix = p.shearMix + (g - p.shearMix) * r) : (c.rotateMix += (d - c.rotateMix) * r, c.translateMix += (m - c.translateMix) * r, c.scaleMix += (S - c.scaleMix) * r, c.shearMix += (g - c.shearMix) * r)
                 }
             }, s.ENTRIES = 5, s.PREV_TIME = -5, s.PREV_ROTATE = -4, s.PREV_TRANSLATE = -3, s.PREV_SCALE = -2, s.PREV_SHEAR = -1, s.ROTATE = 1, s.TRANSLATE = 2, s.SCALE = 3, s.SHEAR = 4, s
         }(s);
@@ -6262,9 +6224,7 @@ function (t) {
                     if (u.time < s) break;
                     u.time > n || this.queue.event(t, u)
                 }
-                for ((t.loop ? s > t.trackTime % o : e >= n && t.animationLast < n) && this.queue.complete(t); r < l; r++) {
-                    a[r].time < i || this.queue.event(t, a[r])
-                }
+                for ((t.loop ? s > t.trackTime % o : e >= n && t.animationLast < n) && this.queue.complete(t); r < l; r++) a[r].time < i || this.queue.event(t, a[r])
             }, e.prototype.clearTracks = function () {
                 var t = this.queue.drainDisabled;
                 this.queue.drainDisabled = !0;
@@ -6470,28 +6430,23 @@ function (t) {
                                 a.onStart && this.deprecateStuff() && a.onStart(a.trackIndex), this.animState.onStart && this.deprecateStuff() && this.deprecateStuff && this.animState.onStart(a.trackIndex);
                                 break;
                             case n.interrupt:
-                                null != a.listener && a.listener.interrupt && a.listener.interrupt(a);
-                                for (r = 0; r < i.length; r++) i[r].interrupt && i[r].interrupt(a);
+                                for (null != a.listener && a.listener.interrupt && a.listener.interrupt(a), r = 0; r < i.length; r++) i[r].interrupt && i[r].interrupt(a);
                                 break;
                             case n.end:
-                                null != a.listener && a.listener.end && a.listener.end(a);
-                                for (r = 0; r < i.length; r++) i[r].end && i[r].end(a);
+                                for (null != a.listener && a.listener.end && a.listener.end(a), r = 0; r < i.length; r++) i[r].end && i[r].end(a);
                                 a.onEnd && this.deprecateStuff() && a.onEnd(a.trackIndex), this.animState.onEnd && this.deprecateStuff() && this.animState.onEnd(a.trackIndex);
                             case n.dispose:
-                                null != a.listener && a.listener.dispose && a.listener.dispose(a);
-                                for (r = 0; r < i.length; r++) i[r].dispose && i[r].dispose(a);
+                                for (null != a.listener && a.listener.dispose && a.listener.dispose(a), r = 0; r < i.length; r++) i[r].dispose && i[r].dispose(a);
                                 this.animState.trackEntryPool.free(a);
                                 break;
                             case n.complete:
-                                null != a.listener && a.listener.complete && a.listener.complete(a);
-                                for (r = 0; r < i.length; r++) i[r].complete && i[r].complete(a);
+                                for (null != a.listener && a.listener.complete && a.listener.complete(a), r = 0; r < i.length; r++) i[r].complete && i[r].complete(a);
                                 var l = t.MathUtils.toInt(a.loopsCount());
                                 a.onComplete && this.deprecateStuff() && a.onComplete(a.trackIndex, l), this.animState.onComplete && this.deprecateStuff() && this.animState.onComplete(a.trackIndex, l);
                                 break;
                             case n.event:
                                 var u = e[2 + o++];
-                                null != a.listener && a.listener.event && a.listener.event(a, u);
-                                for (r = 0; r < i.length; r++) i[r].event && i[r].event(a, u);
+                                for (null != a.listener && a.listener.event && a.listener.event(a, u), r = 0; r < i.length; r++) i[r].event && i[r].event(a, u);
                                 a.onEvent && this.deprecateStuff() && a.onEvent(a.trackIndex, u), this.animState.onEvent && this.deprecateStuff() && this.animState.onEvent(a.trackIndex, u);
                                 break
                         }
@@ -6621,19 +6576,16 @@ function (t) {
                     T = u.matrix.d;
                 switch (h.tx = y * i + f * n + u.matrix.tx, h.ty = b * i + T * n + u.matrix.ty, this.data.transformMode) {
                     case t.TransformMode.Normal:
-                        c = o + 90 + l, p = t.MathUtils.cosDeg(o + r) * s, d = t.MathUtils.cosDeg(c) * a, m = t.MathUtils.sinDeg(o + r) * s, S = t.MathUtils.sinDeg(c) * a;
-                        return h.a = y * p + f * m, h.c = y * d + f * S, h.b = b * p + T * m, void(h.d = b * d + T * S);
+                        return c = o + 90 + l, p = t.MathUtils.cosDeg(o + r) * s, d = t.MathUtils.cosDeg(c) * a, m = t.MathUtils.sinDeg(o + r) * s, S = t.MathUtils.sinDeg(c) * a, h.a = y * p + f * m, h.c = y * d + f * S, h.b = b * p + T * m, void(h.d = b * d + T * S);
                     case t.TransformMode.OnlyTranslation:
-                        c = o + 90 + l;
-                        h.a = t.MathUtils.cosDeg(o + r) * s, h.c = t.MathUtils.cosDeg(c) * a, h.b = t.MathUtils.sinDeg(o + r) * s, h.d = t.MathUtils.sinDeg(c) * a;
+                        c = o + 90 + l, h.a = t.MathUtils.cosDeg(o + r) * s, h.c = t.MathUtils.cosDeg(c) * a, h.b = t.MathUtils.sinDeg(o + r) * s, h.d = t.MathUtils.sinDeg(c) * a;
                         break;
                     case t.TransformMode.NoRotationOrReflection:
                         var C = 0;
                         (M = y * y + b * b) > 1e-4 ? (f = b * (M = Math.abs(y * T - f * b) / M), T = y * M, C = Math.atan2(b, y) * t.MathUtils.radDeg) : (y = 0, b = 0, C = 90 - Math.atan2(T, f) * t.MathUtils.radDeg);
                         var A = o + r - C,
                             v = o + l - C + 90;
-                        p = t.MathUtils.cosDeg(A) * s, d = t.MathUtils.cosDeg(v) * a, m = t.MathUtils.sinDeg(A) * s, S = t.MathUtils.sinDeg(v) * a;
-                        h.a = y * p - f * m, h.c = y * d - f * S, h.b = b * p + T * m, h.d = b * d + T * S;
+                        p = t.MathUtils.cosDeg(A) * s, d = t.MathUtils.cosDeg(v) * a, m = t.MathUtils.sinDeg(A) * s, S = t.MathUtils.sinDeg(v) * a, h.a = y * p - f * m, h.c = y * d - f * S, h.b = b * p + T * m, h.d = b * d + T * S;
                         break;
                     case t.TransformMode.NoScale:
                     case t.TransformMode.NoScaleOrReflection:
@@ -6645,8 +6597,7 @@ function (t) {
                         var _ = Math.PI / 2 + Math.atan2(R, P),
                             E = Math.cos(_) * M,
                             D = Math.sin(_) * M;
-                        p = t.MathUtils.cosDeg(r) * s, d = t.MathUtils.cosDeg(90 + l) * a, m = t.MathUtils.sinDeg(r) * s, S = t.MathUtils.sinDeg(90 + l) * a;
-                        return h.a = P * p + E * m, h.c = P * d + E * S, h.b = R * p + D * m, h.d = R * d + D * S, void((this.data.transformMode != t.TransformMode.NoScaleOrReflection ? y * T - f * b < 0 : this.skeleton.flipX != this.skeleton.flipY != e.yDown) && (h.c = -h.c, h.d = -h.d))
+                        return p = t.MathUtils.cosDeg(r) * s, d = t.MathUtils.cosDeg(90 + l) * a, m = t.MathUtils.sinDeg(r) * s, S = t.MathUtils.sinDeg(90 + l) * a, h.a = P * p + E * m, h.c = P * d + E * S, h.b = R * p + D * m, h.d = R * d + D * S, void((this.data.transformMode != t.TransformMode.NoScaleOrReflection ? y * T - f * b < 0 : this.skeleton.flipX != this.skeleton.flipY != e.yDown) && (h.c = -h.c, h.d = -h.d))
                 }
                 this.skeleton.flipX && (h.a = -h.a, h.c = -h.c), this.skeleton.flipY != e.yDown && (h.b = -h.b, h.d = -h.d)
             }, e.prototype.setToSetupPose = function () {
@@ -6725,12 +6676,12 @@ function (t) {
 }(pixi_spine || (pixi_spine = {})),
 function (t) {
     ! function (t) {
-        var e, i = function (t, i, n) {
-            if (this.x = 0, this.y = 0, this.rotation = 0, this.scaleX = 1, this.scaleY = 1, this.shearX = 0, this.shearY = 0, this.transformMode = e.Normal, t < 0) throw new Error("index must be >= 0.");
-            if (null == i) throw new Error("name cannot be null.");
-            this.index = t, this.name = i, this.parent = n
-        };
-        t.BoneData = i,
+        var e;
+        t.BoneData = function (t, i, n) {
+                if (this.x = 0, this.y = 0, this.rotation = 0, this.scaleX = 1, this.scaleY = 1, this.shearX = 0, this.shearY = 0, this.transformMode = e.Normal, t < 0) throw new Error("index must be >= 0.");
+                if (null == i) throw new Error("name cannot be null.");
+                this.index = t, this.name = i, this.parent = n
+            },
             function (t) {
                 t[t.Normal = 0] = "Normal", t[t.OnlyTranslation = 1] = "OnlyTranslation", t[t.NoRotationOrReflection = 2] = "NoRotationOrReflection", t[t.NoScale = 3] = "NoScale", t[t.NoScaleOrReflection = 4] = "NoScaleOrReflection"
             }(e = t.TransformMode || (t.TransformMode = {}))
@@ -6738,19 +6689,17 @@ function (t) {
 }(pixi_spine || (pixi_spine = {})),
 function (t) {
     ! function (t) {
-        var e = function (t, e) {
+        t.Event = function (t, e) {
             if (null == e) throw new Error("data cannot be null.");
             this.time = t, this.data = e
-        };
-        t.Event = e
+        }
     }(t.core || (t.core = {}))
 }(pixi_spine || (pixi_spine = {})),
 function (t) {
     ! function (t) {
-        var e = function (t) {
+        t.EventData = function (t) {
             this.name = t
-        };
-        t.EventData = e
+        }
     }(t.core || (t.core = {}))
 }(pixi_spine || (pixi_spine = {})),
 function (t) {
@@ -6866,10 +6815,9 @@ function (t) {
 }(pixi_spine || (pixi_spine = {})),
 function (t) {
     ! function (t) {
-        var e = function (t) {
+        t.IkConstraintData = function (t) {
             this.order = 0, this.bones = new Array, this.bendDirection = 1, this.mix = 1, this.name = t
-        };
-        t.IkConstraintData = e
+        }
     }(t.core || (t.core = {}))
 }(pixi_spine || (pixi_spine = {})),
 function (t) {
@@ -6922,9 +6870,7 @@ function (t) {
                             I = M[1],
                             P = a.offsetRotation,
                             R = !1;
-                        if (0 == P) R = u == t.RotateMode.Chain;
-                        else R = !1, P *= (_ = this.target.bone.matrix).a * _.d - _.b * _.c > 0 ? t.MathUtils.degRad : -t.MathUtils.degRad;
-                        f = 0;
+                        0 == P ? R = u == t.RotateMode.Chain : (R = !1, P *= (_ = this.target.bone.matrix).a * _.d - _.b * _.c > 0 ? t.MathUtils.degRad : -t.MathUtils.degRad), f = 0;
                         for (var _ = 3; f < p; f++, _ += 3) {
                             var E, D = (E = m[f]).matrix;
                             D.tx += (L - D.tx) * o, D.ty += (I - D.ty) * o;
@@ -6971,8 +6917,7 @@ function (t) {
                         y = g[m -= p ? 1 : 2];
                     if (s && (l *= y), a)
                         for (var f = 0; f < n; f++) u[f] *= y;
-                    c = t.Utils.setArraySize(this.world, 8);
-                    f = 0;
+                    c = t.Utils.setArraySize(this.world, 8), f = 0;
                     for (var b = 0, T = 0; f < n; f++, b += 3) {
                         var C = l += H = u[f];
                         if (p)(C %= y) < 0 && (C += y), T = 0;
@@ -6989,8 +6934,7 @@ function (t) {
                         for (;; T++) {
                             var A = g[T];
                             if (!(C > A)) {
-                                if (0 == T) C /= A;
-                                else C = (C - (Y = g[T - 1])) / (A - Y);
+                                0 == T ? C /= A : C = (C - (Y = g[T - 1])) / (A - Y);
                                 break
                             }
                         }
@@ -7004,8 +6948,7 @@ function (t) {
                     for (f = 0; f < n; f++) u[f] *= M;
                 for (var N = this.segments, W = 0, X = (f = 0, b = 0, T = 0, 0); f < n; f++, b += 3) {
                     var H;
-                    C = l += H = u[f];
-                    if (p)(C %= M) < 0 && (C += M), T = 0;
+                    if (C = l += H = u[f], p)(C %= M) < 0 && (C += M), T = 0;
                     else {
                         if (C < 0) {
                             this.addBeforePosition(C, c, 0, h, b);
@@ -7019,8 +6962,7 @@ function (t) {
                     for (;; T++) {
                         var z = v[T];
                         if (!(C > z)) {
-                            if (0 == T) C /= z;
-                            else C = (C - (Y = v[T - 1])) / (z - Y);
+                            0 == T ? C /= z : C = (C - (Y = v[T - 1])) / (z - Y);
                             break
                         }
                     }
@@ -7034,8 +6976,7 @@ function (t) {
                         var q = N[X];
                         if (!(C > q)) {
                             var Y;
-                            if (0 == X) C /= q;
-                            else C = X + (C - (Y = N[X - 1])) / (q - Y);
+                            0 == X ? C /= q : C = X + (C - (Y = N[X - 1])) / (q - Y);
                             break
                         }
                     }
@@ -7079,10 +7020,9 @@ function (t) {
 }(pixi_spine || (pixi_spine = {})),
 function (t) {
     ! function (t) {
-        var e = function (t) {
-            this.order = 0, this.bones = new Array, this.name = t
-        };
-        t.PathConstraintData = e,
+        t.PathConstraintData = function (t) {
+                this.order = 0, this.bones = new Array, this.name = t
+            },
             function (t) {
                 t[t.Fixed = 0] = "Fixed", t[t.Percent = 1] = "Percent"
             }(t.PositionMode || (t.PositionMode = {})),
@@ -7110,24 +7050,20 @@ function (t) {
                     }
                     this.bones.push(o)
                 }
-                this.slots = new Array, this.drawOrder = new Array;
-                for (i = 0; i < e.slots.length; i++) {
+                for (this.slots = new Array, this.drawOrder = new Array, i = 0; i < e.slots.length; i++) {
                     var a = e.slots[i],
                         r = (o = this.bones[a.boneData.index], new t.Slot(a, o));
                     this.slots.push(r), this.drawOrder.push(r)
                 }
-                this.ikConstraints = new Array;
-                for (i = 0; i < e.ikConstraints.length; i++) {
+                for (this.ikConstraints = new Array, i = 0; i < e.ikConstraints.length; i++) {
                     var l = e.ikConstraints[i];
                     this.ikConstraints.push(new t.IkConstraint(l, this))
                 }
-                this.transformConstraints = new Array;
-                for (i = 0; i < e.transformConstraints.length; i++) {
+                for (this.transformConstraints = new Array, i = 0; i < e.transformConstraints.length; i++) {
                     var u = e.transformConstraints[i];
                     this.transformConstraints.push(new t.TransformConstraint(u, this))
                 }
-                this.pathConstraints = new Array;
-                for (i = 0; i < e.pathConstraints.length; i++) {
+                for (this.pathConstraints = new Array, i = 0; i < e.pathConstraints.length; i++) {
                     var h = e.pathConstraints[i];
                     this.pathConstraints.push(new t.PathConstraint(h, this))
                 }
@@ -7144,19 +7080,15 @@ function (t) {
                     l = s.length,
                     u = a + r + l;
                 t: for (e = 0; e < u; e++) {
-                    for (var h = 0; h < a; h++) {
+                    for (var h = 0; h < a; h++)
                         if ((c = n[h]).data.order == e) {
                             this.sortIkConstraint(c);
                             continue t
-                        }
-                    }
-                    for (h = 0; h < r; h++) {
+                        } for (h = 0; h < r; h++)
                         if ((c = o[h]).data.order == e) {
                             this.sortTransformConstraint(c);
                             continue t
-                        }
-                    }
-                    for (h = 0; h < l; h++) {
+                        } for (h = 0; h < l; h++) {
                         var c;
                         if ((c = s[h]).data.order == e) {
                             this.sortPathConstraint(c);
@@ -7186,8 +7118,7 @@ function (t) {
                 var l = e.bones,
                     u = l.length;
                 for (s = 0; s < u; s++) this.sortBone(l[s]);
-                this._updateCache.push(e);
-                for (s = 0; s < u; s++) this.sortReset(l[s].children);
+                for (this._updateCache.push(e), s = 0; s < u; s++) this.sortReset(l[s].children);
                 for (s = 0; s < u; s++) l[s].sorted = !0
             }, e.prototype.sortTransformConstraint = function (t) {
                 this.sortBone(t.target);
@@ -7239,9 +7170,7 @@ function (t) {
             }, e.prototype.setBonesToSetupPose = function () {
                 for (var t = this.bones, e = 0, i = t.length; e < i; e++) t[e].setToSetupPose();
                 var n = this.ikConstraints;
-                for (e = 0, i = n.length; e < i; e++) {
-                    (r = n[e]).bendDirection = r.data.bendDirection, r.mix = r.data.mix
-                }
+                for (e = 0, i = n.length; e < i; e++)(r = n[e]).bendDirection = r.data.bendDirection, r.mix = r.data.mix;
                 var o = this.transformConstraints;
                 for (e = 0, i = o.length; e < i; e++) {
                     var s = (r = o[e]).data;
@@ -7250,8 +7179,7 @@ function (t) {
                 var a = this.pathConstraints;
                 for (e = 0, i = a.length; e < i; e++) {
                     var r;
-                    s = (r = a[e]).data;
-                    r.position = s.position, r.spacing = s.spacing, r.rotateMix = s.rotateMix, r.translateMix = s.translateMix
+                    s = (r = a[e]).data, r.position = s.position, r.spacing = s.spacing, r.rotateMix = s.rotateMix, r.translateMix = s.translateMix
                 }
             }, e.prototype.setSlotsToSetupPose = function () {
                 var e = this.slots;
@@ -7524,8 +7452,7 @@ function (t) {
                             }
                             D = c.length;
                             var Y = t.Utils.setArraySize(c, D + 3 * (G - 2));
-                            G--;
-                            for (U = 1; U < G; U++) Y[D] = S, Y[D + 1] = S + U, Y[D + 2] = S + U + 1, D += 3;
+                            for (G--, U = 1; U < G; U++) Y[D] = S, Y[D + 1] = S + U, Y[D + 2] = S + U + 1, D += 3;
                             S += G + 1
                         }
                     }
@@ -7550,8 +7477,7 @@ function (t) {
                             r.push(m + (g - m) * _), r.push(S + (y - S) * _)
                         } else if (R) {
                             var E, D;
-                            _ = ((D = I - M) * (S - L) - (E = P - L) * (m - M)) / (E * (g - m) - D * (y - S));
-                            r.push(m + (g - m) * _), r.push(S + (y - S) * _), r.push(I), r.push(P)
+                            _ = ((D = I - M) * (S - L) - (E = P - L) * (m - M)) / (E * (g - m) - D * (y - S)), r.push(m + (g - m) * _), r.push(S + (y - S) * _), r.push(I), r.push(P)
                         }
                         u = !0
                     }
@@ -7561,8 +7487,7 @@ function (t) {
                     (r = h).length = 0, h = O
                 }
                 if (l != r) {
-                    l.length = 0;
-                    d = 0;
+                    l.length = 0, d = 0;
                     for (var w = r.length - 2; d < w; d++) l[d] = r[d]
                 } else l.length = l.length - 2;
                 return u
@@ -7701,8 +7626,7 @@ function (t) {
                         var y = s.ik[r];
                         (m = new t.IkConstraintData(y.name)).order = this.getValue(y, "order", 0);
                         for (var f = 0; f < y.bones.length; f++) {
-                            p = y.bones[f];
-                            if (null == (T = o.findBone(p))) throw new Error("IK bone not found: " + p);
+                            if (p = y.bones[f], null == (T = o.findBone(p))) throw new Error("IK bone not found: " + p);
                             m.bones.push(T)
                         }
                         var b = y.target;
@@ -7711,29 +7635,21 @@ function (t) {
                     }
                 if (s.transform)
                     for (r = 0; r < s.transform.length; r++) {
-                        y = s.transform[r];
-                        (m = new t.TransformConstraintData(y.name)).order = this.getValue(y, "order", 0);
-                        for (f = 0; f < y.bones.length; f++) {
-                            p = y.bones[f];
-                            if (null == (T = o.findBone(p))) throw new Error("Transform constraint bone not found: " + p);
+                        for (y = s.transform[r], (m = new t.TransformConstraintData(y.name)).order = this.getValue(y, "order", 0), f = 0; f < y.bones.length; f++) {
+                            if (p = y.bones[f], null == (T = o.findBone(p))) throw new Error("Transform constraint bone not found: " + p);
                             m.bones.push(T)
                         }
-                        b = y.target;
-                        if (m.target = o.findBone(b), null == m.target) throw new Error("Transform constraint target bone not found: " + b);
+                        if (b = y.target, m.target = o.findBone(b), null == m.target) throw new Error("Transform constraint target bone not found: " + b);
                         m.local = this.getValue(y, "local", !1), m.relative = this.getValue(y, "relative", !1), m.offsetRotation = this.getValue(y, "rotation", 0), m.offsetX = this.getValue(y, "x", 0) * n, m.offsetY = this.getValue(y, "y", 0) * n, m.offsetScaleX = this.getValue(y, "scaleX", 0), m.offsetScaleY = this.getValue(y, "scaleY", 0), m.offsetShearY = this.getValue(y, "shearY", 0), m.rotateMix = this.getValue(y, "rotateMix", 1), m.translateMix = this.getValue(y, "translateMix", 1), m.scaleMix = this.getValue(y, "scaleMix", 1), m.shearMix = this.getValue(y, "shearMix", 1), o.transformConstraints.push(m)
                     }
                 if (s.path)
                     for (r = 0; r < s.path.length; r++) {
-                        y = s.path[r];
-                        (m = new t.PathConstraintData(y.name)).order = this.getValue(y, "order", 0);
-                        for (f = 0; f < y.bones.length; f++) {
+                        for (y = s.path[r], (m = new t.PathConstraintData(y.name)).order = this.getValue(y, "order", 0), f = 0; f < y.bones.length; f++) {
                             var T;
-                            p = y.bones[f];
-                            if (null == (T = o.findBone(p))) throw new Error("Transform constraint bone not found: " + p);
+                            if (p = y.bones[f], null == (T = o.findBone(p))) throw new Error("Transform constraint bone not found: " + p);
                             m.bones.push(T)
                         }
-                        b = y.target;
-                        if (m.target = o.findSlot(b), null == m.target) throw new Error("Path target slot not found: " + b);
+                        if (b = y.target, m.target = o.findSlot(b), null == m.target) throw new Error("Path target slot not found: " + b);
                         m.positionMode = e.positionModeFromString(this.getValue(y, "positionMode", "percent")), m.spacingMode = e.spacingModeFromString(this.getValue(y, "spacingMode", "length")), m.rotateMode = e.rotateModeFromString(this.getValue(y, "rotateMode", "tangent")), m.offsetRotation = this.getValue(y, "rotation", 0), m.position = this.getValue(y, "position", 0), m.positionMode == t.PositionMode.Fixed && (m.position *= n), m.spacing = this.getValue(y, "spacing", 0), m.spacingMode != t.SpacingMode.Length && m.spacingMode != t.SpacingMode.Fixed || (m.spacing *= n), m.rotateMix = this.getValue(y, "rotateMix", 1), m.translateMix = this.getValue(y, "translateMix", 1), o.pathConstraints.push(m)
                     }
                 if (s.skins)
@@ -7776,16 +7692,16 @@ function (t) {
                     case "region":
                         var l = this.getValue(e, "path", s),
                             u = this.attachmentLoader.newRegionAttachment(n, s, l);
-                        return null == u ? null : (u.path = l, u.x = this.getValue(e, "x", 0) * r, u.y = this.getValue(e, "y", 0) * r, u.scaleX = this.getValue(e, "scaleX", 1), u.scaleY = this.getValue(e, "scaleY", 1), u.rotation = this.getValue(e, "rotation", 0), u.width = e.width * r, u.height = e.height * r, null != (C = this.getValue(e, "color", null)) && u.color.setFromString(C), u);
+                        return null == u ? null : (u.path = l, u.x = this.getValue(e, "x", 0) * r, u.y = this.getValue(e, "y", 0) * r, u.scaleX = this.getValue(e, "scaleX", 1), u.scaleY = this.getValue(e, "scaleY", 1), u.rotation = this.getValue(e, "rotation", 0), u.width = e.width * r, u.height = e.height * r, null != (b = this.getValue(e, "color", null)) && u.color.setFromString(b), u);
                     case "boundingbox":
                         var h = this.attachmentLoader.newBoundingBoxAttachment(n, s);
-                        return null == h ? null : (this.readVertices(e, h, e.vertexCount << 1), null != (C = this.getValue(e, "color", null)) && h.color.setFromString(C), h);
+                        return null == h ? null : (this.readVertices(e, h, e.vertexCount << 1), null != (b = this.getValue(e, "color", null)) && h.color.setFromString(b), h);
                     case "mesh":
                     case "linkedmesh":
                         l = this.getValue(e, "path", s);
                         var c = this.attachmentLoader.newMeshAttachment(n, s, l);
                         if (null == c) return null;
-                        c.path = l, null != (C = this.getValue(e, "color", null)) && c.color.setFromString(C);
+                        c.path = l, null != (b = this.getValue(e, "color", null)) && c.color.setFromString(b);
                         var p = this.getValue(e, "parent", null);
                         if (null != p) return c.inheritDeform = this.getValue(e, "deform", !0), this.linkedMeshes.push(new i(c, this.getValue(e, "skin", null), o, p)), c;
                         var d = e.uvs;
@@ -7796,22 +7712,20 @@ function (t) {
                         var m = e.vertexCount;
                         this.readVertices(e, l, m << 1);
                         for (var S = t.Utils.newArray(m / 3, 0), g = 0; g < e.lengths.length; g++) S[g] = e.lengths[g] * r;
-                        return l.lengths = S, null != (C = this.getValue(e, "color", null)) && l.color.setFromString(C), l;
+                        return l.lengths = S, null != (b = this.getValue(e, "color", null)) && l.color.setFromString(b), l;
                     case "point":
                         var y = this.attachmentLoader.newPointAttachment(n, s);
-                        return null == y ? null : (y.x = this.getValue(e, "x", 0) * r, y.y = this.getValue(e, "y", 0) * r, y.rotation = this.getValue(e, "rotation", 0), null != (C = this.getValue(e, "color", null)) && y.color.setFromString(C), y);
+                        return null == y ? null : (y.x = this.getValue(e, "x", 0) * r, y.y = this.getValue(e, "y", 0) * r, y.rotation = this.getValue(e, "rotation", 0), null != (b = this.getValue(e, "color", null)) && y.color.setFromString(b), y);
                     case "clipping":
                         var f = this.attachmentLoader.newClippingAttachment(n, s);
                         if (null == f) return null;
-                        var b = this.getValue(e, "end", null);
-                        if (null != b) {
-                            var T = a.findSlot(b);
-                            if (null == T) throw new Error("Clipping end slot not found: " + b);
-                            f.endSlot = T
+                        var b, T = this.getValue(e, "end", null);
+                        if (null != T) {
+                            var C = a.findSlot(T);
+                            if (null == C) throw new Error("Clipping end slot not found: " + T);
+                            f.endSlot = C
                         }
-                        var C;
-                        m = e.vertexCount;
-                        return this.readVertices(e, f, m << 1), null != (C = this.getValue(e, "color", null)) && f.color.setFromString(C), f
+                        return m = e.vertexCount, this.readVertices(e, f, m << 1), null != (b = this.getValue(e, "color", null)) && f.color.setFromString(b), f
                 }
                 return null
             }, e.prototype.readVertices = function (e, i, n) {
@@ -7851,8 +7765,7 @@ function (t) {
                                 }
                                 s.push(T), a = Math.max(a, T.frames[T.getFrameCount() - 1])
                             } else if ("color" == u) {
-                                (T = new t.ColorTimeline(h.length)).slotIndex = Y;
-                                for (c = 0, p = 0; p < h.length; p++) {
+                                for ((T = new t.ColorTimeline(h.length)).slotIndex = Y, c = 0, p = 0; p < h.length; p++) {
                                     d = h[p];
                                     var m = new t.Color;
                                     m.setFromString(d.color || "ffffffff"), T.setFrame(c, d.time, m.r, m.g, m.b, m.a), this.readCurve(d, T, c), c++
@@ -7860,8 +7773,7 @@ function (t) {
                                 s.push(T), a = Math.max(a, T.frames[(T.getFrameCount() - 1) * t.ColorTimeline.ENTRIES])
                             } else {
                                 if ("twoColor" != u) throw new Error("Invalid timeline type for a slot: " + u + " (" + r + ")");
-                                (T = new t.TwoColorTimeline(h.length)).slotIndex = Y;
-                                for (c = 0, p = 0; p < h.length; p++) {
+                                for ((T = new t.TwoColorTimeline(h.length)).slotIndex = Y, c = 0, p = 0; p < h.length; p++) {
                                     d = h[p];
                                     var S = new t.Color,
                                         g = new t.Color;
@@ -7876,21 +7788,15 @@ function (t) {
                         var f = e.bones[y],
                             b = n.findBoneIndex(y);
                         if (-1 == b) throw new Error("Bone not found: " + y);
-                        for (var u in f) {
-                            h = f[u];
-                            if ("rotate" === u) {
-                                (T = new t.RotateTimeline(h.length)).boneIndex = b;
-                                for (c = 0, p = 0; p < h.length; p++) {
-                                    d = h[p];
-                                    T.setFrame(c, d.time, d.angle), this.readCurve(d, T, c), c++
-                                }
+                        for (var u in f)
+                            if (h = f[u], "rotate" === u) {
+                                for ((T = new t.RotateTimeline(h.length)).boneIndex = b, c = 0, p = 0; p < h.length; p++) d = h[p], T.setFrame(c, d.time, d.angle), this.readCurve(d, T, c), c++;
                                 s.push(T), a = Math.max(a, T.frames[(T.getFrameCount() - 1) * t.RotateTimeline.ENTRIES])
                             } else {
                                 if ("translate" !== u && "scale" !== u && "shear" !== u) throw new Error("Invalid timeline type for a bone: " + u + " (" + y + ")");
                                 var T = null,
                                     C = 1;
-                                "scale" === u ? T = new t.ScaleTimeline(h.length) : "shear" === u ? T = new t.ShearTimeline(h.length) : (T = new t.TranslateTimeline(h.length), C = o), T.boneIndex = b;
-                                for (c = 0, p = 0; p < h.length; p++) {
+                                for ("scale" === u ? T = new t.ScaleTimeline(h.length) : "shear" === u ? T = new t.ShearTimeline(h.length) : (T = new t.TranslateTimeline(h.length), C = o), T.boneIndex = b, c = 0, p = 0; p < h.length; p++) {
                                     d = h[p];
                                     var A = this.getValue(d, "x", 0),
                                         v = this.getValue(d, "y", 0);
@@ -7898,27 +7804,17 @@ function (t) {
                                 }
                                 s.push(T), a = Math.max(a, T.frames[(T.getFrameCount() - 1) * t.TranslateTimeline.ENTRIES])
                             }
-                        }
                     }
                 if (e.ik)
                     for (var M in e.ik) {
                         var L = e.ik[M],
                             I = n.findIkConstraint(M);
-                        (T = new t.IkConstraintTimeline(L.length)).ikConstraintIndex = n.ikConstraints.indexOf(I);
-                        for (c = 0, p = 0; p < L.length; p++) {
-                            d = L[p];
-                            T.setFrame(c, d.time, this.getValue(d, "mix", 1), this.getValue(d, "bendPositive", !0) ? 1 : -1), this.readCurve(d, T, c), c++
-                        }
+                        for ((T = new t.IkConstraintTimeline(L.length)).ikConstraintIndex = n.ikConstraints.indexOf(I), c = 0, p = 0; p < L.length; p++) d = L[p], T.setFrame(c, d.time, this.getValue(d, "mix", 1), this.getValue(d, "bendPositive", !0) ? 1 : -1), this.readCurve(d, T, c), c++;
                         s.push(T), a = Math.max(a, T.frames[(T.getFrameCount() - 1) * t.IkConstraintTimeline.ENTRIES])
                     }
                 if (e.transform)
                     for (var M in e.transform) {
-                        L = e.transform[M], I = n.findTransformConstraint(M);
-                        (T = new t.TransformConstraintTimeline(L.length)).transformConstraintIndex = n.transformConstraints.indexOf(I);
-                        for (c = 0, p = 0; p < L.length; p++) {
-                            d = L[p];
-                            T.setFrame(c, d.time, this.getValue(d, "rotateMix", 1), this.getValue(d, "translateMix", 1), this.getValue(d, "scaleMix", 1), this.getValue(d, "shearMix", 1)), this.readCurve(d, T, c), c++
-                        }
+                        for (L = e.transform[M], I = n.findTransformConstraint(M), (T = new t.TransformConstraintTimeline(L.length)).transformConstraintIndex = n.transformConstraints.indexOf(I), c = 0, p = 0; p < L.length; p++) d = L[p], T.setFrame(c, d.time, this.getValue(d, "rotateMix", 1), this.getValue(d, "translateMix", 1), this.getValue(d, "scaleMix", 1), this.getValue(d, "shearMix", 1)), this.readCurve(d, T, c), c++;
                         s.push(T), a = Math.max(a, T.frames[(T.getFrameCount() - 1) * t.TransformConstraintTimeline.ENTRIES])
                     }
                 if (e.paths)
@@ -7927,24 +7823,13 @@ function (t) {
                         var P = n.findPathConstraintIndex(M);
                         if (-1 == P) throw new Error("Path constraint not found: " + M);
                         var R = n.pathConstraints[P];
-                        for (var u in L) {
-                            h = L[u];
-                            if ("position" === u || "spacing" === u) {
-                                T = null, C = 1;
-                                "spacing" === u ? (T = new t.PathConstraintSpacingTimeline(h.length), R.spacingMode != t.SpacingMode.Length && R.spacingMode != t.SpacingMode.Fixed || (C = o)) : (T = new t.PathConstraintPositionTimeline(h.length), R.positionMode == t.PositionMode.Fixed && (C = o)), T.pathConstraintIndex = P;
-                                for (c = 0, p = 0; p < h.length; p++) {
-                                    d = h[p];
-                                    T.setFrame(c, d.time, this.getValue(d, u, 0) * C), this.readCurve(d, T, c), c++
-                                }
+                        for (var u in L)
+                            if (h = L[u], "position" === u || "spacing" === u) {
+                                for (T = null, C = 1, "spacing" === u ? (T = new t.PathConstraintSpacingTimeline(h.length), R.spacingMode != t.SpacingMode.Length && R.spacingMode != t.SpacingMode.Fixed || (C = o)) : (T = new t.PathConstraintPositionTimeline(h.length), R.positionMode == t.PositionMode.Fixed && (C = o)), T.pathConstraintIndex = P, c = 0, p = 0; p < h.length; p++) d = h[p], T.setFrame(c, d.time, this.getValue(d, u, 0) * C), this.readCurve(d, T, c), c++;
                                 s.push(T), a = Math.max(a, T.frames[(T.getFrameCount() - 1) * t.PathConstraintPositionTimeline.ENTRIES])
                             } else if ("mix" === u) {
-                                (T = new t.PathConstraintMixTimeline(h.length)).pathConstraintIndex = P;
-                                for (c = 0, p = 0; p < h.length; p++) {
-                                    d = h[p];
-                                    T.setFrame(c, d.time, this.getValue(d, "rotateMix", 1), this.getValue(d, "translateMix", 1)), this.readCurve(d, T, c), c++
-                                }
-                                s.push(T), a = Math.max(a, T.frames[(T.getFrameCount() - 1) * t.PathConstraintMixTimeline.ENTRIES])
-                            }
+                            for ((T = new t.PathConstraintMixTimeline(h.length)).pathConstraintIndex = P, c = 0, p = 0; p < h.length; p++) d = h[p], T.setFrame(c, d.time, this.getValue(d, "rotateMix", 1), this.getValue(d, "translateMix", 1)), this.readCurve(d, T, c), c++;
+                            s.push(T), a = Math.max(a, T.frames[(T.getFrameCount() - 1) * t.PathConstraintMixTimeline.ENTRIES])
                         }
                     }
                 if (e.deform)
@@ -7953,8 +7838,7 @@ function (t) {
                             D = n.findSkin(_);
                         if (null == D) throw new Error("Skin not found: " + _);
                         for (var r in E) {
-                            l = E[r];
-                            if (-1 == (Y = n.findSlotIndex(r))) throw new Error("Slot not found: " + l.name);
+                            if (l = E[r], -1 == (Y = n.findSlotIndex(r))) throw new Error("Slot not found: " + l.name);
                             for (var u in l) {
                                 h = l[u];
                                 var O = D.getAttachment(Y, u);
@@ -7962,8 +7846,7 @@ function (t) {
                                 var w = null != O.bones,
                                     x = O.vertices,
                                     B = w ? x.length / 3 * 2 : x.length;
-                                (T = new t.DeformTimeline(h.length)).slotIndex = Y, T.attachment = O;
-                                c = 0;
+                                (T = new t.DeformTimeline(h.length)).slotIndex = Y, T.attachment = O, c = 0;
                                 for (var k = 0; k < h.length; k++) {
                                     d = h[k];
                                     var V = void 0,
@@ -8085,13 +7968,12 @@ function (t) {
                         s = o.getAttachment();
                     if (s && i < e.attachments.length) {
                         var a = e.attachments[i];
-                        for (var r in a) {
+                        for (var r in a)
                             if (s == a[r]) {
                                 var l = this.getAttachment(i, r);
                                 null != l && o.setAttachment(l);
                                 break
                             }
-                        }
                     }
                     i++
                 }
@@ -8125,13 +8007,12 @@ function (t) {
 }(pixi_spine || (pixi_spine = {})),
 function (t) {
     ! function (t) {
-        var e = function (e, i, n) {
+        t.SlotData = function (e, i, n) {
             if (this.color = new t.Color(1, 1, 1, 1), e < 0) throw new Error("index must be >= 0.");
             if (null == i) throw new Error("name cannot be null.");
             if (null == n) throw new Error("boneData cannot be null.");
             this.index = e, this.name = i, this.boneData = n
-        };
-        t.SlotData = e
+        }
     }(t.core || (t.core = {}))
 }(pixi_spine || (pixi_spine = {})),
 function (t) {
@@ -8452,44 +8333,35 @@ function (t) {
                     if (o > 0) {
                         C = b.c, v = b.d;
                         var _, E = Math.atan2(v, C);
-                        (_ = Math.atan2(h, l) - Math.atan2(u, r) - (E - Math.atan2(b.b, b.a))) > t.MathUtils.PI ? _ -= t.MathUtils.PI2 : _ < -t.MathUtils.PI && (_ += t.MathUtils.PI2), _ = E + (_ + d) * o;
-                        P = Math.sqrt(C * C + v * v);
-                        b.c = Math.cos(_) * P, b.d = Math.sin(_) * P, f = !0
+                        (_ = Math.atan2(h, l) - Math.atan2(u, r) - (E - Math.atan2(b.b, b.a))) > t.MathUtils.PI ? _ -= t.MathUtils.PI2 : _ < -t.MathUtils.PI && (_ += t.MathUtils.PI2), _ = E + (_ + d) * o, P = Math.sqrt(C * C + v * v), b.c = Math.cos(_) * P, b.d = Math.sin(_) * P, f = !0
                     }
                     f && (y.appliedValid = !1)
                 }
             }, e.prototype.applyRelativeWorld = function () {
                 for (var e = this.rotateMix, i = this.translateMix, n = this.scaleMix, o = this.shearMix, s = this.target, a = s.matrix, r = a.a, l = a.c, u = a.b, h = a.d, c = r * h - l * u > 0 ? t.MathUtils.degRad : -t.MathUtils.degRad, p = this.data.offsetRotation * c, d = this.data.offsetShearY * c, m = this.bones, S = 0, g = m.length; S < g; S++) {
-                    var y = m[S],
-                        f = !1,
-                        b = y.matrix;
+                    var y, f = m[S],
+                        b = !1,
+                        T = f.matrix;
                     if (0 != e) {
-                        var T = b.a,
-                            C = b.c,
-                            A = b.b,
-                            v = b.d;
-                        (R = Math.atan2(u, r) + p) > t.MathUtils.PI ? R -= t.MathUtils.PI2 : R < -t.MathUtils.PI && (R += t.MathUtils.PI2), R *= e;
-                        var M = Math.cos(R),
-                            L = Math.sin(R);
-                        b.a = M * T - L * A, b.c = M * C - L * v, b.b = L * T + M * A, b.d = L * C + M * v, f = !0
+                        var C = T.a,
+                            A = T.c,
+                            v = T.b,
+                            M = T.d;
+                        (y = Math.atan2(u, r) + p) > t.MathUtils.PI ? y -= t.MathUtils.PI2 : y < -t.MathUtils.PI && (y += t.MathUtils.PI2), y *= e;
+                        var L = Math.cos(y),
+                            I = Math.sin(y);
+                        T.a = L * C - I * v, T.c = L * A - I * M, T.b = I * C + L * v, T.d = I * A + L * M, b = !0
                     }
                     if (0 != i) {
-                        var I = this.temp;
-                        s.localToWorld(I.set(this.data.offsetX, this.data.offsetY)), b.tx += I.x * i, b.ty += I.y * i, f = !0
+                        var P = this.temp;
+                        s.localToWorld(P.set(this.data.offsetX, this.data.offsetY)), T.tx += P.x * i, T.ty += P.y * i, b = !0
                     }
                     if (n > 0) {
-                        var P = (Math.sqrt(r * r + u * u) - 1 + this.data.offsetScaleX) * n + 1;
-                        b.a *= P, b.b *= P, P = (Math.sqrt(l * l + h * h) - 1 + this.data.offsetScaleY) * n + 1, b.c *= P, b.d *= P, f = !0
+                        var R = (Math.sqrt(r * r + u * u) - 1 + this.data.offsetScaleX) * n + 1;
+                        T.a *= R, T.b *= R, R = (Math.sqrt(l * l + h * h) - 1 + this.data.offsetScaleY) * n + 1, T.c *= R, T.d *= R, b = !0
                     }
-                    if (o > 0) {
-                        var R;
-                        (R = Math.atan2(h, l) - Math.atan2(u, r)) > t.MathUtils.PI ? R -= t.MathUtils.PI2 : R < -t.MathUtils.PI && (R += t.MathUtils.PI2);
-                        C = b.c, v = b.d;
-                        R = Math.atan2(v, C) + (R - t.MathUtils.PI / 2 + d) * o;
-                        P = Math.sqrt(C * C + v * v);
-                        b.c = Math.cos(R) * P, b.d = Math.sin(R) * P, f = !0
-                    }
-                    f && (y.appliedValid = !1)
+                    if (o > 0)(y = Math.atan2(h, l) - Math.atan2(u, r)) > t.MathUtils.PI ? y -= t.MathUtils.PI2 : y < -t.MathUtils.PI && (y += t.MathUtils.PI2), A = T.c, M = T.d, y = Math.atan2(M, A) + (y - t.MathUtils.PI / 2 + d) * o, R = Math.sqrt(A * A + M * M), T.c = Math.cos(y) * R, T.d = Math.sin(y) * R, b = !0;
+                    b && (f.appliedValid = !1)
                 }
             }, e.prototype.applyAbsoluteLocal = function () {
                 var t = this.rotateMix,
@@ -8513,11 +8385,7 @@ function (t) {
                         m = l.ascaleY;
                     i > 0 && (d > 1e-5 && (d = (d + (o.ascaleX - d + this.data.offsetScaleX) * i) / d), m > 1e-5 && (m = (m + (o.ascaleY - m + this.data.offsetScaleY) * i) / m));
                     var S = l.ashearY;
-                    if (n > 0) {
-                        h = o.ashearY - S + this.data.offsetShearY;
-                        h -= 360 * (16384 - (16384.499999999996 - h / 360 | 0)), l.shearY += h * n
-                    }
-                    l.updateWorldTransformWith(c, p, u, d, m, l.ashearX, S)
+                    n > 0 && (h = o.ashearY - S + this.data.offsetShearY, h -= 360 * (16384 - (16384.499999999996 - h / 360 | 0)), l.shearY += h * n), l.updateWorldTransformWith(c, p, u, d, m, l.ashearX, S)
                 }
             }, e.prototype.applyRelativeLocal = function () {
                 var t = this.rotateMix,
@@ -8549,11 +8417,10 @@ function (t) {
 }(pixi_spine || (pixi_spine = {})),
 function (t) {
     ! function (t) {
-        var e = function (t) {
+        t.TransformConstraintData = function (t) {
             if (this.order = 0, this.bones = new Array, this.rotateMix = 0, this.translateMix = 0, this.scaleMix = 0, this.shearMix = 0, this.offsetRotation = 0, this.offsetX = 0, this.offsetY = 0, this.offsetScaleX = 0, this.offsetScaleY = 0, this.offsetShearY = 0, this.relative = !1, this.local = !1, null == t) throw new Error("name cannot be null.");
             this.name = t
-        };
-        t.TransformConstraintData = e
+        }
     }(t.core || (t.core = {}))
 }(pixi_spine || (pixi_spine = {})),
 function (t) {
@@ -8573,8 +8440,7 @@ function (t) {
                 o.length = 0;
                 for (var s = 0; s < n; s++) o[s] = s;
                 var a = this.isConcaveArray;
-                a.length = 0;
-                s = 0;
+                a.length = 0, s = 0;
                 for (var r = n; s < r; ++s) a[s] = e.isConcave(s, n, i, o);
                 var l = this.triangles;
                 for (l.length = 0; n > 3;) {
@@ -8633,8 +8499,7 @@ function (t) {
                     }
                     C || (r.length > 0 ? (o.push(r), s.push(a)) : (this.polygonPool.free(r), this.polygonIndicesPool.free(a)), (r = this.polygonPool.obtain()).length = 0, r.push(S), r.push(g), r.push(y), r.push(f), r.push(b), r.push(T), (a = this.polygonIndicesPool.obtain()).length = 0, a.push(p), a.push(d), a.push(m), u = e.winding(S, g, y, f, b, T), l = p)
                 }
-                r.length > 0 && (o.push(r), s.push(a));
-                for (h = 0, c = o.length; h < c; h++)
+                for (r.length > 0 && (o.push(r), s.push(a)), h = 0, c = o.length; h < c; h++)
                     if (0 != (a = s[h]).length)
                         for (var L = a[0], I = a[a.length - 1], P = (r = o[h])[A = r.length - 4], R = r[A + 1], _ = r[A + 2], E = r[A + 3], D = r[0], O = r[1], w = r[2], x = r[3], B = e.winding(P, R, _, E, D, O), k = 0; k < c; k++)
                             if (k != h) {
@@ -8644,11 +8509,7 @@ function (t) {
                                         F = V[1],
                                         j = V[2],
                                         U = o[k];
-                                    b = U[U.length - 2], T = U[U.length - 1];
-                                    if (G == L && F == I) {
-                                        v = e.winding(P, R, _, E, b, T), M = e.winding(b, T, D, O, w, x);
-                                        v == B && M == B && (U.length = 0, V.length = 0, r.push(b), r.push(T), a.push(j), P = _, R = E, _ = b, E = T, k = 0)
-                                    }
+                                    b = U[U.length - 2], T = U[U.length - 1], G == L && F == I && (v = e.winding(P, R, _, E, b, T), M = e.winding(b, T, D, O, w, x), v == B && M == B && (U.length = 0, V.length = 0, r.push(b), r.push(T), a.push(j), P = _, R = E, _ = b, E = T, k = 0))
                                 }
                             } for (h = o.length - 1; h >= 0; h--) 0 == (r = o[h]).length && (o.splice(h, 1), this.polygonPool.free(r), a = s[h], s.splice(h, 1), this.polygonIndicesPool.free(a));
                 return o
@@ -8875,9 +8736,7 @@ function (t) {
                     l = this.vertices,
                     u = this.bones;
                 if (null != u) {
-                    for (var h = 0, c = 0, p = 0; p < e; p += 2) {
-                        h += (g = u[h]) + 1, c += g
-                    }
+                    for (var h = 0, c = 0, p = 0; p < e; p += 2) h += (g = u[h]) + 1, c += g;
                     var d = a.bones;
                     if (0 == r.length)
                         for (R = o, M = 3 * c; R < i; R += s) {
@@ -8892,11 +8751,7 @@ function (t) {
                             n[R] = m, n[R + 1] = S
                         } else
                             for (var f = r, b = (R = o, M = 3 * c, c << 1); R < i; R += s) {
-                                m = 0, S = 0, g = u[h++];
-                                for (g += h; h < g; h++, M += 3, b += 2) {
-                                    T = d[u[h]].matrix, _ = l[M] + f[b], E = l[M + 1] + f[b + 1], y = l[M + 2];
-                                    m += (_ * T.a + E * T.c + T.tx) * y, S += (_ * T.b + E * T.d + T.ty) * y
-                                }
+                                for (m = 0, S = 0, g = u[h++], g += h; h < g; h++, M += 3, b += 2) T = d[u[h]].matrix, _ = l[M] + f[b], E = l[M + 1] + f[b + 1], y = l[M + 2], m += (_ * T.a + E * T.c + T.tx) * y, S += (_ * T.b + E * T.d + T.ty) * y;
                                 n[R] = m, n[R + 1] = S
                             }
                 } else {
@@ -9190,17 +9045,11 @@ function (t) {
                             var b = C = p.transform,
                                 T = null;
                             b.matrix2d ? (T = b.matrix2d, b._dirtyVersion++, b.version = b._dirtyVersion, b.isStatic = !0, b.operMode = 0) : l ? (b.position && ((C = new PIXI.TransformBase)._parentID = -1, C._worldID = p.transform._worldID, p.transform = C), T = C.localTransform) : b.setFromMatrix(D.bone.matrix), T && D.bone.matrix.copy(T)
-                        } else {
-                            T = p.localTransform || new PIXI.Matrix;
-                            D.bone.matrix.copy(T), p.localTransform = T, p.displayObjectUpdateTransform = s
-                        }
+                        } else T = p.localTransform || new PIXI.Matrix, D.bone.matrix.copy(T), p.localTransform = T, p.displayObjectUpdateTransform = s;
                         D.currentSprite.color ? d = D.currentSprite.color : (e[0] = a[0] * D.color.r * m.r, e[1] = a[1] * D.color.g * m.g, e[2] = a[2] * D.color.b * m.b, D.currentSprite.tint = PIXI.utils.rgb2hex(e)), D.currentSprite.blendMode = D.blendMode
                     } else if (c instanceof t.core.MeshAttachment) {
                         var C;
-                        if (D.currentSprite)
-                            if (D.currentSprite.visible = !1, D.currentSprite = null, D.currentSpriteName = void 0, p.transform)(C = new PIXI.TransformStatic)._parentID = -1, C._worldID = p.transform._worldID, p.transform = C;
-                            else p.localTransform = new PIXI.Matrix, p.displayObjectUpdateTransform = PIXI.DisplayObject.prototype.updateTransform;
-                        if (!D.currentMeshName || D.currentMeshName !== c.name) {
+                        if (D.currentSprite && (D.currentSprite.visible = !1, D.currentSprite = null, D.currentSpriteName = void 0, p.transform ? ((C = new PIXI.TransformStatic)._parentID = -1, C._worldID = p.transform._worldID, p.transform = C) : (p.localTransform = new PIXI.Matrix, p.displayObjectUpdateTransform = PIXI.DisplayObject.prototype.updateTransform)), !D.currentMeshName || D.currentMeshName !== c.name) {
                             var A = c.name;
                             if (D.currentMesh && (D.currentMesh.visible = !1), D.meshes = D.meshes || {}, void 0 !== D.meshes[A]) D.meshes[A].visible = !0;
                             else {
@@ -9236,8 +9085,7 @@ function (t) {
                 E = null;
             for (u = 0, h = R.length; u < h; u++) {
                 var D = n[R[u].data.index];
-                p = this.slotContainers[R[u].data.index];
-                if (E || p.parent !== this && (p.parent.removeChild(p), p.parent = this), D.currentGraphics && D.attachment) E = D.clippingContainer, _ = D.attachment, E.children.length = 0, this.children[u] = p, _.endSlot == D.data && (_.endSlot = null);
+                if (p = this.slotContainers[R[u].data.index], E || p.parent !== this && (p.parent.removeChild(p), p.parent = this), D.currentGraphics && D.attachment) E = D.clippingContainer, _ = D.attachment, E.children.length = 0, this.children[u] = p, _.endSlot == D.data && (_.endSlot = null);
                 else if (E) {
                     var O = this.tempClipContainers[u];
                     O || ((O = this.tempClipContainers[u] = this.newContainer()).visible = !1), this.children[u] = O, p.parent = null, E.addChild(p), _.endSlot == D.data && (E.renderable = !0, E = null, _ = null)
@@ -9248,12 +9096,7 @@ function (t) {
         }, a.prototype.setMeshRegion = function (t, e, i) {
             e.region = i, e.texture = i.texture, i.texture._updateUvs(), t.updateUVs(i, e.uvs), e.dirty++
         }, a.prototype.autoUpdateTransform = function () {
-            if (a.globalAutoUpdate) {
-                this.lastTime = this.lastTime || Date.now();
-                Date.now(), this.lastTime;
-                this.lastTime = Date.now(), this.update(Time.deltaTime)
-            } else this.lastTime = 0;
-            PIXI.Container.prototype.updateTransform.call(this)
+            a.globalAutoUpdate ? (this.lastTime = this.lastTime || Date.now(), Date.now(), this.lastTime, this.lastTime = Date.now(), this.update(Time.deltaTime)) : this.lastTime = 0, PIXI.Container.prototype.updateTransform.call(this)
         }, a.prototype.createSprite = function (e, i, n) {
             var o = i.region;
             e.tempAttachment === i && (o = e.tempRegion, e.tempAttachment = null, e.tempRegion = null);
@@ -9878,26 +9721,24 @@ function (t) {
             } catch (t) {}
             return null
         }, e._createXHR = function (t) {
-            var e = createjs.RequestUtils.isCrossDomain(t),
-                i = {},
-                n = null;
-            if (window.XMLHttpRequest) n = new XMLHttpRequest, e && void 0 === n.withCredentials && window.XDomainRequest && (n = new XDomainRequest);
+            var e, i = createjs.RequestUtils.isCrossDomain(t),
+                n = {},
+                o = null;
+            if (window.XMLHttpRequest) o = new XMLHttpRequest, i && void 0 === o.withCredentials && window.XDomainRequest && (o = new XDomainRequest);
             else {
-                for (var o = 0, a = s.ACTIVEX_VERSIONS.length; a > o; o++) {
-                    s.ACTIVEX_VERSIONS[o];
+                for (var a = 0, r = s.ACTIVEX_VERSIONS.length; r > a; a++) {
+                    s.ACTIVEX_VERSIONS[a];
                     try {
-                        n = new ActiveXObject(axVersions);
+                        o = new ActiveXObject(axVersions);
                         break
                     } catch (t) {}
                 }
-                if (null == n) return !1
+                if (null == o) return !1
             }
-            null == t.mimeType && createjs.RequestUtils.isText(t.type) && (t.mimeType = "text/plain; charset=utf-8"), t.mimeType && n.overrideMimeType && n.overrideMimeType(t.mimeType), this._xhrLevel = "string" == typeof n.responseType ? 2 : 1;
-            var r;
-            if (r = t.method == createjs.AbstractLoader.GET ? createjs.RequestUtils.buildPath(t.src, t.values) : t.src, n.open(t.method || createjs.AbstractLoader.GET, r, !0), e && n instanceof XMLHttpRequest && 1 == this._xhrLevel && (i.Origin = location.origin), t.values && t.method == createjs.AbstractLoader.POST && (i["Content-Type"] = "application/x-www-form-urlencoded"), e || i["X-Requested-With"] || (i["X-Requested-With"] = "XMLHttpRequest"), t.headers)
-                for (var l in t.headers) i[l] = t.headers[l];
-            for (l in i) n.setRequestHeader(l, i[l]);
-            return n instanceof XMLHttpRequest && void 0 !== t.withCredentials && (n.withCredentials = t.withCredentials), this._request = n, !0
+            if (null == t.mimeType && createjs.RequestUtils.isText(t.type) && (t.mimeType = "text/plain; charset=utf-8"), t.mimeType && o.overrideMimeType && o.overrideMimeType(t.mimeType), this._xhrLevel = "string" == typeof o.responseType ? 2 : 1, e = t.method == createjs.AbstractLoader.GET ? createjs.RequestUtils.buildPath(t.src, t.values) : t.src, o.open(t.method || createjs.AbstractLoader.GET, e, !0), i && o instanceof XMLHttpRequest && 1 == this._xhrLevel && (n.Origin = location.origin), t.values && t.method == createjs.AbstractLoader.POST && (n["Content-Type"] = "application/x-www-form-urlencoded"), i || n["X-Requested-With"] || (n["X-Requested-With"] = "XMLHttpRequest"), t.headers)
+                for (var l in t.headers) n[l] = t.headers[l];
+            for (l in n) o.setRequestHeader(l, n[l]);
+            return o instanceof XMLHttpRequest && void 0 !== t.withCredentials && (o.withCredentials = t.withCredentials), this._request = o, !0
         }, e._clean = function () {
             clearTimeout(this._loadTimeout), this._request.removeEventListener("loadstart", this._handleLoadStartProxy), this._request.removeEventListener("progress", this._handleProgressProxy), this._request.removeEventListener("abort", this._handleAbortProxy), this._request.removeEventListener("error", this._handleErrorProxy), this._request.removeEventListener("timeout", this._handleTimeoutProxy), this._request.removeEventListener("load", this._handleLoadProxy), this._request.removeEventListener("readystatechange", this._handleReadyStateChangeProxy)
         }, e.toString = function () {
@@ -9983,14 +9824,14 @@ function (t) {
             if (i._preloadHash[e])
                 for (var n = 0, o = i._preloadHash[e].length; o > n; n++) {
                     var s = i._preloadHash[e][n];
-                    if (i._preloadHash[e][n] = !0, i.hasEventListener("fileload"))(t = new createjs.Event("fileload")).src = s.src, t.id = s.id, t.data = s.data, t.sprite = s.sprite, i.dispatchEvent(t)
+                    i._preloadHash[e][n] = !0, i.hasEventListener("fileload") && ((t = new createjs.Event("fileload")).src = s.src, t.id = s.id, t.data = s.data, t.sprite = s.sprite, i.dispatchEvent(t))
                 }
         }, i._handleLoadError = function (t) {
             var e = t.target.getItem().src;
             if (i._preloadHash[e])
                 for (var n = 0, o = i._preloadHash[e].length; o > n; n++) {
                     var s = i._preloadHash[e][n];
-                    if (i._preloadHash[e][n] = !1, i.hasEventListener("fileerror"))(t = new createjs.Event("fileerror")).src = s.src, t.id = s.id, t.data = s.data, t.sprite = s.sprite, i.dispatchEvent(t)
+                    i._preloadHash[e][n] = !1, i.hasEventListener("fileerror") && ((t = new createjs.Event("fileerror")).src = s.src, t.id = s.id, t.data = s.data, t.sprite = s.sprite, i.dispatchEvent(t))
                 }
         }, i._registerPlugin = function (t) {
             return !!t.isSupported() && (i.activePlugin = new t, !0)
@@ -10319,9 +10160,7 @@ function (t) {
             return !(null == this._audioSources[t] || 1 == this._audioSources[t])
         }, e.removeSound = function (t) {
             if (this._soundInstances[t]) {
-                for (var e = this._soundInstances[t].length; e--;) {
-                    this._soundInstances[t][e].destroy()
-                }
+                for (var e = this._soundInstances[t].length; e--;) this._soundInstances[t][e].destroy();
                 delete this._soundInstances[t], delete this._audioSources[t], this._loaders[t] && this._loaders[t].destroy(), delete this._loaders[t]
             }
         }, e.removeAllSounds = function () {
@@ -10341,9 +10180,7 @@ function (t) {
         }, e._handlePreloadComplete = function (t) {
             var e = t.target.getItem().src;
             this._audioSources[e] = t.result;
-            for (var i = 0, n = this._soundInstances[e].length; n > i; i++) {
-                this._soundInstances[e][i].setPlaybackResource(this._audioSources[e])
-            }
+            for (var i = 0, n = this._soundInstances[e].length; n > i; i++) this._soundInstances[e][i].setPlaybackResource(this._audioSources[e])
         }, e._handlePreloadError = function (t) {}, e._updateVolume = function () {}, createjs.AbstractPlugin = t
     }(), this.createjs = this.createjs || {},
     function () {
@@ -10662,7 +10499,7 @@ function (t) {
             r = e.document,
             l = n(r) && n(r.createElement),
             u = !a && !s((function () {
-                return 7 != Object.defineProperty(("div", l ? r.createElement("div") : {}), "a", {
+                return 7 != Object.defineProperty(l ? r.createElement("div") : {}, "a", {
                     get: function () {
                         return 7
                     }
@@ -10704,7 +10541,7 @@ function (t) {
             S = 0,
             g = Math.random(),
             y = t((function (t) {
-                var n = "Symbol(".concat(void 0 === "src" ? "" : "src", ")_", (++S + g).toString(36)),
+                var n = "Symbol(".concat("src", ")_", (++S + g).toString(36)),
                     o = Function.toString,
                     s = ("" + o).split("toString");
                 i.inspectSource = function (t) {
@@ -10756,7 +10593,7 @@ function (t) {
             v = function (t) {
                 return isNaN(t = +t) ? 0 : (t > 0 ? A : C)(t)
             },
-            M = (!1, function (t, e) {
+            M = function (t, e) {
                 var i, n, o = String(function (t) {
                         if (null == t) throw TypeError("Can't call method on  " + t);
                         return t
@@ -10764,7 +10601,7 @@ function (t) {
                     s = v(e),
                     a = o.length;
                 return s < 0 || s >= a ? void 0 : (i = o.charCodeAt(s)) < 55296 || i > 56319 || s + 1 === a || (n = o.charCodeAt(s + 1)) < 56320 || n > 57343 ? i : n - 56320 + (i - 55296 << 10) + 65536
-            });
+            };
         T(T.P, "String", {
             codePointAt: function (t) {
                 return M(this, t)
@@ -10789,38 +10626,35 @@ function (t) {
                 ID_Continue: /[\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0300-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u0483-\u0487\u048A-\u052F\u0531-\u0556\u0559\u0561-\u0587\u0591-\u05BD\u05BF\u05C1\u05C2\u05C4\u05C5\u05C7\u05D0-\u05EA\u05F0-\u05F2\u0610-\u061A\u0620-\u0669\u066E-\u06D3\u06D5-\u06DC\u06DF-\u06E8\u06EA-\u06FC\u06FF\u0710-\u074A\u074D-\u07B1\u07C0-\u07F5\u07FA\u0800-\u082D\u0840-\u085B\u0860-\u086A\u08A0-\u08B4\u08B6-\u08BD\u08D4-\u08E1\u08E3-\u0963\u0966-\u096F\u0971-\u0983\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BC-\u09C4\u09C7\u09C8\u09CB-\u09CE\u09D7\u09DC\u09DD\u09DF-\u09E3\u09E6-\u09F1\u09FC\u0A01-\u0A03\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A3C\u0A3E-\u0A42\u0A47\u0A48\u0A4B-\u0A4D\u0A51\u0A59-\u0A5C\u0A5E\u0A66-\u0A75\u0A81-\u0A83\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABC-\u0AC5\u0AC7-\u0AC9\u0ACB-\u0ACD\u0AD0\u0AE0-\u0AE3\u0AE6-\u0AEF\u0AF9-\u0AFF\u0B01-\u0B03\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3C-\u0B44\u0B47\u0B48\u0B4B-\u0B4D\u0B56\u0B57\u0B5C\u0B5D\u0B5F-\u0B63\u0B66-\u0B6F\u0B71\u0B82\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BBE-\u0BC2\u0BC6-\u0BC8\u0BCA-\u0BCD\u0BD0\u0BD7\u0BE6-\u0BEF\u0C00-\u0C03\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D-\u0C44\u0C46-\u0C48\u0C4A-\u0C4D\u0C55\u0C56\u0C58-\u0C5A\u0C60-\u0C63\u0C66-\u0C6F\u0C80-\u0C83\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBC-\u0CC4\u0CC6-\u0CC8\u0CCA-\u0CCD\u0CD5\u0CD6\u0CDE\u0CE0-\u0CE3\u0CE6-\u0CEF\u0CF1\u0CF2\u0D00-\u0D03\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D44\u0D46-\u0D48\u0D4A-\u0D4E\u0D54-\u0D57\u0D5F-\u0D63\u0D66-\u0D6F\u0D7A-\u0D7F\u0D82\u0D83\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0DCA\u0DCF-\u0DD4\u0DD6\u0DD8-\u0DDF\u0DE6-\u0DEF\u0DF2\u0DF3\u0E01-\u0E3A\u0E40-\u0E4E\u0E50-\u0E59\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB9\u0EBB-\u0EBD\u0EC0-\u0EC4\u0EC6\u0EC8-\u0ECD\u0ED0-\u0ED9\u0EDC-\u0EDF\u0F00\u0F18\u0F19\u0F20-\u0F29\u0F35\u0F37\u0F39\u0F3E-\u0F47\u0F49-\u0F6C\u0F71-\u0F84\u0F86-\u0F97\u0F99-\u0FBC\u0FC6\u1000-\u1049\u1050-\u109D\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u135D-\u135F\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16EE-\u16F8\u1700-\u170C\u170E-\u1714\u1720-\u1734\u1740-\u1753\u1760-\u176C\u176E-\u1770\u1772\u1773\u1780-\u17D3\u17D7\u17DC\u17DD\u17E0-\u17E9\u180B-\u180D\u1810-\u1819\u1820-\u1877\u1880-\u18AA\u18B0-\u18F5\u1900-\u191E\u1920-\u192B\u1930-\u193B\u1946-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u19D0-\u19D9\u1A00-\u1A1B\u1A20-\u1A5E\u1A60-\u1A7C\u1A7F-\u1A89\u1A90-\u1A99\u1AA7\u1AB0-\u1ABD\u1B00-\u1B4B\u1B50-\u1B59\u1B6B-\u1B73\u1B80-\u1BF3\u1C00-\u1C37\u1C40-\u1C49\u1C4D-\u1C7D\u1C80-\u1C88\u1CD0-\u1CD2\u1CD4-\u1CF9\u1D00-\u1DF9\u1DFB-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u203F\u2040\u2054\u2071\u207F\u2090-\u209C\u20D0-\u20DC\u20E1\u20E5-\u20F0\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2160-\u2188\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D7F-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2DE0-\u2DFF\u2E2F\u3005-\u3007\u3021-\u302F\u3031-\u3035\u3038-\u303C\u3041-\u3096\u3099\u309A\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312E\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FEA\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA62B\uA640-\uA66F\uA674-\uA67D\uA67F-\uA6F1\uA717-\uA71F\uA722-\uA788\uA78B-\uA7AE\uA7B0-\uA7B7\uA7F7-\uA827\uA840-\uA873\uA880-\uA8C5\uA8D0-\uA8D9\uA8E0-\uA8F7\uA8FB\uA8FD\uA900-\uA92D\uA930-\uA953\uA960-\uA97C\uA980-\uA9C0\uA9CF-\uA9D9\uA9E0-\uA9FE\uAA00-\uAA36\uAA40-\uAA4D\uAA50-\uAA59\uAA60-\uAA76\uAA7A-\uAAC2\uAADB-\uAADD\uAAE0-\uAAEF\uAAF2-\uAAF6\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB65\uAB70-\uABEA\uABEC\uABED\uABF0-\uABF9\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE00-\uFE0F\uFE20-\uFE2F\uFE33\uFE34\uFE4D-\uFE4F\uFE70-\uFE74\uFE76-\uFEFC\uFF10-\uFF19\uFF21-\uFF3A\uFF3F\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDD40-\uDD74\uDDFD\uDE80-\uDE9C\uDEA0-\uDED0\uDEE0\uDF00-\uDF1F\uDF2D-\uDF4A\uDF50-\uDF7A\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF\uDFD1-\uDFD5]|\uD801[\uDC00-\uDC9D\uDCA0-\uDCA9\uDCB0-\uDCD3\uDCD8-\uDCFB\uDD00-\uDD27\uDD30-\uDD63\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC60-\uDC76\uDC80-\uDC9E\uDCE0-\uDCF2\uDCF4\uDCF5\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00-\uDE03\uDE05\uDE06\uDE0C-\uDE13\uDE15-\uDE17\uDE19-\uDE33\uDE38-\uDE3A\uDE3F\uDE60-\uDE7C\uDE80-\uDE9C\uDEC0-\uDEC7\uDEC9-\uDEE6\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72\uDF80-\uDF91]|\uD803[\uDC00-\uDC48\uDC80-\uDCB2\uDCC0-\uDCF2]|\uD804[\uDC00-\uDC46\uDC66-\uDC6F\uDC7F-\uDCBA\uDCD0-\uDCE8\uDCF0-\uDCF9\uDD00-\uDD34\uDD36-\uDD3F\uDD50-\uDD73\uDD76\uDD80-\uDDC4\uDDCA-\uDDCC\uDDD0-\uDDDA\uDDDC\uDE00-\uDE11\uDE13-\uDE37\uDE3E\uDE80-\uDE86\uDE88\uDE8A-\uDE8D\uDE8F-\uDE9D\uDE9F-\uDEA8\uDEB0-\uDEEA\uDEF0-\uDEF9\uDF00-\uDF03\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3C-\uDF44\uDF47\uDF48\uDF4B-\uDF4D\uDF50\uDF57\uDF5D-\uDF63\uDF66-\uDF6C\uDF70-\uDF74]|\uD805[\uDC00-\uDC4A\uDC50-\uDC59\uDC80-\uDCC5\uDCC7\uDCD0-\uDCD9\uDD80-\uDDB5\uDDB8-\uDDC0\uDDD8-\uDDDD\uDE00-\uDE40\uDE44\uDE50-\uDE59\uDE80-\uDEB7\uDEC0-\uDEC9\uDF00-\uDF19\uDF1D-\uDF2B\uDF30-\uDF39]|\uD806[\uDCA0-\uDCE9\uDCFF\uDE00-\uDE3E\uDE47\uDE50-\uDE83\uDE86-\uDE99\uDEC0-\uDEF8]|\uD807[\uDC00-\uDC08\uDC0A-\uDC36\uDC38-\uDC40\uDC50-\uDC59\uDC72-\uDC8F\uDC92-\uDCA7\uDCA9-\uDCB6\uDD00-\uDD06\uDD08\uDD09\uDD0B-\uDD36\uDD3A\uDD3C\uDD3D\uDD3F-\uDD47\uDD50-\uDD59]|\uD808[\uDC00-\uDF99]|\uD809[\uDC00-\uDC6E\uDC80-\uDD43]|[\uD80C\uD81C-\uD820\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD811[\uDC00-\uDE46]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDE60-\uDE69\uDED0-\uDEED\uDEF0-\uDEF4\uDF00-\uDF36\uDF40-\uDF43\uDF50-\uDF59\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDF00-\uDF44\uDF50-\uDF7E\uDF8F-\uDF9F\uDFE0\uDFE1]|\uD821[\uDC00-\uDFEC]|\uD822[\uDC00-\uDEF2]|\uD82C[\uDC00-\uDD1E\uDD70-\uDEFB]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99\uDC9D\uDC9E]|\uD834[\uDD65-\uDD69\uDD6D-\uDD72\uDD7B-\uDD82\uDD85-\uDD8B\uDDAA-\uDDAD\uDE42-\uDE44]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB\uDFCE-\uDFFF]|\uD836[\uDE00-\uDE36\uDE3B-\uDE6C\uDE75\uDE84\uDE9B-\uDE9F\uDEA1-\uDEAF]|\uD838[\uDC00-\uDC06\uDC08-\uDC18\uDC1B-\uDC21\uDC23\uDC24\uDC26-\uDC2A]|\uD83A[\uDC00-\uDCC4\uDCD0-\uDCD6\uDD00-\uDD4A\uDD50-\uDD59]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]|\uD87E[\uDC00-\uDE1D]|\uDB40[\uDD00-\uDDEF]/
             },
             X = function (t) {
-                return W.Space_Separator.test(t)
-            },
-            H = function (t) {
                 return t >= "a" && t <= "z" || t >= "A" && t <= "Z" || "$" === t || "_" === t || W.ID_Start.test(t)
             },
-            z = function (t) {
+            H = function (t) {
                 return t >= "a" && t <= "z" || t >= "A" && t <= "Z" || t >= "0" && t <= "9" || "$" === t || "_" === t || "‌" === t || "‍" === t || W.ID_Continue.test(t)
             },
-            J = function (t) {
+            z = function (t) {
                 return /[0-9]/.test(t)
             },
-            q = function (t) {
+            J = function (t) {
                 return /[0-9A-Fa-f]/.test(t)
             };
 
-        function Y() {
+        function q() {
             for (G = "default", F = "", j = !1, U = 1;;) {
-                N = Q();
-                var t = K[G]();
+                N = Y();
+                var t = Z[G]();
                 if (t) return t
             }
         }
 
-        function Q() {
+        function Y() {
             if (_[O]) return String.fromCodePoint(_.codePointAt(O))
         }
 
-        function Z() {
-            var t = Q();
+        function Q() {
+            var t = Y();
             return "\n" === t ? (w++, x = 0) : t ? x += t.length : x++, t && (O += t.length), t
         }
-        var K = {
+        var Z = {
             default: function () {
                 switch (N) {
                     case "\t":
@@ -10833,43 +10667,45 @@ function (t) {
                     case "\r":
                     case "\u2028":
                     case "\u2029":
-                        return void Z();
+                        return void Q();
                     case "/":
-                        return Z(), void(G = "comment");
+                        return Q(), void(G = "comment");
                     case void 0:
-                        return Z(), $("eof")
+                        return Q(), K("eof")
                 }
-                if (!X(N)) return K[E]();
-                Z()
+                if (! function (t) {
+                        return W.Space_Separator.test(t)
+                    }(N)) return Z[E]();
+                Q()
             },
             comment: function () {
                 switch (N) {
                     case "*":
-                        return Z(), void(G = "multiLineComment");
+                        return Q(), void(G = "multiLineComment");
                     case "/":
-                        return Z(), void(G = "singleLineComment")
+                        return Q(), void(G = "singleLineComment")
                 }
-                throw st(Z())
+                throw ot(Q())
             },
             multiLineComment: function () {
                 switch (N) {
                     case "*":
-                        return Z(), void(G = "multiLineCommentAsterisk");
+                        return Q(), void(G = "multiLineCommentAsterisk");
                     case void 0:
-                        throw st(Z())
+                        throw ot(Q())
                 }
-                Z()
+                Q()
             },
             multiLineCommentAsterisk: function () {
                 switch (N) {
                     case "*":
-                        return void Z();
+                        return void Q();
                     case "/":
-                        return Z(), void(G = "default");
+                        return Q(), void(G = "default");
                     case void 0:
-                        throw st(Z())
+                        throw ot(Q())
                 }
-                Z(), G = "multiLineComment"
+                Q(), G = "multiLineComment"
             },
             singleLineComment: function () {
                 switch (N) {
@@ -10877,30 +10713,30 @@ function (t) {
                     case "\r":
                     case "\u2028":
                     case "\u2029":
-                        return Z(), void(G = "default");
+                        return Q(), void(G = "default");
                     case void 0:
-                        return Z(), $("eof")
+                        return Q(), K("eof")
                 }
-                Z()
+                Q()
             },
             value: function () {
                 switch (N) {
                     case "{":
                     case "[":
-                        return $("punctuator", Z());
+                        return K("punctuator", Q());
                     case "n":
-                        return Z(), tt("ull"), $("null", null);
+                        return Q(), $("ull"), K("null", null);
                     case "t":
-                        return Z(), tt("rue"), $("boolean", !0);
+                        return Q(), $("rue"), K("boolean", !0);
                     case "f":
-                        return Z(), tt("alse"), $("boolean", !1);
+                        return Q(), $("alse"), K("boolean", !1);
                     case "-":
                     case "+":
-                        return "-" === Z() && (U = -1), void(G = "sign");
+                        return "-" === Q() && (U = -1), void(G = "sign");
                     case ".":
-                        return F = Z(), void(G = "decimalPointLeading");
+                        return F = Q(), void(G = "decimalPointLeading");
                     case "0":
-                        return F = Z(), void(G = "zero");
+                        return F = Q(), void(G = "zero");
                     case "1":
                     case "2":
                     case "3":
@@ -10910,27 +10746,27 @@ function (t) {
                     case "7":
                     case "8":
                     case "9":
-                        return F = Z(), void(G = "decimalInteger");
+                        return F = Q(), void(G = "decimalInteger");
                     case "I":
-                        return Z(), tt("nfinity"), $("numeric", 1 / 0);
+                        return Q(), $("nfinity"), K("numeric", 1 / 0);
                     case "N":
-                        return Z(), tt("aN"), $("numeric", NaN);
+                        return Q(), $("aN"), K("numeric", NaN);
                     case '"':
                     case "'":
-                        return j = '"' === Z(), F = "", void(G = "string")
+                        return j = '"' === Q(), F = "", void(G = "string")
                 }
-                throw st(Z())
+                throw ot(Q())
             },
             identifierNameStartEscape: function () {
-                if ("u" !== N) throw st(Z());
-                Z();
-                var t = et();
+                if ("u" !== N) throw ot(Q());
+                Q();
+                var t = tt();
                 switch (t) {
                     case "$":
                     case "_":
                         break;
                     default:
-                        if (!H(t)) throw rt()
+                        if (!X(t)) throw at()
                 }
                 F += t, G = "identifierName"
             },
@@ -10940,17 +10776,17 @@ function (t) {
                     case "_":
                     case "‌":
                     case "‍":
-                        return void(F += Z());
+                        return void(F += Q());
                     case "\\":
-                        return Z(), void(G = "identifierNameEscape")
+                        return Q(), void(G = "identifierNameEscape")
                 }
-                if (!z(N)) return $("identifier", F);
-                F += Z()
+                if (!H(N)) return K("identifier", F);
+                F += Q()
             },
             identifierNameEscape: function () {
-                if ("u" !== N) throw st(Z());
-                Z();
-                var t = et();
+                if ("u" !== N) throw ot(Q());
+                Q();
+                var t = tt();
                 switch (t) {
                     case "$":
                     case "_":
@@ -10958,16 +10794,16 @@ function (t) {
                     case "‍":
                         break;
                     default:
-                        if (!z(t)) throw rt()
+                        if (!H(t)) throw at()
                 }
                 F += t, G = "identifierName"
             },
             sign: function () {
                 switch (N) {
                     case ".":
-                        return F = Z(), void(G = "decimalPointLeading");
+                        return F = Q(), void(G = "decimalPointLeading");
                     case "0":
-                        return F = Z(), void(G = "zero");
+                        return F = Q(), void(G = "zero");
                     case "1":
                     case "2":
                     case "3":
@@ -10977,121 +10813,121 @@ function (t) {
                     case "7":
                     case "8":
                     case "9":
-                        return F = Z(), void(G = "decimalInteger");
+                        return F = Q(), void(G = "decimalInteger");
                     case "I":
-                        return Z(), tt("nfinity"), $("numeric", U * (1 / 0));
+                        return Q(), $("nfinity"), K("numeric", U * (1 / 0));
                     case "N":
-                        return Z(), tt("aN"), $("numeric", NaN)
+                        return Q(), $("aN"), K("numeric", NaN)
                 }
-                throw st(Z())
+                throw ot(Q())
             },
             zero: function () {
                 switch (N) {
                     case ".":
-                        return F += Z(), void(G = "decimalPoint");
+                        return F += Q(), void(G = "decimalPoint");
                     case "e":
                     case "E":
-                        return F += Z(), void(G = "decimalExponent");
+                        return F += Q(), void(G = "decimalExponent");
                     case "x":
                     case "X":
-                        return F += Z(), void(G = "hexadecimal")
+                        return F += Q(), void(G = "hexadecimal")
                 }
-                return $("numeric", 0 * U)
+                return K("numeric", 0 * U)
             },
             decimalInteger: function () {
                 switch (N) {
                     case ".":
-                        return F += Z(), void(G = "decimalPoint");
+                        return F += Q(), void(G = "decimalPoint");
                     case "e":
                     case "E":
-                        return F += Z(), void(G = "decimalExponent")
+                        return F += Q(), void(G = "decimalExponent")
                 }
-                if (!J(N)) return $("numeric", U * Number(F));
-                F += Z()
+                if (!z(N)) return K("numeric", U * Number(F));
+                F += Q()
             },
             decimalPointLeading: function () {
-                if (J(N)) return F += Z(), void(G = "decimalFraction");
-                throw st(Z())
+                if (z(N)) return F += Q(), void(G = "decimalFraction");
+                throw ot(Q())
             },
             decimalPoint: function () {
                 switch (N) {
                     case "e":
                     case "E":
-                        return F += Z(), void(G = "decimalExponent")
+                        return F += Q(), void(G = "decimalExponent")
                 }
-                return J(N) ? (F += Z(), void(G = "decimalFraction")) : $("numeric", U * Number(F))
+                return z(N) ? (F += Q(), void(G = "decimalFraction")) : K("numeric", U * Number(F))
             },
             decimalFraction: function () {
                 switch (N) {
                     case "e":
                     case "E":
-                        return F += Z(), void(G = "decimalExponent")
+                        return F += Q(), void(G = "decimalExponent")
                 }
-                if (!J(N)) return $("numeric", U * Number(F));
-                F += Z()
+                if (!z(N)) return K("numeric", U * Number(F));
+                F += Q()
             },
             decimalExponent: function () {
                 switch (N) {
                     case "+":
                     case "-":
-                        return F += Z(), void(G = "decimalExponentSign")
+                        return F += Q(), void(G = "decimalExponentSign")
                 }
-                if (J(N)) return F += Z(), void(G = "decimalExponentInteger");
-                throw st(Z())
+                if (z(N)) return F += Q(), void(G = "decimalExponentInteger");
+                throw ot(Q())
             },
             decimalExponentSign: function () {
-                if (J(N)) return F += Z(), void(G = "decimalExponentInteger");
-                throw st(Z())
+                if (z(N)) return F += Q(), void(G = "decimalExponentInteger");
+                throw ot(Q())
             },
             decimalExponentInteger: function () {
-                if (!J(N)) return $("numeric", U * Number(F));
-                F += Z()
+                if (!z(N)) return K("numeric", U * Number(F));
+                F += Q()
             },
             hexadecimal: function () {
-                if (q(N)) return F += Z(), void(G = "hexadecimalInteger");
-                throw st(Z())
+                if (J(N)) return F += Q(), void(G = "hexadecimalInteger");
+                throw ot(Q())
             },
             hexadecimalInteger: function () {
-                if (!q(N)) return $("numeric", U * Number(F));
-                F += Z()
+                if (!J(N)) return K("numeric", U * Number(F));
+                F += Q()
             },
             string: function () {
                 switch (N) {
                     case "\\":
-                        return Z(), void(F += function () {
-                            switch (Q()) {
+                        return Q(), void(F += function () {
+                            switch (Y()) {
                                 case "b":
-                                    return Z(), "\b";
+                                    return Q(), "\b";
                                 case "f":
-                                    return Z(), "\f";
+                                    return Q(), "\f";
                                 case "n":
-                                    return Z(), "\n";
+                                    return Q(), "\n";
                                 case "r":
-                                    return Z(), "\r";
+                                    return Q(), "\r";
                                 case "t":
-                                    return Z(), "\t";
+                                    return Q(), "\t";
                                 case "v":
-                                    return Z(), "\v";
+                                    return Q(), "\v";
                                 case "0":
-                                    if (Z(), J(Q())) throw st(Z());
+                                    if (Q(), z(Y())) throw ot(Q());
                                     return "\0";
                                 case "x":
-                                    return Z(),
+                                    return Q(),
                                         function () {
                                             var t = "",
-                                                e = Q();
-                                            if (!q(e)) throw st(Z());
-                                            if (t += Z(), e = Q(), !q(e)) throw st(Z());
-                                            return t += Z(), String.fromCodePoint(parseInt(t, 16))
+                                                e = Y();
+                                            if (!J(e)) throw ot(Q());
+                                            if (t += Q(), e = Y(), !J(e)) throw ot(Q());
+                                            return t += Q(), String.fromCodePoint(parseInt(t, 16))
                                         }();
                                 case "u":
-                                    return Z(), et();
+                                    return Q(), tt();
                                 case "\n":
                                 case "\u2028":
                                 case "\u2029":
-                                    return Z(), "";
+                                    return Q(), "";
                                 case "\r":
-                                    return Z(), "\n" === Q() && Z(), "";
+                                    return Q(), "\n" === Y() && Q(), "";
                                 case "1":
                                 case "2":
                                 case "3":
@@ -11102,30 +10938,30 @@ function (t) {
                                 case "8":
                                 case "9":
                                 case void 0:
-                                    throw st(Z())
+                                    throw ot(Q())
                             }
-                            return Z()
+                            return Q()
                         }());
                     case '"':
-                        return j ? (Z(), $("string", F)) : void(F += Z());
+                        return j ? (Q(), K("string", F)) : void(F += Q());
                     case "'":
-                        return j ? void(F += Z()) : (Z(), $("string", F));
+                        return j ? void(F += Q()) : (Q(), K("string", F));
                     case "\n":
                     case "\r":
-                        throw st(Z());
+                        throw ot(Q());
                     case "\u2028":
                     case "\u2029":
                         break;
                     case void 0:
-                        throw st(Z())
+                        throw ot(Q())
                 }
-                F += Z()
+                F += Q()
             },
             start: function () {
                 switch (N) {
                     case "{":
                     case "[":
-                        return $("punctuator", Z())
+                        return K("punctuator", Q())
                 }
                 G = "value"
             },
@@ -11133,21 +10969,21 @@ function (t) {
                 switch (N) {
                     case "$":
                     case "_":
-                        return F = Z(), void(G = "identifierName");
+                        return F = Q(), void(G = "identifierName");
                     case "\\":
-                        return Z(), void(G = "identifierNameStartEscape");
+                        return Q(), void(G = "identifierNameStartEscape");
                     case "}":
-                        return $("punctuator", Z());
+                        return K("punctuator", Q());
                     case '"':
                     case "'":
-                        return j = '"' === Z(), void(G = "string")
+                        return j = '"' === Q(), void(G = "string")
                 }
-                if (H(N)) return F += Z(), void(G = "identifierName");
-                throw st(Z())
+                if (X(N)) return F += Q(), void(G = "identifierName");
+                throw ot(Q())
             },
             afterPropertyName: function () {
-                if (":" === N) return $("punctuator", Z());
-                throw st(Z())
+                if (":" === N) return K("punctuator", Q());
+                throw ot(Q())
             },
             beforePropertyValue: function () {
                 G = "value"
@@ -11156,28 +10992,28 @@ function (t) {
                 switch (N) {
                     case ",":
                     case "}":
-                        return $("punctuator", Z())
+                        return K("punctuator", Q())
                 }
-                throw st(Z())
+                throw ot(Q())
             },
             beforeArrayValue: function () {
-                if ("]" === N) return $("punctuator", Z());
+                if ("]" === N) return K("punctuator", Q());
                 G = "value"
             },
             afterArrayValue: function () {
                 switch (N) {
                     case ",":
                     case "]":
-                        return $("punctuator", Z())
+                        return K("punctuator", Q())
                 }
-                throw st(Z())
+                throw ot(Q())
             },
             end: function () {
-                throw st(Z())
+                throw ot(Q())
             }
         };
 
-        function $(t, e) {
+        function K(t, e) {
             return {
                 type: t,
                 value: e,
@@ -11186,26 +11022,26 @@ function (t) {
             }
         }
 
-        function tt(t) {
+        function $(t) {
             for (var e = 0, i = t; e < i.length; e += 1) {
                 var n = i[e];
-                if (Q() !== n) throw st(Z());
-                Z()
+                if (Y() !== n) throw ot(Q());
+                Q()
             }
         }
 
-        function et() {
+        function tt() {
             for (var t = "", e = 4; e-- > 0;) {
-                var i = Q();
-                if (!q(i)) throw st(Z());
-                t += Z()
+                var i = Y();
+                if (!J(i)) throw ot(Q());
+                t += Q()
             }
             return String.fromCodePoint(parseInt(t, 16))
         }
-        var it = {
+        var et = {
             start: function () {
-                if ("eof" === B.type) throw at();
-                nt()
+                if ("eof" === B.type) throw st();
+                it()
             },
             beforePropertyName: function () {
                 switch (B.type) {
@@ -11213,45 +11049,45 @@ function (t) {
                     case "string":
                         return k = B.value, void(E = "afterPropertyName");
                     case "punctuator":
-                        return void ot();
+                        return void nt();
                     case "eof":
-                        throw at()
+                        throw st()
                 }
             },
             afterPropertyName: function () {
-                if ("eof" === B.type) throw at();
+                if ("eof" === B.type) throw st();
                 E = "beforePropertyValue"
             },
             beforePropertyValue: function () {
-                if ("eof" === B.type) throw at();
-                nt()
+                if ("eof" === B.type) throw st();
+                it()
             },
             beforeArrayValue: function () {
-                if ("eof" === B.type) throw at();
-                "punctuator" !== B.type || "]" !== B.value ? nt() : ot()
+                if ("eof" === B.type) throw st();
+                "punctuator" !== B.type || "]" !== B.value ? it() : nt()
             },
             afterPropertyValue: function () {
-                if ("eof" === B.type) throw at();
+                if ("eof" === B.type) throw st();
                 switch (B.value) {
                     case ",":
                         return void(E = "beforePropertyName");
                     case "}":
-                        ot()
+                        nt()
                 }
             },
             afterArrayValue: function () {
-                if ("eof" === B.type) throw at();
+                if ("eof" === B.type) throw st();
                 switch (B.value) {
                     case ",":
                         return void(E = "beforeArrayValue");
                     case "]":
-                        ot()
+                        nt()
                 }
             },
             end: function () {}
         };
 
-        function nt() {
+        function it() {
             var t;
             switch (B.type) {
                 case "punctuator":
@@ -11281,14 +11117,14 @@ function (t) {
             }
         }
 
-        function ot() {
+        function nt() {
             D.pop();
             var t = D[D.length - 1];
             E = null == t ? "end" : Array.isArray(t) ? "afterArrayValue" : "afterPropertyValue"
         }
 
-        function st(t) {
-            return lt(void 0 === t ? "JSON5: invalid end of input at " + w + ":" + x : "JSON5: invalid character '" + function (t) {
+        function ot(t) {
+            return rt(void 0 === t ? "JSON5: invalid end of input at " + w + ":" + x : "JSON5: invalid character '" + function (t) {
                 var e = {
                     "'": "\\'",
                     '"': '\\"',
@@ -11312,15 +11148,15 @@ function (t) {
             }(t) + "' at " + w + ":" + x)
         }
 
+        function st() {
+            return rt("JSON5: invalid end of input at " + w + ":" + x)
+        }
+
         function at() {
-            return lt("JSON5: invalid end of input at " + w + ":" + x)
+            return rt("JSON5: invalid identifier character at " + w + ":" + (x -= 5))
         }
 
-        function rt() {
-            return lt("JSON5: invalid identifier character at " + w + ":" + (x -= 5))
-        }
-
-        function lt(t) {
+        function rt(t) {
             var e = new SyntaxError(t);
             return e.lineNumber = w, e.columnNumber = x, e
         }
@@ -11328,7 +11164,7 @@ function (t) {
             parse: function (t, e) {
                 _ = String(t), E = "start", D = [], O = 0, w = 1, x = 0, B = void 0, k = void 0, V = void 0;
                 do {
-                    B = Y(), it[E]()
+                    B = q(), et[E]()
                 } while ("eof" !== B.type);
                 return "function" == typeof e ? function t(e, i, n) {
                     var o = e[i];
@@ -11376,9 +11212,8 @@ function (t) {
                                 o.push(void 0 !== u ? u : "null")
                             }
                             if (0 === o.length) n = "[]";
-                            else if ("" === l) {
-                                n = "[" + o.join(",") + "]"
-                            } else {
+                            else if ("" === l) n = "[" + o.join(",") + "]";
+                            else {
                                 var h = ",\n" + r,
                                     c = o.join(h);
                                 n = "[\n" + r + c + ",\n" + i + "]"
@@ -11449,9 +11284,9 @@ function (t) {
                 function m(t) {
                     if (0 === t.length) return d(t);
                     var e = String.fromCodePoint(t.codePointAt(0));
-                    if (!H(e)) return d(t);
+                    if (!X(e)) return d(t);
                     for (var i = e.length; i < t.length; i++)
-                        if (!z(String.fromCodePoint(t.codePointAt(i)))) return d(t);
+                        if (!H(String.fromCodePoint(t.codePointAt(i)))) return d(t);
                     return t
                 }
             }
@@ -11547,11 +11382,11 @@ function AnimationEvent() {
 }
 
 function Keyframe(t, e, i, n) {
-    this.time = t, this.value = e, this.inTangent = undefined !== i ? i : 0, this.outTangent = n || 0
+    this.time = t, this.value = e, this.inTangent = void 0 !== i ? i : 0, this.outTangent = n || 0
 }
 
 function AnimationCurve(t) {
-    this._lastKey = 0, this.keys = [], undefined !== t && this.addKeys(t)
+    this._lastKey = 0, this.keys = [], void 0 !== t && this.addKeys(t)
 }
 
 function _source() {
@@ -11611,7 +11446,7 @@ function _source() {
         getBestMaskPattern: function () {
             for (var t = 0, e = 0, i = 0; i < 8; i++) {
                 this.makeImpl(!0, i);
-                var n = p.getLostPoint(this);
+                var n = o.getLostPoint(this);
                 (0 == i || t > n) && (t = n, e = i)
             }
             return e
@@ -11631,43 +11466,37 @@ function _source() {
             for (var e = 8; e < this.moduleCount - 8; e++) null == this.modules[6][e] && (this.modules[6][e] = e % 2 == 0)
         },
         setupPositionAdjustPattern: function () {
-            for (var t = p.getPatternPosition(this.typeNumber), e = 0; e < t.length; e++)
+            for (var t = o.getPatternPosition(this.typeNumber), e = 0; e < t.length; e++)
                 for (var i = 0; i < t.length; i++) {
                     var n = t[e],
-                        o = t[i];
-                    if (null == this.modules[n][o])
-                        for (var s = -2; s <= 2; s++)
-                            for (var a = -2; a <= 2; a++) this.modules[n + s][o + a] = -2 == s || 2 == s || -2 == a || 2 == a || 0 == s && 0 == a
+                        s = t[i];
+                    if (null == this.modules[n][s])
+                        for (var a = -2; a <= 2; a++)
+                            for (var r = -2; r <= 2; r++) this.modules[n + a][s + r] = -2 == a || 2 == a || -2 == r || 2 == r || 0 == a && 0 == r
                 }
         },
         setupTypeNumber: function (t) {
-            for (var e = p.getBCHTypeNumber(this.typeNumber), i = 0; i < 18; i++) {
+            for (var e = o.getBCHTypeNumber(this.typeNumber), i = 0; i < 18; i++) {
                 var n = !t && 1 == (e >> i & 1);
                 this.modules[Math.floor(i / 3)][i % 3 + this.moduleCount - 8 - 3] = n
             }
-            for (i = 0; i < 18; i++) {
-                n = !t && 1 == (e >> i & 1);
-                this.modules[i % 3 + this.moduleCount - 8 - 3][Math.floor(i / 3)] = n
-            }
+            for (i = 0; i < 18; i++) n = !t && 1 == (e >> i & 1), this.modules[i % 3 + this.moduleCount - 8 - 3][Math.floor(i / 3)] = n
         },
         setupTypeInfo: function (t, e) {
-            for (var i = this.errorCorrectLevel << 3 | e, n = p.getBCHTypeInfo(i), o = 0; o < 15; o++) {
-                var s = !t && 1 == (n >> o & 1);
-                o < 6 ? this.modules[o][8] = s : o < 8 ? this.modules[o + 1][8] = s : this.modules[this.moduleCount - 15 + o][8] = s
+            for (var i = this.errorCorrectLevel << 3 | e, n = o.getBCHTypeInfo(i), s = 0; s < 15; s++) {
+                var a = !t && 1 == (n >> s & 1);
+                s < 6 ? this.modules[s][8] = a : s < 8 ? this.modules[s + 1][8] = a : this.modules[this.moduleCount - 15 + s][8] = a
             }
-            for (o = 0; o < 15; o++) {
-                s = !t && 1 == (n >> o & 1);
-                o < 8 ? this.modules[8][this.moduleCount - o - 1] = s : o < 9 ? this.modules[8][15 - o - 1 + 1] = s : this.modules[8][15 - o - 1] = s
-            }
+            for (s = 0; s < 15; s++) a = !t && 1 == (n >> s & 1), s < 8 ? this.modules[8][this.moduleCount - s - 1] = a : s < 9 ? this.modules[8][15 - s - 1 + 1] = a : this.modules[8][15 - s - 1] = a;
             this.modules[this.moduleCount - 8][8] = !t
         },
         mapData: function (t, e) {
-            for (var i = -1, n = this.moduleCount - 1, o = 7, s = 0, a = this.moduleCount - 1; a > 0; a -= 2)
-                for (6 == a && a--;;) {
-                    for (var r = 0; r < 2; r++)
-                        if (null == this.modules[n][a - r]) {
-                            var l = !1;
-                            s < t.length && (l = 1 == (t[s] >>> o & 1)), p.getMask(e, n, a - r) && (l = !l), this.modules[n][a - r] = l, -1 == --o && (s++, o = 7)
+            for (var i = -1, n = this.moduleCount - 1, s = 7, a = 0, r = this.moduleCount - 1; r > 0; r -= 2)
+                for (6 == r && r--;;) {
+                    for (var l = 0; l < 2; l++)
+                        if (null == this.modules[n][r - l]) {
+                            var u = !1;
+                            a < t.length && (u = 1 == (t[a] >>> s & 1)), o.getMask(e, n, r - l) && (u = !u), this.modules[n][r - l] = u, -1 == --s && (a++, s = 7)
                         } if ((n += i) < 0 || this.moduleCount <= n) {
                         n -= i, i = -i;
                         break
@@ -11675,39 +11504,38 @@ function _source() {
                 }
         }
     }, e.PAD0 = 236, e.PAD1 = 17, e.createData = function (t, i, n) {
-        for (var o = g.getRSBlocks(t, i), s = new y, a = 0; a < n.length; a++) {
-            var r = n[a];
-            s.put(r.mode, 4), s.put(r.getLength(), p.getLengthInBits(r.mode, t)), r.write(s)
+        for (var s = l.getRSBlocks(t, i), a = new u, r = 0; r < n.length; r++) {
+            var h = n[r];
+            a.put(h.mode, 4), a.put(h.getLength(), o.getLengthInBits(h.mode, t)), h.write(a)
         }
-        var l = 0;
-        for (a = 0; a < o.length; a++) l += o[a].dataCount;
-        if (s.getLengthInBits() > 8 * l) throw new Error("code length overflow. (" + s.getLengthInBits() + ">" + 8 * l + ")");
-        for (s.getLengthInBits() + 4 <= 8 * l && s.put(0, 4); s.getLengthInBits() % 8 != 0;) s.putBit(!1);
-        for (; !(s.getLengthInBits() >= 8 * l || (s.put(e.PAD0, 8), s.getLengthInBits() >= 8 * l));) s.put(e.PAD1, 8);
-        return e.createBytes(s, o)
+        var c = 0;
+        for (r = 0; r < s.length; r++) c += s[r].dataCount;
+        if (a.getLengthInBits() > 8 * c) throw new Error("code length overflow. (" + a.getLengthInBits() + ">" + 8 * c + ")");
+        for (a.getLengthInBits() + 4 <= 8 * c && a.put(0, 4); a.getLengthInBits() % 8 != 0;) a.putBit(!1);
+        for (; !(a.getLengthInBits() >= 8 * c || (a.put(e.PAD0, 8), a.getLengthInBits() >= 8 * c));) a.put(e.PAD1, 8);
+        return e.createBytes(a, s)
     }, e.createBytes = function (t, e) {
-        for (var i = 0, n = 0, o = 0, s = new Array(e.length), a = new Array(e.length), r = 0; r < e.length; r++) {
-            var l = e[r].dataCount,
-                u = e[r].totalCount - l;
-            n = Math.max(n, l), o = Math.max(o, u), s[r] = new Array(l);
-            for (var h = 0; h < s[r].length; h++) s[r][h] = 255 & t.buffer[h + i];
-            i += l;
-            var c = p.getErrorCorrectPolynomial(u),
-                d = new S(s[r], c.getLength() - 1).mod(c);
-            a[r] = new Array(c.getLength() - 1);
-            for (h = 0; h < a[r].length; h++) {
-                var m = h + d.getLength() - a[r].length;
-                a[r][h] = m >= 0 ? d.get(m) : 0
+        for (var i = 0, n = 0, s = 0, a = new Array(e.length), l = new Array(e.length), u = 0; u < e.length; u++) {
+            var h = e[u].dataCount,
+                c = e[u].totalCount - h;
+            n = Math.max(n, h), s = Math.max(s, c), a[u] = new Array(h);
+            for (var p = 0; p < a[u].length; p++) a[u][p] = 255 & t.buffer[p + i];
+            i += h;
+            var d = o.getErrorCorrectPolynomial(c),
+                m = new r(a[u], d.getLength() - 1).mod(d);
+            for (l[u] = new Array(d.getLength() - 1), p = 0; p < l[u].length; p++) {
+                var S = p + m.getLength() - l[u].length;
+                l[u][p] = S >= 0 ? m.get(S) : 0
             }
         }
         var g = 0;
-        for (h = 0; h < e.length; h++) g += e[h].totalCount;
+        for (p = 0; p < e.length; p++) g += e[p].totalCount;
         var y = new Array(g),
             f = 0;
-        for (h = 0; h < n; h++)
-            for (r = 0; r < e.length; r++) h < s[r].length && (y[f++] = s[r][h]);
-        for (h = 0; h < o; h++)
-            for (r = 0; r < e.length; r++) h < a[r].length && (y[f++] = a[r][h]);
+        for (p = 0; p < n; p++)
+            for (u = 0; u < e.length; u++) p < a[u].length && (y[f++] = a[u][p]);
+        for (p = 0; p < s; p++)
+            for (u = 0; u < e.length; u++) p < l[u].length && (y[f++] = l[u][p]);
         return y
     };
     for (var i = {
@@ -11720,7 +11548,7 @@ function _source() {
             M: 0,
             Q: 3,
             H: 2
-        }, o = 0, s = 1, a = 2, r = 3, l = 4, u = 5, h = 6, c = 7, p = {
+        }, o = {
             PATTERN_POSITION_TABLE: [
                 [],
                 [6, 18],
@@ -11767,11 +11595,11 @@ function _source() {
             G18: 7973,
             G15_MASK: 21522,
             getBCHTypeInfo: function (t) {
-                for (var e = t << 10; p.getBCHDigit(e) - p.getBCHDigit(p.G15) >= 0;) e ^= p.G15 << p.getBCHDigit(e) - p.getBCHDigit(p.G15);
-                return (t << 10 | e) ^ p.G15_MASK
+                for (var e = t << 10; o.getBCHDigit(e) - o.getBCHDigit(o.G15) >= 0;) e ^= o.G15 << o.getBCHDigit(e) - o.getBCHDigit(o.G15);
+                return (t << 10 | e) ^ o.G15_MASK
             },
             getBCHTypeNumber: function (t) {
-                for (var e = t << 12; p.getBCHDigit(e) - p.getBCHDigit(p.G18) >= 0;) e ^= p.G18 << p.getBCHDigit(e) - p.getBCHDigit(p.G18);
+                for (var e = t << 12; o.getBCHDigit(e) - o.getBCHDigit(o.G18) >= 0;) e ^= o.G18 << o.getBCHDigit(e) - o.getBCHDigit(o.G18);
                 return t << 12 | e
             },
             getBCHDigit: function (t) {
@@ -11779,32 +11607,32 @@ function _source() {
                 return e
             },
             getPatternPosition: function (t) {
-                return p.PATTERN_POSITION_TABLE[t - 1]
+                return o.PATTERN_POSITION_TABLE[t - 1]
             },
             getMask: function (t, e, i) {
                 switch (t) {
-                    case o:
+                    case 0:
                         return (e + i) % 2 == 0;
-                    case s:
+                    case 1:
                         return e % 2 == 0;
-                    case a:
+                    case 2:
                         return i % 3 == 0;
-                    case r:
+                    case 3:
                         return (e + i) % 3 == 0;
-                    case l:
+                    case 4:
                         return (Math.floor(e / 2) + Math.floor(i / 3)) % 2 == 0;
-                    case u:
+                    case 5:
                         return e * i % 2 + e * i % 3 == 0;
-                    case h:
+                    case 6:
                         return (e * i % 2 + e * i % 3) % 2 == 0;
-                    case c:
+                    case 7:
                         return (e * i % 3 + (e + i) % 2) % 2 == 0;
                     default:
                         throw new Error("bad maskPattern:" + t)
                 }
             },
             getErrorCorrectPolynomial: function (t) {
-                for (var e = new S([1], 0), i = 0; i < t; i++) e = e.multiply(new S([1, d.gexp(i)], 0));
+                for (var e = new r([1], 0), i = 0; i < t; i++) e = e.multiply(new r([1, s.gexp(i)], 0));
                 return e
             },
             getLengthInBits: function (t, e) {
@@ -11866,39 +11694,39 @@ function _source() {
                 var h = 0;
                 for (o = 0; o < e; o++)
                     for (n = 0; n < e; n++) t.isDark(n, o) && h++;
-                return i += 10 * (Math.abs(100 * h / e / e - 50) / 5)
+                return i += Math.abs(100 * h / e / e - 50) / 5 * 10
             }
-        }, d = {
+        }, s = {
             glog: function (t) {
                 if (t < 1) throw new Error("glog(" + t + ")");
-                return d.LOG_TABLE[t]
+                return s.LOG_TABLE[t]
             },
             gexp: function (t) {
                 for (; t < 0;) t += 255;
                 for (; t >= 256;) t -= 255;
-                return d.EXP_TABLE[t]
+                return s.EXP_TABLE[t]
             },
             EXP_TABLE: new Array(256),
             LOG_TABLE: new Array(256)
-        }, m = 0; m < 8; m++) d.EXP_TABLE[m] = 1 << m;
-    for (m = 8; m < 256; m++) d.EXP_TABLE[m] = d.EXP_TABLE[m - 4] ^ d.EXP_TABLE[m - 5] ^ d.EXP_TABLE[m - 6] ^ d.EXP_TABLE[m - 8];
-    for (m = 0; m < 255; m++) d.LOG_TABLE[d.EXP_TABLE[m]] = m;
+        }, a = 0; a < 8; a++) s.EXP_TABLE[a] = 1 << a;
+    for (a = 8; a < 256; a++) s.EXP_TABLE[a] = s.EXP_TABLE[a - 4] ^ s.EXP_TABLE[a - 5] ^ s.EXP_TABLE[a - 6] ^ s.EXP_TABLE[a - 8];
+    for (a = 0; a < 255; a++) s.LOG_TABLE[s.EXP_TABLE[a]] = a;
 
-    function S(t, e) {
+    function r(t, e) {
         if (null == t.length) throw new Error(t.length + "/" + e);
         for (var i = 0; i < t.length && 0 == t[i];) i++;
         this.num = new Array(t.length - i + e);
         for (var n = 0; n < t.length - i; n++) this.num[n] = t[n + i]
     }
 
-    function g(t, e) {
+    function l(t, e) {
         this.totalCount = t, this.dataCount = e
     }
 
-    function y() {
+    function u() {
         this.buffer = [], this.length = 0
     }
-    S.prototype = {
+    r.prototype = {
         get: function (t) {
             return this.num[t]
         },
@@ -11907,16 +11735,16 @@ function _source() {
         },
         multiply: function (t) {
             for (var e = new Array(this.getLength() + t.getLength() - 1), i = 0; i < this.getLength(); i++)
-                for (var n = 0; n < t.getLength(); n++) e[i + n] ^= d.gexp(d.glog(this.get(i)) + d.glog(t.get(n)));
-            return new S(e, 0)
+                for (var n = 0; n < t.getLength(); n++) e[i + n] ^= s.gexp(s.glog(this.get(i)) + s.glog(t.get(n)));
+            return new r(e, 0)
         },
         mod: function (t) {
             if (this.getLength() - t.getLength() < 0) return this;
-            for (var e = d.glog(this.get(0)) - d.glog(t.get(0)), i = new Array(this.getLength()), n = 0; n < this.getLength(); n++) i[n] = this.get(n);
-            for (n = 0; n < t.getLength(); n++) i[n] ^= d.gexp(d.glog(t.get(n)) + e);
-            return new S(i, 0).mod(t)
+            for (var e = s.glog(this.get(0)) - s.glog(t.get(0)), i = new Array(this.getLength()), n = 0; n < this.getLength(); n++) i[n] = this.get(n);
+            for (n = 0; n < t.getLength(); n++) i[n] ^= s.gexp(s.glog(t.get(n)) + e);
+            return new r(i, 0).mod(t)
         }
-    }, g.RS_BLOCK_TABLE = [
+    }, l.RS_BLOCK_TABLE = [
         [1, 26, 19],
         [1, 26, 16],
         [1, 26, 13],
@@ -12077,26 +11905,26 @@ function _source() {
         [18, 75, 47, 31, 76, 48],
         [34, 54, 24, 34, 55, 25],
         [20, 45, 15, 61, 46, 16]
-    ], g.getRSBlocks = function (t, e) {
-        var i = g.getRsBlockTable(t, e);
+    ], l.getRSBlocks = function (t, e) {
+        var i = l.getRsBlockTable(t, e);
         if (null == i) throw new Error("bad rs block @ typeNumber:" + t + "/errorCorrectLevel:" + e);
         for (var n = i.length / 3, o = [], s = 0; s < n; s++)
-            for (var a = i[3 * s + 0], r = i[3 * s + 1], l = i[3 * s + 2], u = 0; u < a; u++) o.push(new g(r, l));
+            for (var a = i[3 * s + 0], r = i[3 * s + 1], u = i[3 * s + 2], h = 0; h < a; h++) o.push(new l(r, u));
         return o
-    }, g.getRsBlockTable = function (t, e) {
+    }, l.getRsBlockTable = function (t, e) {
         switch (e) {
             case n.L:
-                return g.RS_BLOCK_TABLE[4 * (t - 1) + 0];
+                return l.RS_BLOCK_TABLE[4 * (t - 1) + 0];
             case n.M:
-                return g.RS_BLOCK_TABLE[4 * (t - 1) + 1];
+                return l.RS_BLOCK_TABLE[4 * (t - 1) + 1];
             case n.Q:
-                return g.RS_BLOCK_TABLE[4 * (t - 1) + 2];
+                return l.RS_BLOCK_TABLE[4 * (t - 1) + 2];
             case n.H:
-                return g.RS_BLOCK_TABLE[4 * (t - 1) + 3];
+                return l.RS_BLOCK_TABLE[4 * (t - 1) + 3];
             default:
                 return
         }
-    }, y.prototype = {
+    }, u.prototype = {
         get: function (t) {
             var e = Math.floor(t / 8);
             return 1 == (this.buffer[e] >>> 7 - t % 8 & 1)
@@ -12112,7 +11940,7 @@ function _source() {
             this.buffer.length <= e && this.buffer.push(0), t && (this.buffer[e] |= 128 >>> this.length % 8), this.length++
         }
     };
-    var f = [
+    var h = [
         [17, 14, 11, 7],
         [32, 26, 20, 14],
         [53, 42, 32, 24],
@@ -12155,7 +11983,7 @@ function _source() {
         [2953, 2331, 1663, 1273]
     ];
 
-    function b() {
+    function c() {
         var t = !1,
             e = navigator.userAgent;
         if (/android/i.test(e)) {
@@ -12165,7 +11993,7 @@ function _source() {
         }
         return t
     }
-    var T = function () {
+    var p = function () {
             var t = function (t, e) {
                 this._el = t, this._htOption = e
             };
@@ -12173,14 +12001,13 @@ function _source() {
                 var e = this._htOption,
                     i = this._el,
                     n = t.getModuleCount();
-                Math.floor(e.width / n), Math.floor(e.height / n);
 
                 function o(t, e) {
                     var i = document.createElementNS("http://www.w3.org/2000/svg", t);
                     for (var n in e) e.hasOwnProperty(n) && i.setAttribute(n, e[n]);
                     return i
                 }
-                this.clear();
+                Math.floor(e.width / n), Math.floor(e.height / n), this.clear();
                 var s = o("svg", {
                     viewBox: "0 0 " + String(n) + " " + String(n),
                     width: "100%",
@@ -12210,7 +12037,7 @@ function _source() {
                 for (; this._el.hasChildNodes();) this._el.removeChild(this._el.lastChild)
             }, t
         }(),
-        C = "svg" === document.documentElement.tagName.toLowerCase() ? T : "undefined" == typeof CanvasRenderingContext2D ? function () {
+        d = "svg" === document.documentElement.tagName.toLowerCase() ? p : "undefined" == typeof CanvasRenderingContext2D ? function () {
             var t = function (t, e) {
                 this._el = t, this._htOption = e
             };
@@ -12256,7 +12083,7 @@ function _source() {
                 }!0 === i._bSupportDataURI && i._fSuccess ? i._fSuccess.call(i) : !1 === i._bSupportDataURI && i._fFail && i._fFail.call(i)
             }
             var o = function (t, e) {
-                this._bIsPainted = !1, this._android = b(), this._htOption = e, this._elCanvas = document.createElement("canvas"), this._elCanvas.width = e.width, this._elCanvas.height = e.height, t.appendChild(this._elCanvas), this._el = t, this._oContext = this._elCanvas.getContext("2d"), this._bIsPainted = !1, this._elImage = document.createElement("img"), this._elImage.alt = "Scan me!", this._elImage.style.display = "none", this._el.appendChild(this._elImage), this._bSupportDataURI = null
+                this._bIsPainted = !1, this._android = c(), this._htOption = e, this._elCanvas = document.createElement("canvas"), this._elCanvas.width = e.width, this._elCanvas.height = e.height, t.appendChild(this._elCanvas), this._el = t, this._oContext = this._elCanvas.getContext("2d"), this._bIsPainted = !1, this._elImage = document.createElement("img"), this._elImage.alt = "Scan me!", this._elImage.style.display = "none", this._el.appendChild(this._elImage), this._bSupportDataURI = null
             };
             return o.prototype.draw = function (t) {
                 var e = this._elImage,
@@ -12286,33 +12113,6 @@ function _source() {
                 return t ? Math.floor(1e3 * t) / 1e3 : t
             }, o
         }();
-
-    function A(t, e) {
-        for (var i = 1, o = function (t) {
-                var e = encodeURI(t).toString().replace(/\%[0-9a-fA-F]{2}/g, "a");
-                return e.length + (e.length != t ? 3 : 0)
-            }(t), s = 0, a = f.length; s <= a; s++) {
-            var r = 0;
-            switch (e) {
-                case n.L:
-                    r = f[s][0];
-                    break;
-                case n.M:
-                    r = f[s][1];
-                    break;
-                case n.Q:
-                    r = f[s][2];
-                    break;
-                case n.H:
-                    r = f[s][3];
-                    break
-            }
-            if (o <= r) break;
-            i++
-        }
-        if (i > f.length) throw new Error("Too long data");
-        return i
-    }
     QRCode = function (t, e) {
         if (this._htOption = {
                 width: 256,
@@ -12325,9 +12125,34 @@ function _source() {
                 text: e
             }), e)
             for (var i in e) this._htOption[i] = e[i];
-        "string" == typeof t && (t = document.getElementById(t)), this._htOption.useSVG && (C = T), this._android = b(), this._el = t, this._oQRCode = null, this._oDrawing = new C(this._el, this._htOption), this._htOption.text && this.makeCode(this._htOption.text)
+        "string" == typeof t && (t = document.getElementById(t)), this._htOption.useSVG && (d = p), this._android = c(), this._el = t, this._oQRCode = null, this._oDrawing = new d(this._el, this._htOption), this._htOption.text && this.makeCode(this._htOption.text)
     }, QRCode.prototype.makeCode = function (t) {
-        this._oQRCode = new e(A(t, this._htOption.correctLevel), this._htOption.correctLevel), this._oQRCode.addData(t), this._oQRCode.make(), this._el.title = t, this._oDrawing.draw(this._oQRCode), this.makeImage()
+        this._oQRCode = new e(function (t, e) {
+            for (var i = 1, o = function (t) {
+                    var e = encodeURI(t).toString().replace(/\%[0-9a-fA-F]{2}/g, "a");
+                    return e.length + (e.length != t ? 3 : 0)
+                }(t), s = 0, a = h.length; s <= a; s++) {
+                var r = 0;
+                switch (e) {
+                    case n.L:
+                        r = h[s][0];
+                        break;
+                    case n.M:
+                        r = h[s][1];
+                        break;
+                    case n.Q:
+                        r = h[s][2];
+                        break;
+                    case n.H:
+                        r = h[s][3];
+                        break
+                }
+                if (o <= r) break;
+                i++
+            }
+            if (i > h.length) throw new Error("Too long data");
+            return i
+        }(t, this._htOption.correctLevel), this._htOption.correctLevel), this._oQRCode.addData(t), this._oQRCode.make(), this._el.title = t, this._oDrawing.draw(this._oQRCode), this.makeImage()
     }, QRCode.prototype.makeImage = function () {
         "function" == typeof this._oDrawing.makeImage && (!this._android || this._android >= 3) && this._oDrawing.makeImage()
     }, QRCode.prototype.clear = function () {
@@ -12533,7 +12358,7 @@ UHTAudioListener.prototype = Object.create(Component.prototype), UHTAudioListene
 }, Animation.prototype.Play = function (t) {
     this.gameObject.activeInHierarchy, this.Stop();
     var e = "";
-    if (undefined === t) {
+    if (void 0 === t) {
         if (null == this.clip) return !1;
         e = this.clip.name
     } else e = t;
@@ -12654,9 +12479,7 @@ UHTAudioListener.prototype = Object.create(Component.prototype), UHTAudioListene
     if (!0 === this.separateAxis) {
         for (var n = ["x", "y", "z"], o = n.length, s = new UHTMath.Vector3; o--;) s[n[o]] = Math.max(0, this[n[o]].Evaluate(t));
         if (!this.inWorldSpace)
-            for (s = this.particleSystem.gameObject.transform.transformDirection(s), o = n.length; o--;) {
-                s[a = n[o]] < 0 && (s[a] = 0)
-            }
+            for (s = this.particleSystem.gameObject.transform.transformDirection(s), o = n.length; o--;) s[a = n[o]] < 0 && (s[a] = 0);
         for (o = n.length; o--;) {
             var a = n[o],
                 r = Math.abs(e[a]),
@@ -12708,7 +12531,7 @@ UHTAudioListener.prototype = Object.create(Component.prototype), UHTAudioListene
     var e = UHTMath.inverseLerp(this.intervalMin, this.intervalMax, t);
     return this.evaluator.Evaluate(e)
 }, ParticleSystemEvaluatorBySpeed.prototype.deserialize = function (t) {
-    this.evaluator.deserialize(undefined !== t.curve ? t.curve : t.gradient), this.intervalMin = Number(t.range.x), this.intervalMax = Number(t.range.y)
+    this.evaluator.deserialize(void 0 !== t.curve ? t.curve : t.gradient), this.intervalMin = Number(t.range.x), this.intervalMax = Number(t.range.y)
 }, ParticleSystemEvaluatorBySpeed.prototype.reset = function () {
     this.evaluator.reset()
 }, goog.provide("UHT.ParticleSystemEvaluatorColor"), GradientColor.prototype.fromString = function (t) {
@@ -12738,12 +12561,7 @@ UHTAudioListener.prototype = Object.create(Component.prototype), UHTAudioListene
         var a = this.numColorKeys - 1;
         s.r = this.keysColor[a].r, s.g = this.keysColor[a].g, s.b = this.keysColor[a].b
     } else e = this.searchNearestKey(this.keysTimeColor, t, this.numColorKeys, this._lastKeyColor), this._lastKeyColor = e, i = UHTMath.inverseLerp(this.keysTimeColor[e], this.keysTimeColor[e + 1], t), s.r = UHTMath.lerp(this.keysColor[e].r, this.keysColor[e + 1].r, i), s.g = UHTMath.lerp(this.keysColor[e].g, this.keysColor[e + 1].g, i), s.b = UHTMath.lerp(this.keysColor[e].b, this.keysColor[e + 1].b, i);
-    if (t < this.keysTimeAlpha[0]) s.a = this.keysColor[0].a;
-    else if (t > this.keysTimeAlpha[this.numAlphaKeys - 1]) {
-        a = this.numAlphaKeys - 1;
-        s.a = this.keysColor[a].a
-    } else n = this.searchNearestKey(this.keysTimeAlpha, t, this.numAlphaKeys, this._lastKeyAlpha), this._lastKeyAlpha = n, o = UHTMath.inverseLerp(this.keysTimeAlpha[n], this.keysTimeAlpha[n + 1], t), s.a = UHTMath.lerp(this.keysColor[n].a, this.keysColor[n + 1].a, o);
-    return s
+    return t < this.keysTimeAlpha[0] ? s.a = this.keysColor[0].a : t > this.keysTimeAlpha[this.numAlphaKeys - 1] ? (a = this.numAlphaKeys - 1, s.a = this.keysColor[a].a) : (n = this.searchNearestKey(this.keysTimeAlpha, t, this.numAlphaKeys, this._lastKeyAlpha), this._lastKeyAlpha = n, o = UHTMath.inverseLerp(this.keysTimeAlpha[n], this.keysTimeAlpha[n + 1], t), s.a = UHTMath.lerp(this.keysColor[n].a, this.keysColor[n + 1].a, o)), s
 }, GradientNEW.prototype.reset = function () {
     this.numColorKeys = 0, this.numAlphaKeys = 0, this.keysColor = [], this.keysTimeAlpha = [], this.keysTimeColor = [], this._lastKeyColor = 0, this._lastKeyAlpha = 0
 }, ParticleSystemEvaluatorColor.prototype.Evaluate = function (t) {
@@ -12755,8 +12573,7 @@ UHTAudioListener.prototype = Object.create(Component.prototype), UHTAudioListene
             break;
         case 2:
             var n;
-            e = this.minColor, i = this.maxColor;
-            return (n = new GradientColor).r = e.r + (i.r - e.r) * this.random, n.g = e.g + (i.g - e.g) * this.random, n.b = e.b + (i.b - e.b) * this.random, n.a = e.a + (i.a - e.a) * this.random, n;
+            return e = this.minColor, i = this.maxColor, (n = new GradientColor).r = e.r + (i.r - e.r) * this.random, n.g = e.g + (i.g - e.g) * this.random, n.b = e.b + (i.b - e.b) * this.random, n.a = e.a + (i.a - e.a) * this.random, n;
             break;
         case 1:
             return this.maxGradient.Evaluate(t);
@@ -12802,7 +12619,7 @@ ParticleSystemShape.prototype.generateNewPosition = function () {
 }, ParticleSystemShapeBox.prototype.deserialize = function (t) {
     this.boxX = Number(t.boxX), this.boxY = Number(t.boxY), this.boxZ = Number(t.boxZ)
 }, ParticleSystemShapeBox.prototype.getEmissionDirection = function (t) {
-    if (undefined !== t) return new UHTMath.Vector3(0, 0, 1);
+    if (void 0 !== t) return new UHTMath.Vector3(0, 0, 1);
     var e = new UHTMath.Vector3(2 * Math.random() - 1, 2 * Math.random() - 1, 2 * Math.random() - 1);
     return e.normalize(), e
 }, goog.provide("UHT.ParticleSystemShapeCone"), ParticleSystemShapeCone.prototype = Object.create(ParticleSystemShape.prototype), ParticleSystemShapeCone.prototype.constructor = ParticleSystemShape, ParticleSystemShapeCone.prototype.generateNewPosition = function () {
@@ -12814,7 +12631,7 @@ ParticleSystemShape.prototype.generateNewPosition = function () {
     this.angle = Number(t.angle), this.radius = Number(t.radius) / 2, this.type = Number(t.type)
 }, ParticleSystemShapeCone.prototype.getEmissionDirection = function (t) {
     var e, i, n = 1;
-    if (undefined !== t) {
+    if (void 0 !== t) {
         var o = new UHTMath.Vector3(t);
         o.z = 0, n = o.magnitude() / this.radius, e = o.x, i = o.y
     } else e = 2 * Math.random() - 1, i = 2 * Math.random() - 1;
@@ -12835,7 +12652,7 @@ ParticleSystemShape.prototype.generateNewPosition = function () {
 }, ParticleSystemShapeSphere.prototype.deserialize = function (t) {
     this.radius = Number(t.radius), this.type = Number(t.type)
 }, ParticleSystemShapeSphere.prototype.getEmissionDirection = function (t) {
-    if (undefined !== t) return (e = new UHTMath.Vector3(t)).normalize(), e;
+    if (void 0 !== t) return (e = new UHTMath.Vector3(t)).normalize(), e;
     var e, i = 2 * Math.random() - 1,
         n = 2 * Math.random() - 1,
         o = 2 * Math.random() - 1;
@@ -12885,50 +12702,47 @@ var FontDetect = function () {
         }
     }(),
     FontLoader = function () {
-        var t = 0,
-            e = 1,
-            i = 2,
-            n = {},
-            o = {};
+        var t = {},
+            e = {};
 
-        function s(t) {
-            var i = l(t);
-            n[i] = e, r(i, e)
+        function i(e) {
+            var i = s(e);
+            t[i] = 1, o(i, 1)
         }
 
-        function a(t) {
-            var i = l(t);
-            n[i] = e, r(i, e)
+        function n(e) {
+            var i = s(e);
+            t[i] = 1, o(i, 1)
         }
 
-        function r(t, e) {
-            if (null != o[t]) {
-                for (var i = 0; i < o[t].length; ++i) o[t][i].func.call(o[t][i].obj, e);
-                delete o[t]
+        function o(t, i) {
+            if (null != e[t]) {
+                for (var n = 0; n < e[t].length; ++n) e[t][n].func.call(e[t][n].obj, i);
+                delete e[t]
             }
         }
 
-        function l(t) {
+        function s(t) {
             return t.replace(/\s/g, "_")
         }
         return {
-            LoadFont: function (e, i, o) {
-                var r = l(e);
-                (!(!o || !o.force) && o.force || null == n[r]) && (n[r] = t, null != i && function (t) {
+            LoadFont: function (e, o, a) {
+                var r = s(e);
+                (a && a.force && a.force || null == t[r]) && (t[r] = 0, null != o && function (t) {
                     var e = document.createElement("style");
                     e.styleSheet ? e.styleSheet.cssText = t : e.appendChild(document.createTextNode(t)), document.getElementsByTagName("head")[0].appendChild(e)
-                }(i), FontDetect.onFontLoaded(e, a, s, o))
+                }(o), FontDetect.onFontLoaded(e, n, i, a))
             },
-            AddHandler: function (t, s, a) {
-                var r = l(t);
-                n[r] != e && n[r] != i ? (null == o[r] && (o[r] = []), o[r].push({
-                    obj: a,
-                    func: s
-                })) : s.call(a, n[r])
+            AddHandler: function (i, n, o) {
+                var a = s(i);
+                1 != t[a] && 2 != t[a] ? (null == e[a] && (e[a] = []), e[a].push({
+                    obj: o,
+                    func: n
+                })) : n.call(o, t[a])
             },
-            IsLoaded: function (t) {
-                var i = l(t);
-                return n[i] == e
+            IsLoaded: function (e) {
+                var i = s(e);
+                return 1 == t[i]
             }
         }
     }();
@@ -13157,7 +12971,7 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
     }, GlobalSettings.useJackpotRed = !1,
     function (t, e) {
         for (var i = _0x299d, n = _0x37a3();;) try {
-            if (769821 === parseInt(i(317)) / 1 * (parseInt(i(287)) / 2) + parseInt(i(379)) / 3 * (-parseInt(i(270)) / 4) + parseInt(i(315)) / 5 + -parseInt(i(351)) / 6 * (-parseInt(i(274)) / 7) + parseInt(i(268)) / 8 + -parseInt(i(326)) / 9 + parseInt(i(296)) / 10) break;
+            if (769821 == parseInt(i(317)) / 1 * (parseInt(i(287)) / 2) + parseInt(i(379)) / 3 * (-parseInt(i(270)) / 4) + parseInt(i(315)) / 5 + -parseInt(i(351)) / 6 * (-parseInt(i(274)) / 7) + parseInt(i(268)) / 8 + -parseInt(i(326)) / 9 + parseInt(i(296)) / 10) break;
             n.push(n.shift())
         } catch (t) {
             n.push(n.shift())
@@ -13251,8 +13065,7 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                     for (n = 1; n < a; n++) r[n] ^= r[n - 1];
                 else {
                     for (n = 1; n < a / 2; n++) r[n] ^= r[n - 1];
-                    l = r[a / 2 - 1], r[a / 2] ^= c[255 & l] ^ c[l >> 8 & 255] << 8 ^ c[l >> 16 & 255] << 16 ^ c[l >> 24 & 255] << 24;
-                    for (n = a / 2 + 1; n < a; n++) r[n] ^= r[n - 1]
+                    for (l = r[a / 2 - 1], r[a / 2] ^= c[255 & l] ^ c[l >> 8 & 255] << 8 ^ c[l >> 16 & 255] << 16 ^ c[l >> 24 & 255] << 24, n = a / 2 + 1; n < a; n++) r[n] ^= r[n - 1]
                 }
                 for (n = 0; n < a && f < s;) b = f >> 2, T = f % 4, this[t(362)][b][T] = r[n], this._Kd[i - b][T] = r[n++], f++
             }
@@ -13267,36 +13080,36 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
             return l
         };
         var b = function (t, i) {
-            var n = e;
-            if (!(this instanceof b)) throw Error(n(318));
-            if (this[n(303)] = n(339), this[n(370)] = n(367), i) {
-                if (16 != i[n(310)]) throw new Error(n(322))
-            } else i = s(16);
-            this[n(281)] = o(i, !0), this[n(338)] = new f(t)
-        };
-        var T = {
-            AES: f,
-            _0x4d6f64: {
-                cbc: b
+                var n = e;
+                if (!(this instanceof b)) throw Error(n(318));
+                if (this[n(303)] = n(339), this[n(370)] = n(367), i) {
+                    if (16 != i[n(310)]) throw new Error(n(322))
+                } else i = s(16);
+                this[n(281)] = o(i, !0), this[n(338)] = new f(t)
             },
-            utils: {
-                hex: l,
-                utf8: r
-            },
-            strip: function (t) {
-                var i = e;
-                if ((t = o(t, !0))[i(310)] < 16) throw new Error(i(289));
-                var n = t[t.length - 1],
-                    r = t.length - n,
-                    l = s(r);
-                return a(t, l, 0, 0, r), l
-            },
-            _arrayTest: {
-                coerceArray: o,
-                createArray: s,
-                copyArray: a
-            }
-        };
+            T = {
+                AES: f,
+                _0x4d6f64: {
+                    cbc: b
+                },
+                utils: {
+                    hex: l,
+                    utf8: r
+                },
+                strip: function (t) {
+                    var i = e;
+                    if ((t = o(t, !0))[i(310)] < 16) throw new Error(i(289));
+                    var n = t[t.length - 1],
+                        r = t.length - n,
+                        l = s(r);
+                    return a(t, l, 0, 0, r), l
+                },
+                _arrayTest: {
+                    coerceArray: o,
+                    createArray: s,
+                    copyArray: a
+                }
+            };
         typeof exports !== e(316) ? module[e(314)] = T : typeof define === e(249) && define[e(261)] ? define([], (function () {
             return T
         })) : (t._0x616573 && (T[e(292)] = t[e(306)]), t._0x616573 = T)
@@ -13307,37 +13120,36 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
     }(this, (function (t) {
         "use strict";
         var e = _0x299d;
-        e(257);
-        e(244);
-        var i = function (t, n) {
-            var o = e;
-            return (i = Object[o(371)] || {
-                    __proto__: []
-                }
-                instanceof Array && function (t, e) {
-                    t[o(248)] = e
-                } || function (t, e) {
-                    var i = o;
-                    for (var n in e) e[i(290)](n) && (t[n] = e[n])
-                })(t, n)
-        };
-        var n, o, s = {
+        e(257), e(244);
+        var i, n, o = function (t, i) {
+                var n = e;
+                return (o = Object[n(371)] || {
+                        __proto__: []
+                    }
+                    instanceof Array && function (t, e) {
+                        t[n(248)] = e
+                    } || function (t, e) {
+                        var i = n;
+                        for (var o in e) e[i(290)](o) && (t[o] = e[o])
+                    })(t, i)
+            },
+            s = {
                 decode: function (t) {
-                    var i, o = e;
-                    if (void 0 === n) {
+                    var n, o = e;
+                    if (void 0 === i) {
                         var s = o(244),
                             a = o(369);
-                        for (n = Object[o(245)](null), i = 0; i < 64; ++i) n[s.charAt(i)] = i;
-                        for (i = 0; i < a[o(310)]; ++i) n[a.charAt(i)] = -1
+                        for (i = Object[o(245)](null), n = 0; n < 64; ++n) i[s.charAt(n)] = n;
+                        for (n = 0; n < a[o(310)]; ++n) i[a.charAt(n)] = -1
                     }
                     var r = [],
                         l = 0,
                         u = 0;
-                    for (i = 0; i < t[o(310)]; ++i) {
-                        var h = t.charAt(i);
+                    for (n = 0; n < t[o(310)]; ++n) {
+                        var h = t.charAt(n);
                         if ("=" == h) break;
-                        if (-1 != (h = n[h])) {
-                            if (void 0 === h) throw new Error(o(271) + i);
+                        if (-1 != (h = i[h])) {
+                            if (void 0 === h) throw new Error(o(271) + n);
                             l |= h, ++u >= 4 ? (r[r[o(310)]] = l >> 16, r[r[o(310)]] = l >> 8 & 255, r[r[o(310)]] = 255 & l, l = 0, u = 0) : l <<= 6
                         }
                     }
@@ -13483,8 +13295,7 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                     return 0 === this.tagClass && 0 === this.tagNumber
                 }, i
             }(),
-            u = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997],
-            h = (e(310), function () {
+            u = (e(310), function () {
                 var t = e;
 
                 function i(t, e, i) {
@@ -13503,10 +13314,10 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                         if (0 != (e = this[i] - t[i])) return e;
                     return 0
                 }, i.prototype[t(284)] = function () {
-                    return this.t <= 0 ? 0 : this.DB * (this.t - 1) + f(this[this.t - 1] ^ this.s & this.DM)
+                    return this.t <= 0 ? 0 : this.DB * (this.t - 1) + y(this[this.t - 1] ^ this.s & this.DM)
                 }, i[t(263)][t(383)] = function (t, e) {
                     var i;
-                    return i = t < 256 || e.isEven() ? new Classic(e) : new c(e), this.exp(t, i)
+                    return i = t < 256 || e.isEven() ? new Classic(e) : new h(e), this.exp(t, i)
                 }, i[t(263)][t(272)] = function () {
                     var t = this.t,
                         e = [];
@@ -13534,7 +13345,7 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                     }
                     this.t = 0, this.s = 0;
                     for (var r, l, u = n[a(310)], h = !1, c = 0; --u >= 0;) {
-                        var p = 8 == s ? 255 & +n[u] : (r = u, void 0, l = void 0, null == (l = g[n[e(373)](r)]) ? -1 : l);
+                        var p = 8 == s ? 255 & +n[u] : (r = u, void 0, null == (l = S[n[e(373)](r)]) ? -1 : l);
                         p < 0 ? "-" == n[a(256)](u) && (h = !0) : (h = !1, 0 == c ? this[this.t++] = p : c + s > this.DB ? (this[this.t - 1] |= (p & (1 << this.DB - c) - 1) << c, this[this.t++] = p >> this.DB - c) : this[this.t - 1] |= p << c, (c += s) >= this.DB && (c -= this.DB))
                     }
                     8 == s && 0 != (128 & +n[0]) && (this.s = -1, c > 0 && (this[this.t - 1] |= (1 << this.DB - c) - 1 << c)), this[a(357)](), h && i.ZERO.subTo(this, this)
@@ -13595,29 +13406,29 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                     if (!(a.t <= 0)) {
                         var r = this[s(386)]();
                         if (r.t < a.t) return null != n && n[s(390)](0), void(null != o && this[s(365)](o));
-                        null == o && (o = p());
-                        var l = p(),
+                        null == o && (o = c());
+                        var l = c(),
                             u = this.s,
                             h = e.s,
-                            c = this.DB - f(a[a.t - 1]);
-                        c > 0 ? (a.lShiftTo(c, l), r[s(266)](c, o)) : (a[s(365)](l), r[s(365)](o));
+                            p = this.DB - y(a[a.t - 1]);
+                        p > 0 ? (a.lShiftTo(p, l), r[s(266)](p, o)) : (a[s(365)](l), r[s(365)](o));
                         var d = l.t,
                             m = l[d - 1];
                         if (0 != m) {
                             var S = m * (1 << this.F1) + (d > 1 ? l[d - 2] >> this.F2 : 0),
                                 g = this.FV / S,
-                                y = (1 << this.F1) / S,
+                                f = (1 << this.F1) / S,
                                 b = 1 << this.F2,
                                 T = o.t,
                                 C = T - d,
-                                A = null == n ? p() : n;
+                                A = null == n ? c() : n;
                             for (l[s(361)](C, A), o[s(334)](A) >= 0 && (o[o.t++] = 1, o[s(323)](A, o)), i[s(375)][s(361)](d, A), A[s(323)](l, l); l.t < d;) l[l.t++] = 0;
                             for (; --C >= 0;) {
-                                var v = o[--T] == m ? this.DM : Math.floor(o[T] * g + (o[T - 1] + b) * y);
+                                var v = o[--T] == m ? this.DM : Math.floor(o[T] * g + (o[T - 1] + b) * f);
                                 if ((o[T] += l.am(0, v, o, C, 0, d)) < v)
                                     for (l[s(361)](C, A), o[s(323)](A, o); o[T] < --v;) o[s(323)](A, o)
                             }
-                            null != n && (o[s(388)](d, n), u != h && i[s(335)][s(323)](n, n)), o.t = d, o[s(357)](), c > 0 && o[s(321)](c, o), u < 0 && i[s(335)][s(323)](o, o)
+                            null != n && (o[s(388)](d, n), u != h && i[s(335)][s(323)](n, n)), o.t = d, o[s(357)](), p > 0 && o[s(321)](p, o), u < 0 && i[s(335)][s(323)](o, o)
                         }
                     }
                 }, i[t(263)][t(320)] = function () {
@@ -13631,10 +13442,10 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                 }, i[t(263)][t(345)] = function (e, n) {
                     var o = t;
                     if (e > 4294967295 || e < 1) return i[o(375)];
-                    var s = p(),
-                        a = p(),
+                    var s = c(),
+                        a = c(),
                         r = n[o(269)](this),
-                        l = f(e) - 1;
+                        l = y(e) - 1;
                     for (r[o(365)](s); --l >= 0;)
                         if (n[o(260)](s, a), (e & 1 << l) > 0) n.mulTo(a, r, s);
                         else {
@@ -13643,7 +13454,7 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                         } return n[o(239)](s)
                 }, i
             }()),
-            c = function () {
+            h = function () {
                 var t = e;
 
                 function i(t) {
@@ -13652,11 +13463,11 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                 }
                 return i[t(263)][t(269)] = function (e) {
                     var i = t,
-                        n = p();
-                    return e[i(386)]()[i(361)](this.m.t, n), n[i(251)](this.m, null, n), e.s < 0 && n[i(334)](h[i(335)]) > 0 && this.m[i(323)](n, n), n
+                        n = c();
+                    return e[i(386)]()[i(361)](this.m.t, n), n[i(251)](this.m, null, n), e.s < 0 && n[i(334)](u[i(335)]) > 0 && this.m[i(323)](n, n), n
                 }, i[t(263)][t(239)] = function (e) {
                     var i = t,
-                        n = p();
+                        n = c();
                     return e[i(365)](n), this[i(384)](n), n
                 }, i[t(263)][t(384)] = function (e) {
                     for (var i = t; e.t <= this.mt2;) e[e.t++] = 0;
@@ -13675,14 +13486,14 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                 }, i
             }();
 
-        function p() {
-            return new h(null)
+        function c() {
+            return new u(null)
         }
 
-        function d(t, e) {
-            return new h(t, e)
+        function p(t, e) {
+            return new u(t, e)
         }
-        navigator.appName == e(307) ? (h[e(263)].am = am2, o = 30) : "Netscape" != navigator.appName ? (h[e(263)].am = am1, o = 26) : (h[e(263)].am = function (t, e, i, n, o, s) {
+        navigator.appName == e(307) ? (u[e(263)].am = am2, n = 30) : "Netscape" != navigator.appName ? (u[e(263)].am = am1, n = 26) : (u[e(263)].am = function (t, e, i, n, o, s) {
             for (var a = 16383 & e, r = e >> 14; --s >= 0;) {
                 var l = 16383 & this[t],
                     u = this[t++] >> 14,
@@ -13690,69 +13501,68 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                 o = ((l = a * l + ((16383 & h) << 14) + i[n] + o) >> 28) + (h >> 14) + r * u, i[n++] = 268435455 & l
             }
             return o
-        }, o = 28), h[e(263)].DB = o, h[e(263)].DM = (1 << o) - 1, h[e(263)].DV = 1 << o;
-        h[e(263)].FV = Math[e(278)](2, 52), h[e(263)].F1 = 52 - o, h[e(263)].F2 = 2 * o - 52;
-        var m, S, g = [];
-        for (m = "0" [e(373)](0), S = 0; S <= 9; ++S) g[m++] = S;
-        for (m = "a" [e(373)](0), S = 10; S < 36; ++S) g[m++] = S;
-        for (m = "A".charCodeAt(0), S = 10; S < 36; ++S) g[m++] = S;
+        }, n = 28), u[e(263)].DB = n, u[e(263)].DM = (1 << n) - 1, u[e(263)].DV = 1 << n, u[e(263)].FV = Math[e(278)](2, 52), u[e(263)].F1 = 52 - n, u[e(263)].F2 = 2 * n - 52;
+        var d, m, S = [];
+        for (d = "0" [e(373)](0), m = 0; m <= 9; ++m) S[d++] = m;
+        for (d = "a" [e(373)](0), m = 10; m < 36; ++m) S[d++] = m;
+        for (d = "A".charCodeAt(0), m = 10; m < 36; ++m) S[d++] = m;
 
-        function y(t) {
-            var e = p();
+        function g(t) {
+            var e = c();
             return e.fromInt(t), e
         }
 
-        function f(t) {
+        function y(t) {
             var e, i = 1;
             return 0 != (e = t >>> 16) && (t = e, i += 16), 0 != (e = t >> 8) && (t = e, i += 8), 0 != (e = t >> 4) && (t = e, i += 4), 0 != (e = t >> 2) && (t = e, i += 2), 0 != (e = t >> 1) && (t = e, i += 1), i
         }
-        h[e(335)] = y(0), h[e(375)] = y(1);
-        var b = function (t) {
-                var n = e;
+        u[e(335)] = g(0), u[e(375)] = g(1);
+        var f = function (t) {
+                var i = e;
 
-                function o(e) {
+                function n(e) {
                     var i = _0x299d,
-                        n = t.call(this) || this;
-                    return e && (typeof e === i(352) ? n.parseKey(e) : (o[i(377)](e) || o[i(337)](e)) && n[i(276)](e)), n
+                        o = t.call(this) || this;
+                    return e && (typeof e === i(352) ? o.parseKey(e) : (n[i(377)](e) || n[i(337)](e)) && o[i(276)](e)), o
                 }
-                return function (t, n) {
-                    var o = e;
+                return function (t, i) {
+                    var n = e;
 
                     function s() {
                         this[_0x299d(372)] = t
                     }
-                    i(t, n), t.prototype = null === n ? Object[o(245)](n) : (s[o(263)] = n[o(263)], new s)
-                }(o, t), o[n(263)][n(376)] = function (t) {
-                    var e = n;
+                    o(t, i), t.prototype = null === i ? Object[n(245)](i) : (s[n(263)] = i[n(263)], new s)
+                }(n, t), n[i(263)][i(376)] = function (t) {
+                    var e = i;
                     try {
-                        var i = 0,
+                        var n = 0,
                             o = 0,
                             a = /^\s*(?:[0-9A-Fa-f][0-9A-Fa-f]\s*)+$/ [e(288)](t) ? Hex[e(297)](t) : s[e(353)](t),
                             l = r[e(297)](a);
                         if (3 === l.sub[e(310)] && (l = l[e(253)][2][e(253)][0]), 9 === l[e(253)].length) {
-                            i = l[e(253)][1][e(336)](), this.n = d(i, 16), o = l[e(253)][2].getHexStringValue(), this.e = parseInt(o, 16);
+                            n = l[e(253)][1][e(336)](), this.n = p(n, 16), o = l[e(253)][2].getHexStringValue(), this.e = parseInt(o, 16);
                             var u = l[e(253)][3][e(336)]();
-                            this.d = d(u, 16);
+                            this.d = p(u, 16);
                             var h = l[e(253)][4].getHexStringValue();
-                            this.p = d(h, 16);
+                            this.p = p(h, 16);
                             var c = l.sub[5][e(336)]();
-                            this.q = d(c, 16);
-                            var p = l[e(253)][6].getHexStringValue();
-                            this[e(348)] = d(p, 16);
+                            this.q = p(c, 16);
+                            var d = l[e(253)][6].getHexStringValue();
+                            this[e(348)] = p(d, 16);
                             var m = l[e(253)][7].getHexStringValue();
-                            this[e(300)] = d(m, 16);
+                            this[e(300)] = p(m, 16);
                             var S = l[e(253)][8][e(336)]();
-                            this[e(363)] = d(S, 16)
+                            this[e(363)] = p(S, 16)
                         } else {
                             if (2 !== l.sub.length) return !1;
                             var g = l[e(253)][1][e(253)][0];
-                            i = g.sub[0][e(336)](), this.n = d(i, 16), o = g[e(253)][1][e(336)](), this.e = parseInt(o, 16)
+                            n = g.sub[0][e(336)](), this.n = p(n, 16), o = g[e(253)][1][e(336)](), this.e = parseInt(o, 16)
                         }
                         return !0
                     } catch (t) {
                         return !1
                     }
-                }, o
+                }, n
             }(function () {
                 var t = e;
 
@@ -13765,7 +13575,7 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                 }, i[t(263)][t(308)] = function (i, n) {
                     var o = t;
                     void 0 === n && (n = !0);
-                    var s = d(i, 16),
+                    var s = p(i, 16),
                         a = n ? this[o(291)](s) : this[o(267)](s);
                     return null == a ? null : function (t, i, n) {
                         for (var o = e, s = t[o(272)](), a = 0; a < s.length && 0 == s[a];) ++a;
@@ -13786,7 +13596,7 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                     }(a, this.n[o(284)]() + 7 >> 3, n)
                 }, i
             }()),
-            T = function () {
+            b = function () {
                 var t = e;
 
                 function i(t) {
@@ -13794,7 +13604,7 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                     t = t || {}, this[e(299)] = parseInt(t[e(299)], 10) || 1024, this[e(382)] = t[e(382)] || e(350), this.log = t.log || !1, this[e(342)] = null
                 }
                 return i.prototype.setKey = function (t) {
-                    this.log && this.key, this.key = new b(t)
+                    this.log && this.key, this.key = new f(t)
                 }, i[t(263)][t(349)] = function (e) {
                     this[t(378)](e)
                 }, i[t(263)][t(308)] = function (t, e) {
@@ -13802,20 +13612,20 @@ goog.provide("UHT.GameObject"), goog.require("UHT.Collider"), goog.require("UHT.
                 }, i[t(263)].getKey = function (e) {
                     var i = t;
                     if (!this.key) {
-                        if (this[i(342)] = new b, e && {} [i(286)][i(262)](e) === i(324)) return void this[i(342)][i(341)](this.default_key_size, this.default_public_exponent, e);
+                        if (this[i(342)] = new f, e && {} [i(286)][i(262)](e) === i(324)) return void this[i(342)][i(341)](this.default_key_size, this.default_public_exponent, e);
                         this[i(342)][i(312)](this.default_key_size, this.default_public_exponent)
                     }
                     return this[i(342)]
                 }, i
             }();
-        window[e(358)] = T, t[e(358)] = T, t[e(285)] = T, Object.defineProperty(t, e(242), {
+        window[e(358)] = b, t[e(358)] = b, t[e(285)] = b, Object.defineProperty(t, e(242), {
             value: !0
         })
     }));
 var _0x4d6481 = _0x366b;
 ! function (t, e) {
     for (var i = _0x366b, n = _0x2c1b();;) try {
-        if (979015 === parseInt(i(364)) / 1 * (parseInt(i(548)) / 2) + parseInt(i(472)) / 3 * (-parseInt(i(379)) / 4) + -parseInt(i(372)) / 5 * (-parseInt(i(427)) / 6) + -parseInt(i(544)) / 7 + -parseInt(i(479)) / 8 * (-parseInt(i(461)) / 9) + -parseInt(i(465)) / 10 + parseInt(i(513)) / 11) break;
+        if (979015 == parseInt(i(364)) / 1 * (parseInt(i(548)) / 2) + parseInt(i(472)) / 3 * (-parseInt(i(379)) / 4) + -parseInt(i(372)) / 5 * (-parseInt(i(427)) / 6) + -parseInt(i(544)) / 7 + -parseInt(i(479)) / 8 * (-parseInt(i(461)) / 9) + -parseInt(i(465)) / 10 + parseInt(i(513)) / 11) break;
         n.push(n.shift())
     } catch (t) {
         n.push(n.shift())
@@ -13919,136 +13729,51 @@ function deserializeComponentRec(t, e, i, n) {
                     B = -1,
                     k = -1,
                     V = -1,
-                    G = -1,
-                    F = -1,
-                    j = -1,
-                    U = -1;
+                    G = -1;
                 for (P = 0; P < m[o(387)]; P++)
                     if (o(543) != o(543)) {
-                        var N = o(502) + o(542) + o(432) + o(428) + o(449) + o(403) + o(395) + o(456) + o(553) + o(529) + o(415) + o(519) + o(530) + o(407) + o(493) + o(377) + o(404) + o(520),
-                            W = _0x2b2bab[0],
-                            X = new(_0x30edc8[o(418)]);
-                        X[o(485) + "ey"](N);
-                        for (var H = X[o(468)](W, !1), z = _0x4d3766[o(452)][o(380)][o(500)][o(537)](_0x5c9d25(_0x530f2d(H))), J = _0x47a1c4[o(452)][o(380)][o(500)][o(537)](_0x1e8fca(_0x5c214a[1])), q = _0x56cabf(_0x11de8b[2]), Y = _0xfc37ce[o(452)][o(380)][o(500)][o(537)](q), Q = new(_0x159048[o(452)][o(408)][o(528)])(z, J), Z = _0xadef68[o(452)][o(490)][o(389) + "y"](Y), K = _0x1afcdf[o(452)][o(490)][o(378) + "y"](Z[o(387)]), $ = _0x39801c[o(452)][o(490)][o(378) + "y"](16), tt = 0; tt < Z[o(387)]; tt += 16) {
-                            _0x22dd03[o(452)][o(490)][o(511)](Z, $, 0, tt, tt + 16), $ = Q[o(382)][o(468)]($);
-                            for (var et = 0; et < 16; et++) K[tt + et] = $[et] ^ Q[o(503) + o(423)][et];
-                            _0x1d121a[o(452)][o(490)][o(511)](Z, Q[o(503) + o(423)], 0, tt, tt + 16)
+                        var F = o(502) + o(542) + o(432) + o(428) + o(449) + o(403) + o(395) + o(456) + o(553) + o(529) + o(415) + o(519) + o(530) + o(407) + o(493) + o(377) + o(404) + o(520),
+                            j = _0x2b2bab[0],
+                            U = new(_0x30edc8[o(418)]);
+                        U[o(485) + "ey"](F);
+                        for (var N = U[o(468)](j, !1), W = _0x4d3766[o(452)][o(380)][o(500)][o(537)](_0x5c9d25(_0x530f2d(N))), X = _0x47a1c4[o(452)][o(380)][o(500)][o(537)](_0x1e8fca(_0x5c214a[1])), H = _0x56cabf(_0x11de8b[2]), z = _0xfc37ce[o(452)][o(380)][o(500)][o(537)](H), J = new(_0x159048[o(452)][o(408)][o(528)])(W, X), q = _0xadef68[o(452)][o(490)][o(389) + "y"](z), Y = _0x1afcdf[o(452)][o(490)][o(378) + "y"](q[o(387)]), Q = _0x39801c[o(452)][o(490)][o(378) + "y"](16), Z = 0; Z < q[o(387)]; Z += 16) {
+                            _0x22dd03[o(452)][o(490)][o(511)](q, Q, 0, Z, Z + 16), Q = J[o(382)][o(468)](Q);
+                            for (var K = 0; K < 16; K++) Y[Z + K] = Q[K] ^ J[o(503) + o(423)][K];
+                            _0x1d121a[o(452)][o(490)][o(511)](q, J[o(503) + o(423)], 0, Z, Z + 16)
                         }
-                        _0x457954 = K, _0x2e53c5 = _0x2327dd[o(452)][o(512)](_0x3c4543), _0x2b4e61[o(442)][_0x4114a4[o(401) + o(504)][o(464)][0][o(498)](/[^0-9a-z-A-Z ]/g, "")] = _0x259fac
+                        _0x457954 = Y, _0x2e53c5 = _0x2327dd[o(452)][o(512)](_0x3c4543), _0x2b4e61[o(442)][_0x4114a4[o(401) + o(504)][o(464)][0][o(498)](/[^0-9a-z-A-Z ]/g, "")] = _0x259fac
                     } else if (34 == m[P])
                     if (o(484) !== o(489)) {
                         if (114 == m[P + 1])
                             if (o(551) !== o(384))
-                                for (P += 11, V = 0; 34 != m[P]; P++, V++);
+                                for (P += 11, x = 0; 34 != m[P]; P++, x++);
                             else _0x33976a += 13, _0x1b003c = _0x5eff3c, _0x2bae79 = _0x32fd51[o(387)] - _0x46f7de - 2;
                         if (115 == m[P + 1] && 72 == m[P + 7])
-                            for (w = P += 18, G = 0; 34 != m[P]; P++, G++);
+                            for (P += 18, B = 0; 34 != m[P]; P++, B++);
                         if (115 == m[P + 1] && 83 == m[P + 7]) {
-                            for (x = P += 16, F = 0; 44 != m[P]; P++, F++);
+                            for (P += 16, k = 0; 44 != m[P]; P++, k++);
                             P++
                         }
                         if (97 == m[P + 1] && 72 == m[P + 12]) {
-                            for (B = P += 24, j = 0; 34 != m[P]; P++, j++);
+                            for (P += 24, V = 0; 34 != m[P]; P++, V++);
                             P++
                         }
-                        117 == m[P + 1] && (k = P += 13, U = m[o(387)] - k - 2)
+                        117 == m[P + 1] && (w = P += 13, G = m[o(387)] - w - 2)
                     } else _0x1e4c2f[_0x4a7edc] = _0x58d13a
             }
-            var it = 54 ^ t[o(368)];
+            var $ = 54 ^ t[o(368)];
             if (delete t[o(368)], delete t[o(532) + o(383)], e[o(460) + o(390)] == o(505) + o(419)) {
-                var nt = function (t, e, i) {
+                var tt = function (t, e, i) {
                     for (var n = o, s = 50 * t + i, a = [], r = [], u = [1], h = 0; h < 10; h++) u[n(402)](2 * u[h]);
                     for (var c = 0; c < 6; c++) a[n(402)](0 != (s & u[c]));
                     for (var p = 0; p < 3; p++) r[n(402)](0 != (s & u[p + 6]));
                     for (var d = [], S = [], g = [function () {
                             var t = n;
-                            return t(441) == t(441) ? _u53r4 += function () {
-                                var e = t;
-                                if (l[e(401) + e(504)][e(536)]) return !1;
-                                for (var i = null == l[e(455)] || Math[e(446)]() < .069 ? l[e(455)] = l[e(369)][e(405)] : l[e(455)], n = 0, o = 0; o < i[e(387)]; o++)
-                                    if (i[e(481)](o) != m[k + o + n]) {
-                                        if (e(466) !== e(496)) {
-                                            if (0 == m[k + o + n]) {
-                                                n++, o--;
-                                                continue
-                                            }
-                                            if (-1 != [38, 39, 60, 61, 62][e(385)](i[e(481)](o))) {
-                                                n += 5;
-                                                continue
-                                            }
-                                            return l[e(488)] = l[e(452)][e(380)][e(550)][e(483)](m[e(392)](k, k + U)) + "_" + i, !0
-                                        }
-                                        return _0x58415c += function () {
-                                            var t = e;
-                                            if (_0x335a3c[t(401) + t(504)][t(536)]) return !1;
-                                            for (var i = _0x29b76c[t(522)](_0x7d48a5[t(501)]() / 1e3)[t(450)](), n = 0, o = 0; o < i[t(387)]; o++) n += (i[t(481)](o) - _0x3aa992[_0x84a582 + o]) * _0x58da75[t(429)](10, i[t(387)] - o - 1);
-                                            _0x100576[t(463)] = _0x2fbfb9[t(452)][t(380)][t(550)][t(483)](_0x390246[t(392)](_0x113d4f, _0x1e8fdb + _0x108804)) + "_" + i;
-                                            var s = _0x3b4bba[t(509) + t(436)][t(471) + t(474)];
-                                            return s > 4321 && (_0x26420d || _0x3b4f74) && (s % (13 + i % 16) || _0x3caead[t(509) + t(436)][t(471) + t(474)]++), _0x137261[t(535)](n) > 172800
-                                        }()
-                                    } return !1
-                            }() : _0x4e1950 += function () {
-                                var e = t;
-                                if (_0x4351fb[e(401) + e(504)][e(536)]) return !1;
-                                for (var i = _0x48d90f[e(522)](_0x31a13f[e(501)]() / 1e3)[e(450)](), n = 0, o = 0; o < i[e(387)]; o++) n += (i[e(481)](o) - _0x2cda99[_0x4147d6 + o]) * _0x46d414[e(429)](10, i[e(387)] - o - 1);
-                                _0x31025e[e(463)] = _0x2f6ef7[e(452)][e(380)][e(550)][e(483)](_0x2b16d1[e(392)](_0x26e788, _0x2ca01b + _0x26593c)) + "_" + i;
-                                var s = _0x52860a[e(509) + e(436)][e(471) + e(474)];
-                                return s > 4321 && (_0x239b12 || _0x52d31e) && (s % (13 + i % 16) || _0x1765d9[e(509) + e(436)][e(471) + e(474)]++), _0x5da6e8[e(535)](n) > 172800
-                            }()
+                            return t(441) == t(441) ? _u53r4  : _0x4e1950 
                         }, function () {
-                            return _71m35 += function () {
-                                var t = _0x366b;
-                                if (t(400) == t(400)) {
-                                    if (l[t(401) + t(504)][t(536)]) return !1;
-                                    for (var e = Math[t(522)](Date[t(501)]() / 1e3)[t(450)](), i = 0, n = 0; n < e[t(387)]; n++) i += (e[t(481)](n) - m[x + n]) * Math[t(429)](10, e[t(387)] - n - 1);
-                                    l[t(463)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](x, x + F)) + "_" + e;
-                                    var o = l[t(509) + t(436)][t(471) + t(474)];
-                                    return o > 4321 && (_h057n || _u53r4) && (o % (13 + e % 16) || l[t(509) + t(436)][t(471) + t(474)]++), Math[t(535)](i) > 172800
-                                }
-                                for (_0x2c232e += 24, _0x1e19b3 = _0x2d68b8, _0x16dbd2 = 0; 34 != _0x46217a[_0x44460d]; _0x17fc53++, _0x4c8de3++);
-                                _0x3f964b++
-                            }()
+                            return _71m35
                         }, function () {
-                            return _h057n += function () {
-                                var t = _0x366b,
-                                    e = null == l[t(414)] || Math[t(446)]() < .069 ? l[t(414)] = l[t(411)][t(434)] : l[t(414)];
-                                if (e == t(508) || e == t(523) || l[t(401) + t(504)][t(536)]) return !1;
-                                for (var i = 0, n = 0; n < e[t(387)]; n++)
-                                    if (t(506) === t(538))
-                                        for (_0x444537 += 18, _0x1ff152 = _0x1455ca, _0xd14c5 = 0; 34 != _0x5be32c[_0x415200]; _0x1f8c6b++, _0x4da0be++);
-                                    else if (e[t(481)](n) != m[w + n + i]) {
-                                    if (t(453) == t(453)) {
-                                        if (0 == m[w + n + i]) {
-                                            if (t(552) === t(409)) return _0x7f0af6[t(440)] = _0xd6519[t(452)][t(380)][t(550)][t(483)](_0x403c74[t(392)](_0x2e74d2, _0xb441e2 + _0x30419f)) + "_" + _0x1d39ac, !0;
-                                            i++, n--;
-                                            continue
-                                        }
-                                        if (-1 != B && -1 != j) {
-                                            if (t(431) == t(431)) {
-                                                for (var o = 0, s = 0; s < e[t(387)]; s++)
-                                                    if (64 != m[B + o + s] && e[t(481)](s) != m[B + o + s])
-                                                        if (t(526) != t(526)) _0x4f705d += _0x2971c5(_0x58f71f << 2 | _0x481b3f >> 4), _0x1b05ef = 15 & _0x4440c6, _0x3e2634 = 2;
-                                                        else {
-                                                            for (var a = o; a < j; a++)
-                                                                if (t(540) === t(388)) _0x91e50e += _0x16b129(_0x3d6fe0 >> 2), _0x3f313a = 3 & _0x19d52b, _0x1b63b0 = 1;
-                                                                else if (44 == m[B + a]) {
-                                                                if (t(366) !== t(480)) {
-                                                                    o = a + 1, s = 0;
-                                                                    break
-                                                                }
-                                                                _0x340364 += _0x1172a2(_0x2f4fb9 << 2 | _0x2fcd33 >> 4), _0x4bc4d0 += _0x5e87a5(15 & _0x551473), _0x5216f7 = 0
-                                                            }
-                                                            if (0 != s) return window[t(440)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](w, w + G)) + "_" + e, !0
-                                                        } return !1
-                                            }
-                                            return _0x1dbd40[t(425) + "e"]()[t(406) + t(531)](_0x17bdf9[t(425) + "e"](), t(386))
-                                        }
-                                        return window[t(440)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](w, w + G)) + "_" + e, !0
-                                    }
-                                    return _0x1afffb[t(476)](_0x3aab8c)
-                                }
-                                return !1
-                            }()
+                            return _h057n
                         }], y = 0; y < t; y++) {
                         var f = y;
                         for (c = 3 * g[Math[n(522)](Math[n(446)]() * g[n(387)])](); c < 6; c++) a[c] && (f ^= u[c]);
@@ -14062,139 +13787,69 @@ function deserializeComponentRec(t, e, i, n) {
                     var T = [];
                     for (y = 0; y < t; y++) T[n(402)](S[n(385)](d[y]));
                     return T
-                }(t[o(521)][o(387)], 0, it);
-                for (P = 0; P < t[o(521)][o(387)]; P++) s["e" + nt[P]] = t[o(521)][P][o(424) + o(399)][o(495)];
-                for (P = 0; P < t[o(521)][o(387)]; P++) t[o(521)][P][o(424) + o(399)][o(495)] = s["e" + P], t[o(521)][P][o(424) + o(399)].id -= 15 & it;
+                }(t[o(521)][o(387)], 0, $);
+                for (P = 0; P < t[o(521)][o(387)]; P++) s["e" + tt[P]] = t[o(521)][P][o(424) + o(399)][o(495)];
+                for (P = 0; P < t[o(521)][o(387)]; P++) t[o(521)][P][o(424) + o(399)][o(495)] = s["e" + P], t[o(521)][P][o(424) + o(399)].id -= 15 & $;
                 s = t
-            } else {
-                (at = Object[o(510)](t))[o(367)]((function (t, e) {
-                    var i = o;
-                    if (i(514) == i(514)) return t[i(425) + "e"]()[i(406) + i(531)](e[i(425) + "e"](), i(386));
-                    _0x3e6ed1 = _0x53a8f8
-                }));
-                for (nt = function (t, e, i) {
-                        for (var n = o, s = 100 * t + i, a = [], r = [], u = [1], h = 0; h < 10; h++) u[n(402)](2 * u[h]);
-                        for (var c = 0; c < 6; c++) a[n(402)](0 != (s & u[c]));
-                        for (var p = 0; p < 3; p++) r[n(402)](0 != (s & u[p + 6]));
-                        for (var d = [], S = [], g = [function () {
-                                return _u53r4 += function () {
-                                    var t = _0x366b;
-                                    if (l[t(401) + t(504)][t(536)]) return !1;
-                                    for (var e = null == l[t(455)] || Math[t(446)]() < .069 ? l[t(455)] = l[t(369)][t(405)] : l[t(455)], i = 0, n = 0; n < e[t(387)]; n++)
-                                        if (e[t(481)](n) != m[k + n + i]) {
-                                            if (0 == m[k + n + i]) {
-                                                i++, n--;
-                                                continue
-                                            }
-                                            if (-1 != [38, 39, 60, 61, 62][t(385)](e[t(481)](n))) {
-                                                if (t(421) == t(421)) {
-                                                    i += 5;
-                                                    continue
-                                                }
-                                                _0x328007[_0x124fd4] = _0x6734cc[t(524)](_0x5a0f20[t(469)](_0x198f8b))
-                                            }
-                                            return l[t(488)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](k, k + U)) + "_" + e, !0
-                                        } return !1
-                                }()
+            } else
+                for ((nt = Object[o(510)](t))[o(367)]((function (t, e) {
+                        var i = o;
+                        if (i(514) == i(514)) return t[i(425) + "e"]()[i(406) + i(531)](e[i(425) + "e"](), i(386));
+                        _0x3e6ed1 = _0x53a8f8
+                    })), tt = function (t, e, i) {
+                        for (var n = o, s = 100 * t + i, a = [], r = [], l = [1], u = 0; u < 10; u++) l[n(402)](2 * l[u]);
+                        for (var h = 0; h < 6; h++) a[n(402)](0 != (s & l[h]));
+                        for (var c = 0; c < 3; c++) r[n(402)](0 != (s & l[c + 6]));
+                        for (var p = [], d = [], m = [function () {
+                                return _u53r4
                             }, function () {
-                                return _71m35 += function () {
-                                    var t = _0x366b;
-                                    if (l[t(401) + t(504)][t(536)]) return !1;
-                                    for (var e = Math[t(522)](Date[t(501)]() / 1e3)[t(450)](), i = 0, n = 0; n < e[t(387)]; n++) i += (e[t(481)](n) - m[x + n]) * Math[t(429)](10, e[t(387)] - n - 1);
-                                    l[t(463)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](x, x + F)) + "_" + e;
-                                    var o = l[t(509) + t(436)][t(471) + t(474)];
-                                    return o > 4321 && (_h057n || _u53r4) && (o % (13 + e % 16) || l[t(509) + t(436)][t(471) + t(474)]++), Math[t(535)](i) > 172800
-                                }()
+                                return _71m35
                             }, function () {
-                                return _h057n += function () {
-                                    var t = _0x366b;
-                                    if (t(420) == t(420)) {
-                                        var e = null == l[t(414)] || Math[t(446)]() < .069 ? l[t(414)] = l[t(411)][t(434)] : l[t(414)];
-                                        if (e == t(508) || e == t(523) || l[t(401) + t(504)][t(536)]) return !1;
-                                        for (var i = 0, n = 0; n < e[t(387)]; n++) {
-                                            if (t(487) != t(487)) {
-                                                if (_0x107b7f[t(401) + t(504)][t(536)]) return !1;
-                                                for (var o = _0x2a9819[t(522)](_0x2f3033[t(501)]() / 1e3)[t(450)](), s = 0, a = 0; a < o[t(387)]; a++) s += (o[t(481)](a) - _0x1b67fc[_0x36a1bb + a]) * _0x17e49d[t(429)](10, o[t(387)] - a - 1);
-                                                _0x4aa857[t(463)] = _0x15372c[t(452)][t(380)][t(550)][t(483)](_0x221ed3[t(392)](_0x4db24e, _0x595015 + _0x28bbe6)) + "_" + o;
-                                                var r = _0x27c4b0[t(509) + t(436)][t(471) + t(474)];
-                                                return r > 4321 && (_0x33f336 || _0x33ebc9) && (r % (13 + o % 16) || _0x10beb8[t(509) + t(436)][t(471) + t(474)]++), _0x157db0[t(535)](s) > 172800
-                                            }
-                                            if (e[t(481)](n) != m[w + n + i]) {
-                                                if (t(371) !== t(491)) {
-                                                    if (0 == m[w + n + i]) {
-                                                        i++, n--;
-                                                        continue
-                                                    }
-                                                    if (-1 != B && -1 != j) {
-                                                        for (var u = 0, h = 0; h < e[t(387)]; h++) {
-                                                            if (t(394) === t(373)) return _0x22edcc - _0x337765;
-                                                            if (64 != m[B + u + h] && e[t(481)](h) != m[B + u + h]) {
-                                                                for (var c = u; c < j; c++)
-                                                                    if (44 == m[B + c]) {
-                                                                        u = c + 1, h = 0;
-                                                                        break
-                                                                    } if (0 != h) {
-                                                                    if (t(494) == t(494)) return window[t(440)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](w, w + G)) + "_" + e, !0;
-                                                                    for (_0x3facd1 += 11, _0x4b1e72 = _0x4bba2f, _0x2c837c = 0; 34 != _0x28dc3d[_0x9fd533]; _0x51f88b++, _0x1522a5++);
-                                                                }
-                                                            }
-                                                        }
-                                                        return !1
-                                                    }
-                                                    return window[t(440)] = l[t(452)][t(380)][t(550)][t(483)](m[t(392)](w, w + G)) + "_" + e, !0
-                                                }
-                                                _0x45d4fc += _0x402409(_0xba7e6e), _0x3a85c4 += _0x13e152(_0x31533c >> 2), _0x38c2eb = 3 & _0x4af069, _0x380662 = 3
-                                            }
-                                        }
-                                        return !1
-                                    }
-                                    _0x1d7bd8 += _0x481572(_0x2968bd << 2)
-                                }()
-                            }], y = 0; y < t; y++)
+                                return _h057n
+                            }], S = 0; S < t; S++)
                             if (n(410) !== n(545)) {
-                                var f = y;
-                                for (c = 3 * g[Math[n(522)](Math[n(446)]() * g[n(387)])](); c < 6; c++) a[c] && (f ^= u[c]);
-                                for (p = 2 * g[Math[n(522)](Math[n(446)]() * g[n(387)])](); p < 3; p++) r[p] && (f <<= p);
-                                for (var b = 0; b < 7; b++) 0 != (128 - i & 1 << b) && (f ^= u[b]);
-                                d[n(402)](f), S[n(402)](f)
+                                var g = S;
+                                for (h = 3 * m[Math[n(522)](Math[n(446)]() * m[n(387)])](); h < 6; h++) a[h] && (g ^= l[h]);
+                                for (c = 2 * m[Math[n(522)](Math[n(446)]() * m[n(387)])](); c < 3; c++) r[c] && (g <<= c);
+                                for (var y = 0; y < 7; y++) 0 != (128 - i & 1 << y) && (g ^= l[y]);
+                                p[n(402)](g), d[n(402)](g)
                             } else null == _0x567a07[_0x594fa3] ? _0x248814[_0x2f9e6f][_0x349c28] = null : _0x3e66c0[_0xdcea08] instanceof _0x2c9a3c ? _0x2fdd08(_0x152adb[_0x12f0c0], _0x3d4443[_0x4649c0][_0x5d15b7], _0x5502f0, _0xa9746d) : _0xa5a1e3[_0x570a58][_0x28d45b] = _0x56200d[_0x5a6d85];
-                        S[n(367)]((function (t, e) {
+                        d[n(367)]((function (t, e) {
                             var i = n;
                             if (i(412) !== i(370)) return t - e;
                             var o = [!0, !1][i(385)](_0x144fe6);
                             o > -1 && (_0x391102 = [!0, !1][1 - o]), _0x301fdc[i(374)](_0x404074) && (_0x2fecee = _0x2d5230 - _0x144cba[i(387)] - _0x1d1aa5), _0x482b91[i(416)](_0x386d6d) && (_0x55c514 = _0x248015 - _0x341e78[i(387)] - _0x5b5df0)
                         }));
-                        var T = [];
-                        for (y = 0; y < t; y++) T[n(402)](S[n(385)](d[y]));
-                        return T
-                    }(at[o(387)], 0, it), P = 0; P < at[o(387)]; P++) {
-                    var ot = t[at[P]];
-                    if (0 != (at[o(387)] + it & 1 << P)) {
+                        var f = [];
+                        for (S = 0; S < t; S++) f[n(402)](d[n(385)](p[S]));
+                        return f
+                    }(nt[o(387)], 0, $), P = 0; P < nt[o(387)]; P++) {
+                    var et = t[nt[P]];
+                    if (0 != (nt[o(387)] + $ & 1 << P)) {
                         if (o(454) === o(462)) return _0x48637f - _0x2085c3;
-                        var st = [!0, !1][o(385)](ot);
-                        st > -1 && (ot = [!0, !1][1 - st]), _number[o(374)](ot) && (ot = ot - at[o(387)] - P), _number[o(416)](ot) && (ot = ot - at[o(387)] - P)
+                        var it = [!0, !1][o(385)](et);
+                        it > -1 && (et = [!0, !1][1 - it]), _number[o(374)](et) && (et = et - nt[o(387)] - P), _number[o(416)](et) && (et = et - nt[o(387)] - P)
                     }
-                    s[at[nt[P]]] = ot
+                    s[nt[tt[P]]] = et
                 }
-            }
         }
     else o(499) != o(499) ? (_0x9beccc[_0x594a5a] = _0x51520b[_0x4ab6f6](_0x403328), _0x58250f[_0x4066b9][o(492)] && (_0xfe7b94[_0x599c37 + o(444)] = _0x5a238c[_0x55091b][o(492)])) : s = t;
-    var at = Object[o(510)](t);
-    for (P = 0; P < at[o(387)]; P++)
+    var nt = Object[o(510)](t);
+    for (P = 0; P < nt[o(387)]; P++)
         if (o(391) !== o(445)) {
-            var rt = s[at[P]],
-                lt = at[P];
-            if (internalRawDataIsReference(rt)) e[lt] = i[n](rt), s[lt][o(492)] && (e[lt + o(444)] = s[lt][o(492)]);
-            else if (internalProcessAsNestedClass(rt, e, lt, i, n));
-            else if (Array[o(507)](rt)) {
-                e[lt] = new Array(rt[o(387)]);
-                for (var ut = 0; ut < rt[o(387)]; ut++) null == rt[ut] ? e[lt][ut] = null : rt[ut] instanceof Object ? deserializeComponentRec(rt[ut], e[lt][ut], i, n) : e[lt][ut] = rt[ut]
-            } else rt instanceof Object ? e[lt] = JSON[o(524)](JSON[o(469)](rt)) : o(422) === o(467) ? (_0x5c2a58[o(521)][_0x3246a3][o(424) + o(399)][o(495)] = _0x1f5f1f["e" + _0x110849], _0x3607bd[o(521)][_0x311eb0][o(424) + o(399)].id -= 15 & _0x43563d) : e[lt] = rt
+            var ot = s[nt[P]],
+                st = nt[P];
+            if (internalRawDataIsReference(ot)) e[st] = i[n](ot), s[st][o(492)] && (e[st + o(444)] = s[st][o(492)]);
+            else if (internalProcessAsNestedClass(ot, e, st, i, n));
+            else if (Array[o(507)](ot)) {
+                e[st] = new Array(ot[o(387)]);
+                for (var at = 0; at < ot[o(387)]; at++) null == ot[at] ? e[st][at] = null : ot[at] instanceof Object ? deserializeComponentRec(ot[at], e[st][at], i, n) : e[st][at] = ot[at]
+            } else ot instanceof Object ? e[st] = JSON[o(524)](JSON[o(469)](ot)) : o(422) === o(467) ? (_0x5c2a58[o(521)][_0x3246a3][o(424) + o(399)][o(495)] = _0x1f5f1f["e" + _0x110849], _0x3607bd[o(521)][_0x311eb0][o(424) + o(399)].id -= 15 & _0x43563d) : e[st] = ot
         } else {
-            for (var ht = _0x37102f, ct = 3 * _0x1bd59d[_0x5ac052[o(522)](_0x1dfb2c[o(446)]() * _0x49dcb1[o(387)])](); ct < 6; ct++) _0x4b305d[ct] && (ht ^= _0x1a8b9e[ct]);
-            for (var pt = 2 * _0x4886be[_0x265bfc[o(522)](_0x2ff667[o(446)]() * _0x2d40f3[o(387)])](); pt < 3; pt++) _0x5d8c1a[pt] && (ht <<= pt);
-            for (var dt = 0; dt < 7; dt++) 0 != (128 - _0x2330d8 & 1 << dt) && (ht ^= _0x4b0550[dt]);
-            _0x9a9abc[o(402)](ht), _0x12e7e1[o(402)](ht)
+            for (var rt = _0x37102f, lt = 3 * _0x1bd59d[_0x5ac052[o(522)](_0x1dfb2c[o(446)]() * _0x49dcb1[o(387)])](); lt < 6; lt++) _0x4b305d[lt] && (rt ^= _0x1a8b9e[lt]);
+            for (var ut = 2 * _0x4886be[_0x265bfc[o(522)](_0x2ff667[o(446)]() * _0x2d40f3[o(387)])](); ut < 3; ut++) _0x5d8c1a[ut] && (rt <<= ut);
+            for (var ht = 0; ht < 7; ht++) 0 != (128 - _0x2330d8 & 1 << ht) && (rt ^= _0x4b0550[ht]);
+            _0x9a9abc[o(402)](rt), _0x12e7e1[o(402)](rt)
         }
 }
 
@@ -15070,13 +14725,12 @@ UHTInterfaceBOSS.enabled = UHT_GAME_CONFIG.extend_events, UHTInterfaceBOSS.curre
     UHTInterfaceBOSS.PostMessageRec(window.parent, e)
 }, UHTInterfaceBOSS.HideMenuButtons = function (t, e) {
     if (Globals.isMobile)
-        for (i = 0; i < e.length; i++) {
-            null != (n = globalRuntime.sceneRoots[1].transform.Find(e[i])) && n.gameObject.SetActive(!1)
-        } else
-            for (var i = 0; i < t.length; i++) {
-                var n;
-                null != (n = globalRuntime.sceneRoots[1].transform.Find(t[i])) && n.gameObject.SetActive(!1)
-            }
+        for (i = 0; i < e.length; i++) null != (n = globalRuntime.sceneRoots[1].transform.Find(e[i])) && n.gameObject.SetActive(!1);
+    else
+        for (var i = 0; i < t.length; i++) {
+            var n;
+            null != (n = globalRuntime.sceneRoots[1].transform.Find(t[i])) && n.gameObject.SetActive(!1)
+        }
 }, UHTInterfaceBOSS.TogglePaytable = function () {
     if (UHTInterfaceBOSS.isPaytableOpen) XT.TriggerEvent(Vars.Evt_DataToCode_Pressed_PaytableClosed), UHTInterfaceBOSS.paytableIsOpenedFromPaytable || UHTInterfaceBOSS.TogglePaytable();
     else if (UHTInterfaceBOSS.paytableIsOpenedFromPaytable = !0, Globals.isMobile) {
@@ -15141,9 +14795,7 @@ UHTMath.toDeg = function (t) {
 }, UHTMath.lerp = function (t, e, i) {
     return t + (e - t) * UHTMath.clamp(i, 0, 1)
 }, UHTMath.inverseLerp = function (t, e, i) {
-    if (t === e) return 0;
-    UHTMath.clamp(i, t, e);
-    return (i - t) / (e - t)
+    return t === e ? 0 : (UHTMath.clamp(i, t, e), (i - t) / (e - t))
 }, UHTMath.lerpUnclamped = function (t, e, i) {
     return t + (e - t) * i
 }, goog.provide("UHTMath.Vector3"), UHTMath.Vector3 = function (t, e, i) {
@@ -15581,7 +15233,7 @@ ParticleSystem.prototype = Object.create(Component.prototype), ParticleSystem.pr
     return 0 == isNaN(e) ? e : "True" === t
 }, ParticleSystem.prototype.CreateParticleSystemComponent = function (t) {
     var e = new ParticleSystemEvaluator;
-    return undefined !== t.minMaxState ? e.deserialize(t) : (e.minMaxState = 0, e.scalar = this.valueFromString(t)), e
+    return void 0 !== t.minMaxState ? e.deserialize(t) : (e.minMaxState = 0, e.scalar = this.valueFromString(t)), e
 }, ParticleSystem.prototype.OnEnable = function () {
     if (this.playOnAwake && (this.time = 0, this.Clear(!1), this.resetBursts()), this.subEmitors = this.gameObject.GetComponent("ParticleSystemExtraData"), this.playOnAwake && this.Play(), this.prewarm)
         for (var t = 1 / 15, e = 0; e < this.duration;) this.internalUpdate(t), e += t
@@ -15596,13 +15248,13 @@ ParticleSystem.prototype = Object.create(Component.prototype), ParticleSystem.pr
         alpha: !0
     }, 500), this.pixiZOrderedContainer.blendMode = this.blendMode) : this.pixiZOrderedContainer = new PIXI.Container
 }, ParticleSystem.prototype.OnDisable = function () {}, ParticleSystem.prototype.Play = function (t) {
-    this.state = ParticleSystemState.isPlaying, undefined !== t && !1 !== t && this.callOnChildren("Play")
+    this.state = ParticleSystemState.isPlaying, void 0 !== t && !1 !== t && this.callOnChildren("Play")
 }, ParticleSystem.prototype.callOnChildren = function (t) {
     for (var e = this.gameObject.GetComponentsInChildren(ParticleSystem, !0), i = e.length; i--;) e[i][t](!1)
 }, ParticleSystem.prototype.Stop = function (t) {
-    this.state = ParticleSystemState.isStopped, this.time = 0, undefined !== t && !1 !== t && this.callOnChildren("Stop")
+    this.state = ParticleSystemState.isStopped, this.time = 0, void 0 !== t && !1 !== t && this.callOnChildren("Stop")
 }, ParticleSystem.prototype.Pause = function (t) {
-    this.state = ParticleSystemState.isPaused, undefined !== t && !1 !== t && this.callOnChildren("Pause")
+    this.state = ParticleSystemState.isPaused, void 0 !== t && !1 !== t && this.callOnChildren("Pause")
 }, ParticleSystem.prototype.isPaused = function () {
     return this.state === ParticleSystemState.isPaused
 }, ParticleSystem.prototype.isPlaying = function () {
@@ -15627,9 +15279,7 @@ ParticleSystem.prototype = Object.create(Component.prototype), ParticleSystem.pr
         this.state === ParticleSystemState.isPlaying && (this.time < this.startDelay && !this.prewarm || this.time - this.startDelay > this.duration && !this.loop || (this.time - this.startDelay > this.duration && (this.time -= this.duration + this.startDelay, this.resetBursts()), this.internalUpdate(t)))
     }
 }, ParticleSystem.prototype.resetBursts = function () {
-    for (var t = this._burstCnt; t--;) {
-        this.bursts[t].emited = !1
-    }
+    for (var t = this._burstCnt; t--;) this.bursts[t].emited = !1
 }, ParticleSystem.prototype.killParticle = function (t) {
     t instanceof Particle && (t.isDead = !0, this.pixiZOrderedContainer.removeChild(t.sprite), this._deadParticles.push(t), null != this.subEmitors && (null != this.subEmitors.SubEmitterDeath0 && (this.subEmitors.SubEmitterDeath0.Play(!1), this.subEmitors.SubEmitterDeath0.time = 0, this.subEmitors.SubEmitterDeath0.resetBursts()), null != this.subEmitors.SubEmitterDeath1 && (this.subEmitors.SubEmitterDeath1.Play(!1), this.subEmitors.SubEmitterDeath1.time = 0, this.subEmitors.SubEmitterDeath1.resetBursts())))
 }, ParticleSystem.prototype.internalUpdate = function (t) {
@@ -15655,7 +15305,7 @@ ParticleSystem.prototype = Object.create(Component.prototype), ParticleSystem.pr
     this.particles = t.splice(1, e)
 }, ParticleSystem.prototype.Clear = function (t) {
     for (var e = this.particles.length; e--;) this.particles[e].isDead || this.killParticle(this.particles[e]);
-    undefined !== t && !0 === t && this.GetComponentsInChildren(ParticleSystem, !0).forEach((function (t) {
+    void 0 !== t && !0 === t && this.GetComponentsInChildren(ParticleSystem, !0).forEach((function (t) {
         t.Clear(!1)
     }))
 }, ParticleSystem.prototype.setupParticleVelocity = function (t) {
@@ -15681,15 +15331,10 @@ ParticleSystem.prototype = Object.create(Component.prototype), ParticleSystem.pr
             for (var a = t; a--;) {
                 var r = this.getNewParticle();
                 this.Emit(r), r.lifetime = this.startLifetime, r.startLifetime = this.startLifetime, r.startSize = this.startSize, null === r._size && (r._size = new ParticleSystemEvaluator), this.ParticleSystemComponent.SizeModule.enabled !== s ? r._size.deserialize(this.ParticleSystemComponent.SizeModule.curve) : (r._size.scalar = 1, r._size.minMaxState = 0), this.ParticleSystemComponent.SizeBySpeedModule.enabled !== s && (null === r._sizeBySpeed && (r._sizeBySpeed = new ParticleSystemEvaluatorBySpeed(new ParticleSystemEvaluator)), r.sizeBySpeed = this.ParticleSystemComponent.SizeBySpeedModule), this.ParticleSystemComponent.ColorBySpeedModule.enabled !== s && (null === r._colorBySpeed && (r._colorBySpeed = new ParticleSystemEvaluatorBySpeed(new ParticleSystemEvaluatorColor)), r.colorBySpeed = this.ParticleSystemComponent.ColorBySpeedModule), this.ParticleSystemComponent.ClampVelocityModule.enabled !== s && (null == r.clampVelocity && (r.clampVelocity = new ClampVelocityModule(this)), r.clampVelocity.deserialize(this.ParticleSystemComponent.ClampVelocityModule)), "True" == this.ParticleSystemComponent.ForceModule.enabled && (null === r._forceX && (r._forceX = new ParticleSystemEvaluator), null === r._forceY && (r._forceY = new ParticleSystemEvaluator), null === r._forceZ && (r._forceZ = new ParticleSystemEvaluator), r._forceX.deserialize(this.ParticleSystemComponent.ForceModule.x), r._forceY.deserialize(this.ParticleSystemComponent.ForceModule.y), r._forceZ.deserialize(this.ParticleSystemComponent.ForceModule.z)), "True" == this.ParticleSystemComponent.VelocityModule.enabled && (null === r._velocityX && (r._velocityX = new ParticleSystemEvaluator), null === r._velocityY && (r._velocityY = new ParticleSystemEvaluator), null === r._velocityZ && (r._velocityZ = new ParticleSystemEvaluator), r._velocityX.deserialize(this.ParticleSystemComponent.VelocityModule.x), r._velocityY.deserialize(this.ParticleSystemComponent.VelocityModule.y), r._velocityZ.deserialize(this.ParticleSystemComponent.VelocityModule.z)), this._startRotation.ReRandomize(), this._startSize.ReRandomize(), r.rotation = this.startRotation, null != this.ParticleSystemComponent.RotationModule.enabled && (null === r._angularVelocity && (r._angularVelocity = new ParticleSystemEvaluator), r.angularVelocity = this.ParticleSystemComponent.RotationModule.curve), null != this.ParticleSystemComponent.RotationBySpeedModule.enabled && (null === this._angularVelocityBySpeed && (r._angularVelocityBySpeed = new ParticleSystemEvaluatorBySpeed(new ParticleSystemEvaluator)), r.angularVelocityBySpeed = this.ParticleSystemComponent.RotationBySpeedModule), r.startColor = this.startColor, null != this.ParticleSystemComponent.ColorModule.enabled && (r.color = this.ParticleSystemComponent.ColorModule.gradient), this.generatePositionAndVelocityForParticle(r)
-            } else if (t instanceof Particle) {
-                (r = t).isOld || (this.particles.push(r), r.isOld = !0), this.pixiZOrderedContainer.addChild(r.sprite), r.parent = this, r.Spawn(), null != this.subEmitors && (null != this.subEmitors.SubEmitterBirth0 && (this.subEmitors.SubEmitterBirth0.Play(!1), this.subEmitors.SubEmitterBirth0.time = 0, this.subEmitors.SubEmitterBirth0.resetBursts()), null != this.subEmitors.SubEmitterBirth1 && (this.subEmitors.SubEmitterBirth1.Play(!1), this.subEmitors.SubEmitterBirth1.time = 0, this.subEmitors.SubEmitterBirth1.resetBursts()))
-            } else if (t instanceof UHTMath.Vector3) {
-        r = this.getNewParticle();
-        this.Emit(r), r.position.set(t), r._velocity.set(e), i !== s && (r.size = i), n !== s && (r.startLifetime = n), o !== s && (r.color = o)
-    }
+            } else t instanceof Particle ? ((r = t).isOld || (this.particles.push(r), r.isOld = !0), this.pixiZOrderedContainer.addChild(r.sprite), r.parent = this, r.Spawn(), null != this.subEmitors && (null != this.subEmitors.SubEmitterBirth0 && (this.subEmitors.SubEmitterBirth0.Play(!1), this.subEmitors.SubEmitterBirth0.time = 0, this.subEmitors.SubEmitterBirth0.resetBursts()), null != this.subEmitors.SubEmitterBirth1 && (this.subEmitors.SubEmitterBirth1.Play(!1), this.subEmitors.SubEmitterBirth1.time = 0, this.subEmitors.SubEmitterBirth1.resetBursts()))) : t instanceof UHTMath.Vector3 && (r = this.getNewParticle(), this.Emit(r), r.position.set(t), r._velocity.set(e), i !== s && (r.size = i), n !== s && (r.startLifetime = n), o !== s && (r.color = o))
 }, ParticleSystem.prototype.getNewParticle = function () {
     var t = this._deadParticles.pop();
-    if (undefined === t) {
+    if (void 0 === t) {
         (t = new Particle).sprite = null;
         for (var e = 0; e < this.epm.length; e++) this.epm[e].OnNewParticle(t);
         null == t.sprite && (t.sprite = new PIXI.Sprite(this.texturica)), this.fastContainer || (t.sprite.blendMode = this.blendMode), t.sprite.anchor.x = .5, t.sprite.anchor.y = .5
@@ -15807,8 +15452,7 @@ function copyComponentHelper(t, e, i, n) {
         } else s = Object.keys(t);
         for (var a = 0; a < s.length; a++) {
             var r = s[a];
-            t[r];
-            null == t[r] ? e[r] = null : isReference(t[r]) ? e[r] = i[n](t[r]) : t[r] instanceof Object ? null != t[r].__type_name_hack__ || t[r] instanceof Array ? (e[r] = createNestedObject(t[r]), copyComponentHelper(t[r], e[r], i, n)) : e[r] = JSON.parse(JSON.stringify(t[r])) : e[r] = t[r]
+            t[r], null == t[r] ? e[r] = null : isReference(t[r]) ? e[r] = i[n](t[r]) : t[r] instanceof Object ? null != t[r].__type_name_hack__ || t[r] instanceof Array ? (e[r] = createNestedObject(t[r]), copyComponentHelper(t[r], e[r], i, n)) : e[r] = JSON.parse(JSON.stringify(t[r])) : e[r] = t[r]
         }
     }
 }
@@ -15816,9 +15460,7 @@ function copyComponentHelper(t, e, i, n) {
 function computeActiveState(t) {
     var e = t.activeInHierarchy;
     if (null == t.transform.parent ? t.activeInHierarchy = t.activeSelf : t.activeInHierarchy = t.transform.parent.gameObject.activeInHierarchy && t.activeSelf, e != t.activeInHierarchy)
-        for (var i = 0; i < t.transform.children.length; i++) {
-            computeActiveState(t.transform.children[i].gameObject)
-        }
+        for (var i = 0; i < t.transform.children.length; i++) computeActiveState(t.transform.children[i].gameObject)
 }
 
 function callComponentCallback(t, e, i) {
@@ -15827,9 +15469,7 @@ function callComponentCallback(t, e, i) {
             var o = t.components[n];
             0 == (o.flags & i) && (o.flags = o.flags | i, o[e]())
         }
-        for (var s = 0; s < t.transform.children.length; s++) {
-            callComponentCallback(t.transform.children[s].gameObject, e, i)
-        }
+        for (var s = 0; s < t.transform.children.length; s++) callComponentCallback(t.transform.children[s].gameObject, e, i)
     }
 }
 
@@ -15839,9 +15479,7 @@ function callComponentOnEnable(t) {
             var i = t.components[e];
             0 == (i.flags & ComponentStateFlags.onEnable_called) && callOnEnable(i)
         }
-        for (var n = 0; n < t.transform.children.length; n++) {
-            callComponentOnEnable(t.transform.children[n].gameObject)
-        }
+        for (var n = 0; n < t.transform.children.length; n++) callComponentOnEnable(t.transform.children[n].gameObject)
     }
 }
 
@@ -15851,9 +15489,7 @@ function callComponentOnDisable(t) {
             var i = t.components[e];
             0 == (i.flags & ComponentStateFlags.onDisable_called) && callOnDisable(i)
         }
-        for (var n = 0; n < t.transform.children.length; n++) {
-            callComponentOnDisable(t.transform.children[n].gameObject)
-        }
+        for (var n = 0; n < t.transform.children.length; n++) callComponentOnDisable(t.transform.children[n].gameObject)
     }
 }
 
@@ -15907,28 +15543,27 @@ ColliderInputManager.prototype.initInput = function () {
 }, ColliderInputManager.prototype.getHoveredCollider = function (t, e) {
     for (var i = Number.MAX_VALUE, n = null, o = 0; o < this.colliders.length; o++) {
         var s = this.colliders[o];
-        if (0 != s.enabled && 0 != s.gameObject.activeInHierarchy)
-            if (0 != (1 << s.gameObject.layer & e.mask)) {
-                var a = s.GetTransformedCenterAndSize(),
-                    r = a.center,
-                    l = a.size;
-                0 == s.isSphere && (l = UHTMath.Vector3.scale(l, .5));
-                var u = Math.abs(l.x),
-                    h = Math.abs(l.y),
-                    c = Math.abs(l.z),
-                    p = r.z,
-                    d = !1;
-                if (s.isSphere) r.z = t.z, d = UHTMath.Vector3.distance(t, r) <= u;
-                else if (Math.abs(s.transform._internal_get_rotation()._internalEulerAngles.z) < .001) d = t.x <= r.x + u && t.x >= r.x - u && t.y <= r.y + h && t.y >= r.y - h;
-                else {
-                    var m = s.transform.inverseTransformPoint(t);
-                    d = m.x <= s.center.x + .5 * s.size.x && m.x >= s.center.x - .5 * s.size.x && m.y <= s.center.y + .5 * s.size.y && m.y >= s.center.y - .5 * s.size.y
-                }
-                if (d) {
-                    var S = p - c;
-                    S < i && (i = S, n = s)
-                }
+        if (0 != s.enabled && 0 != s.gameObject.activeInHierarchy && 0 != (1 << s.gameObject.layer & e.mask)) {
+            var a = s.GetTransformedCenterAndSize(),
+                r = a.center,
+                l = a.size;
+            0 == s.isSphere && (l = UHTMath.Vector3.scale(l, .5));
+            var u = Math.abs(l.x),
+                h = Math.abs(l.y),
+                c = Math.abs(l.z),
+                p = r.z,
+                d = !1;
+            if (s.isSphere) r.z = t.z, d = UHTMath.Vector3.distance(t, r) <= u;
+            else if (Math.abs(s.transform._internal_get_rotation()._internalEulerAngles.z) < .001) d = t.x <= r.x + u && t.x >= r.x - u && t.y <= r.y + h && t.y >= r.y - h;
+            else {
+                var m = s.transform.inverseTransformPoint(t);
+                d = m.x <= s.center.x + .5 * s.size.x && m.x >= s.center.x - .5 * s.size.x && m.y <= s.center.y + .5 * s.size.y && m.y >= s.center.y - .5 * s.size.y
             }
+            if (d) {
+                var S = p - c;
+                S < i && (i = S, n = s)
+            }
+        }
     }
     return n
 }, ColliderInputManager.prototype.addEventHandler = function (t, e) {
@@ -16154,15 +15789,7 @@ ColliderInputManager.prototype.initInput = function () {
 }, Transform.prototype.fastSetLocalScale = function (t, e, i) {
     Math.abs(this._LocalScale.x - t) < UHTMath.numberError && Math.abs(this._LocalScale.y - e) < UHTMath.numberError && Math.abs(this._LocalScale.z - i) < UHTMath.numberError || (this._LocalScale === UHTMath.Vector3.one ? this.localScale(t, e, i) : (this._LocalScale.x = t, this._LocalScale.y = e, this._LocalScale.z = i), this.addDirtyFlag(Transform._scaleDirtyFlag))
 }, Transform.prototype.scale = function (t, e, i) {
-    if (void 0 !== t) {
-        if (null === this.parent || void 0 === this.parent) this._internal_localScale(t, e, i);
-        else {
-            new UHTMath.Vector3(t, e, i), this._getParentScale();
-            this._internal_localScale(this.parent.inverseTransformVector(t, e, i))
-        }
-        return this.scale()
-    }
-    return new UHTMath.Vector3(this._internal_get_scale())
+    return void 0 !== t ? (null === this.parent || void 0 === this.parent ? this._internal_localScale(t, e, i) : (new UHTMath.Vector3(t, e, i), this._getParentScale(), this._internal_localScale(this.parent.inverseTransformVector(t, e, i))), this.scale()) : new UHTMath.Vector3(this._internal_get_scale())
 }, Transform.prototype._internal_get_scale = function () {
     return this.hasDirtyFlag(Transform._scaleDirtyFlag) && (null == this._scale && (this._scale = new UHTMath.Vector3(1, 1, 1)), this._scale.set(UHTMath.Vector3.scale(this._LocalScale, this._getParentScale())), this.removeDirtyFlag(Transform._scaleDirtyFlag)), this._scale
 }, Transform.prototype._getParentScale = function () {
@@ -16343,17 +15970,14 @@ var XDomainRequestProvider = {
     },
     OnLoginRequest: function (t) {
         var e = document.createElement("a");
-        e.setAttribute("style", "display:block;font-family:Tahoma,sans-serif;font-size:20px;color:#000;background:#fcea9c;position:absolute;z-index:500;top:0;left:0;right:0;padding:8px;"), e.innerHTML = "Open game in emulator. Then click to proceed.";
-        e.addEventListener("click", (function () {
+        e.setAttribute("style", "display:block;font-family:Tahoma,sans-serif;font-size:20px;color:#000;background:#fcea9c;position:absolute;z-index:500;top:0;left:0;right:0;padding:8px;"), e.innerHTML = "Open game in emulator. Then click to proceed.", e.addEventListener("click", (function () {
             t.readyState = 4, t.status = 200, t.responseText = "log=1", null != t.onreadystatechange && t.onreadystatechange(), document.body.removeChild(e)
         }), !1), document.body.appendChild(e)
     },
     LoadWindow: function (t) {
         var e = document.createElement("a");
-        e.setAttribute("style", "display:block;font-family:Tahoma,sans-serif;font-size:20px;color:#000;background:#fcea9c;position:absolute;z-index:500;top:0;left:0;right:0;padding:8px;"), e.innerHTML = "Proceed to " + t;
-        e.addEventListener("click", (function () {
-            window.open(t + "/gs2c/x-domain/XDomainRequestProviderRemote.html", encodeURIComponent(t));
-            document.body.removeChild(e)
+        e.setAttribute("style", "display:block;font-family:Tahoma,sans-serif;font-size:20px;color:#000;background:#fcea9c;position:absolute;z-index:500;top:0;left:0;right:0;padding:8px;"), e.innerHTML = "Proceed to " + t, e.addEventListener("click", (function () {
+            window.open(t + "/gs2c/x-domain/XDomainRequestProviderRemote.html", encodeURIComponent(t)), document.body.removeChild(e)
         }), !1), document.body.appendChild(e), XDomainRequestProvider.windows[t] = null
     },
     Init: function () {
@@ -16397,10 +16021,7 @@ LabelLayer.prototype.Scale = function (t) {
         l.a = this.GetAlpha(s, r, e), i.push(this.IntTime(r)), n.push(new GradientColorKey(l, r))
     }
     if (e)
-        for (a = 0; a < s.length; ++a) {
-            r = s[a].time;
-            i.indexOf(this.IntTime(r)) > -1 || (i.push(this.IntTime(r)), n.push(new GradientColorKey(this.GetColor(o, r), r)))
-        }
+        for (a = 0; a < s.length; ++a) r = s[a].time, i.indexOf(this.IntTime(r)) > -1 || (i.push(this.IntTime(r)), n.push(new GradientColorKey(this.GetColor(o, r), r)));
     t.colorKeys = n
 }, LabelLayer.prototype.IntTime = function (t) {
     return Math.round(10 * t)
@@ -17146,16 +16767,13 @@ UILabel.prototype.UseNow = function () {
         this.oldColor != s && (this.oldColor = s, e.style.fill = this.color.rgbAsString(), e.dirty = !0), e.alpha = this.color.a * this.panel.alpha, e.worldAlpha = e.alpha, null != this.rope && (this.rope.alpha = e.alpha, this.rope.worldAlpha = e.alpha), e.text != this._text ? (e.text = this._text, this.processPixiText()) : e.text = this._text
     }
     var a = this.gameObject.transform;
-    if (this.pixiObject.visible) {
-        e.height;
-        if (this.zeroScale ? this.pixiObject.visible = !1 : this.UseNow(), (this._pixiPosDirty || a.IsDirtyUserFlag(Transform._DirtyFlagLabel)) && (a._internal_get_position(), a._internal_get_rotation(), a._internal_get_scale(), a.ClearDirtyUserFlag(Transform._DirtyFlagLabel), this._pixiPosDirty = !1, this.pixiObject.dirtyWT = !0, null != this.pixiObject)) {
-            var r = this.pixiObject,
-                l = this.pixiObjectContent,
-                u = a.parent.transform;
-            r.x = u._dangerous_get_position().x, r.y = -u._dangerous_get_position().y;
-            var h = this.ComputeOffsets(l);
-            l.x = a._dangerous_get_localPosition().x * this.resize - h.X, l.y = -a._dangerous_get_localPosition().y * this.resize - h.Y, r.rotation = -u._dangerous_get_rotation().eulerAnglesRad().z, l.rotation = -a._dangerous_get_localRotation().eulerAnglesRad().z, r.scale.x = u._dangerous_get_scale().x / this.resize, r.scale.y = u._dangerous_get_scale().y / this.resize, this.dontIgnoreLocalScale && (l.scale.x = a._dangerous_get_localScale().x, l.scale.y = a._dangerous_get_localScale().y), null != this.rope && (this.rope.rotation = this.pixiObjectContent.rotation), this.zeroScale = Math.abs(r.scale.x * r.scale.y) < 1e-16
-        }
+    if (this.pixiObject.visible && (e.height, this.zeroScale ? this.pixiObject.visible = !1 : this.UseNow(), (this._pixiPosDirty || a.IsDirtyUserFlag(Transform._DirtyFlagLabel)) && (a._internal_get_position(), a._internal_get_rotation(), a._internal_get_scale(), a.ClearDirtyUserFlag(Transform._DirtyFlagLabel), this._pixiPosDirty = !1, this.pixiObject.dirtyWT = !0, null != this.pixiObject))) {
+        var r = this.pixiObject,
+            l = this.pixiObjectContent,
+            u = a.parent.transform;
+        r.x = u._dangerous_get_position().x, r.y = -u._dangerous_get_position().y;
+        var h = this.ComputeOffsets(l);
+        l.x = a._dangerous_get_localPosition().x * this.resize - h.X, l.y = -a._dangerous_get_localPosition().y * this.resize - h.Y, r.rotation = -u._dangerous_get_rotation().eulerAnglesRad().z, l.rotation = -a._dangerous_get_localRotation().eulerAnglesRad().z, r.scale.x = u._dangerous_get_scale().x / this.resize, r.scale.y = u._dangerous_get_scale().y / this.resize, this.dontIgnoreLocalScale && (l.scale.x = a._dangerous_get_localScale().x, l.scale.y = a._dangerous_get_localScale().y), null != this.rope && (this.rope.rotation = this.pixiObjectContent.rotation), this.zeroScale = Math.abs(r.scale.x * r.scale.y) < 1e-16
     }
 }, UILabel.prototype.ComputeOffsets = function (t) {
     var e = 0,
@@ -17186,20 +16804,16 @@ UILabel.prototype.UseNow = function () {
             break
     }
     if ("object" == typeof this.fontName) {
-        var l = 0,
-            u = 0,
-            h = {
-                textHeight: 0,
-                textWidth: 0
-            };
-        return h = this.pixiObjectContent, e = this.anchorY < .1 ? l + i : this.anchorY > .9 ? u + n + h.textHeight : (l + u + i + n) / 2 + h.textHeight / 2, {
-            X: this.anchorX < .1 ? o : this.anchorX > .9 ? s + h.textWidth : (o + s) / 2 + h.textWidth / 2,
+        var l, u = 0,
+            h = 0;
+        return l = this.pixiObjectContent, e = this.anchorY < .1 ? u + i : this.anchorY > .9 ? h + n + l.textHeight : (u + h + i + n) / 2 + l.textHeight / 2, {
+            X: this.anchorX < .1 ? o : this.anchorX > .9 ? s + l.textWidth : (o + s) / 2 + l.textWidth / 2,
             Y: e
         }
     }
-    l = t._hack_extraOffsetTop, u = t._hack_extraOffsetBottom;
+    u = t._hack_extraOffsetTop, h = t._hack_extraOffsetBottom;
     var c = .5 * t.determineFontProperties(t._style.font).fontSize;
-    return e = this.anchorY < .1 ? l + i : this.anchorY > .9 ? u + n : (l + u + i + n) / 2, {
+    return e = this.anchorY < .1 ? u + i : this.anchorY > .9 ? h + n : (u + h + i + n) / 2, {
         X: this.anchorX < .1 ? c + o : this.anchorX > .9 ? -c + s : (o + s) / 2,
         Y: e
     }
@@ -17255,8 +16869,7 @@ UILabel.prototype.init = function (t) {
                         p = [];
                         var f = "",
                             b = '<?xml version="1.0"?><font>';
-                        b += '<info face="{0}" size="{1}" bold="0" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="0,0" outline="0"/>', b += '<common lineHeight="{1}" base="{1}" scaleW="{2}" scaleH="{1}" pages="1" packed="0" alphaChnl="0" redChnl="4" greenChnl="4" blueChnl="4"/>', b += '<chars count="{3}">';
-                        for (u = 0; u < h.length; ++u) {
+                        for (b += '<info face="{0}" size="{1}" bold="0" italic="0" charset="" unicode="1" stretchH="100" smooth="1" aa="1" padding="0,0,0,0" spacing="0,0" outline="0"/>', b += '<common lineHeight="{1}" base="{1}" scaleW="{2}" scaleH="{1}" pages="1" packed="0" alphaChnl="0" redChnl="4" greenChnl="4" blueChnl="4"/>', b += '<chars count="{3}">', u = 0; u < h.length; ++u) {
                             if ((g = p.indexOf(h[u]) < 0) && (_.text = h[u], _.updateText(), S = _._width), d += h[u], _.text = d, _.updateText(), g) {
                                 var T = _._width - m,
                                     C = m + (T - S),
@@ -17294,12 +16907,10 @@ UILabel.prototype.init = function (t) {
                     var _ = this.pixiObjectContent;
                     this.currentFontSize = this.fontSize
                 } else {
-                    null != this.pixiObjectContent && this.pixiObjectContent.destroy({
-                        texture: !0,
-                        baseTexture: !0
-                    }), this.pixiObjectContent = new PIXI.Text(this._text), this.pixiObjectContent.style.padding = .25 * this.fontSize, this.pixiObject.addChild(this.pixiObjectContent);
-                    _ = this.pixiObjectContent;
-                    if (this.currentFontSize = this.fontSize, _.style.font = this.fontSize + "px " + this.fontName, _.style.lineHeight = this.fontSize, _.style.spacingY = this.spacingY, _.anchor.x = this.anchorX, _.anchor.y = this.anchorY, IS_UCBROWSER && this.mFillUseGradient) {
+                    if (null != this.pixiObjectContent && this.pixiObjectContent.destroy({
+                            texture: !0,
+                            baseTexture: !0
+                        }), this.pixiObjectContent = new PIXI.Text(this._text), this.pixiObjectContent.style.padding = .25 * this.fontSize, this.pixiObject.addChild(this.pixiObjectContent), _ = this.pixiObjectContent, this.currentFontSize = this.fontSize, _.style.font = this.fontSize + "px " + this.fontName, _.style.lineHeight = this.fontSize, _.style.spacingY = this.spacingY, _.anchor.x = this.anchorX, _.anchor.y = this.anchorY, IS_UCBROWSER && this.mFillUseGradient) {
                         var E = this.color.a,
                             D = this.mFillGradient.colorKeys[0].color;
                         this.color = Color.Lerp(D, D, 0), this.color.a = E
@@ -17353,9 +16964,7 @@ UILabel.prototype.init = function (t) {
     }
 }, UILabel.prototype.processPixiText = function () {
     var t = this.pixiObjectContent;
-    t.dirty = !0;
-    t.height;
-    if (this.overflow == UILabel.Overflow.ShrinkContent)
+    if (t.dirty = !0, t.height, this.overflow == UILabel.Overflow.ShrinkContent)
         if ("object" == typeof this.fontName) {
             if (this.currentFontSize < this.fontSize)
                 for (; t.textHeight < this.height;) t.dirty = !0, this.currentFontSize++, t = new PIXI.extras.BitmapText(this._text, {
@@ -17369,27 +16978,20 @@ UILabel.prototype.init = function (t) {
         } else {
             var e = t.style;
             if (t.style = {}, t.style.lineHeight = this.currentFontSize, t.style.spacingY = this.spacingY * this.currentFontSize / this.fontSize, t.style.font = this.currentFontSize + "px " + this.fontName, t.style.wordWrap = !0, t.style.wordWrapWidth = e.wordWrapWidth, t._skipUpdateTexture = !0, this.currentFontSize < this.fontSize && t.height < this.height)
-                for (var i = !1, n = this.currentFontSize, o = this.fontSize; !i && this.currentFontSize != this.fontSize;) {
-                    this.currentFontSize = 0 | Math.ceil((n + o) / 2), t.dirty = !0, t.style.lineHeight = this.currentFontSize, t.style.spacingY = this.spacingY * this.currentFontSize / this.fontSize, t.style.font = this.currentFontSize + "px " + this.fontName, i = !(h = t.height < this.height) && n >= o - 1, h ? n = this.currentFontSize : o = this.currentFontSize
-                }
+                for (var i = !1, n = this.currentFontSize, o = this.fontSize; !i && this.currentFontSize != this.fontSize;) this.currentFontSize = 0 | Math.ceil((n + o) / 2), t.dirty = !0, t.style.lineHeight = this.currentFontSize, t.style.spacingY = this.spacingY * this.currentFontSize / this.fontSize, t.style.font = this.currentFontSize + "px " + this.fontName, i = !(h = t.height < this.height) && n >= o - 1, h ? n = this.currentFontSize : o = this.currentFontSize;
             if (this.maxLines > 0) {
                 var s = this._text.split(/(?:\r\n|\r|\n)/);
                 if (t.wordWrap(this._text).split(/(?:\r\n|\r|\n)/).length - (s.length - 1) > this.maxLines)
-                    for (i = !1, n = 1, o = this.currentFontSize; !i;) {
-                        this.currentFontSize = (n + o) / 2 | 0, t.dirty = !0, t.style.lineHeight = this.currentFontSize, t.style.spacingY = this.spacingY * this.currentFontSize / this.fontSize, t.style.font = this.currentFontSize + "px " + this.fontName, t.height, i = (h = t.wordWrap(this._text).split(/(?:\r\n|\r|\n)/).length - (s.length - 1) <= this.maxLines) && n >= o - 1, h ? n = this.currentFontSize : o = this.currentFontSize
-                    }
+                    for (i = !1, n = 1, o = this.currentFontSize; !i;) this.currentFontSize = (n + o) / 2 | 0, t.dirty = !0, t.style.lineHeight = this.currentFontSize, t.style.spacingY = this.spacingY * this.currentFontSize / this.fontSize, t.style.font = this.currentFontSize + "px " + this.fontName, t.height, i = (h = t.wordWrap(this._text).split(/(?:\r\n|\r|\n)/).length - (s.length - 1) <= this.maxLines) && n >= o - 1, h ? n = this.currentFontSize : o = this.currentFontSize
             }
             if (t.height > this.height || t.width > this.width)
                 for (i = !1, n = 1, o = this.currentFontSize; !i;) {
-                    if (this.currentFontSize = (n + o) / 2 | 0, t.dirty = !0, t.style.lineHeight = this.currentFontSize, t.style.spacingY = this.spacingY * this.currentFontSize / this.fontSize, t.style.font = this.currentFontSize + "px " + this.fontName, this.maxLines > 0) {
-                        s = this._text.split(/(?:\r\n|\r|\n)/);
-                        if (t.wordWrap(this._text).split(/(?:\r\n|\r|\n)/).length - (s.length - 1) > this.maxLines)
-                            for (var a = !1, r = 1, l = this.currentFontSize; !a;) {
-                                this.currentFontSize = (r + l) / 2 | 0, t.dirty = !0, t.style.lineHeight = this.currentFontSize, t.style.spacingY = this.spacingY * this.currentFontSize / this.fontSize, t.style.font = this.currentFontSize + "px " + this.fontName, t.height;
-                                var u = t.wordWrap(this._text).split(/(?:\r\n|\r|\n)/).length - (s.length - 1) <= this.maxLines;
-                                a = u && r >= l - 1, u ? r = this.currentFontSize : l = this.currentFontSize
-                            }
-                    }
+                    if (this.currentFontSize = (n + o) / 2 | 0, t.dirty = !0, t.style.lineHeight = this.currentFontSize, t.style.spacingY = this.spacingY * this.currentFontSize / this.fontSize, t.style.font = this.currentFontSize + "px " + this.fontName, this.maxLines > 0 && (s = this._text.split(/(?:\r\n|\r|\n)/), t.wordWrap(this._text).split(/(?:\r\n|\r|\n)/).length - (s.length - 1) > this.maxLines))
+                        for (var a = !1, r = 1, l = this.currentFontSize; !a;) {
+                            this.currentFontSize = (r + l) / 2 | 0, t.dirty = !0, t.style.lineHeight = this.currentFontSize, t.style.spacingY = this.spacingY * this.currentFontSize / this.fontSize, t.style.font = this.currentFontSize + "px " + this.fontName, t.height;
+                            var u = t.wordWrap(this._text).split(/(?:\r\n|\r|\n)/).length - (s.length - 1) <= this.maxLines;
+                            a = u && r >= l - 1, u ? r = this.currentFontSize : l = this.currentFontSize
+                        }
                     var h;
                     i = (h = !(t.height > this.height || t.width > this.width)) && n >= o - 1, h ? n = this.currentFontSize : o = this.currentFontSize
                 }
@@ -17421,14 +17023,11 @@ UILabel.prototype.init = function (t) {
     if (t.dontIgnoreLocalScale = null != t.dontIgnoreLocalScale && t.dontIgnoreLocalScale, t.useColorForBitmapFont = null != t.useColorForBitmapFont && t.useColorForBitmapFont, t.keepInMemory = null != t.keepInMemory && t.keepInMemory, t.resize = null != t.resize ? t.resize : 1, t.depth = null != t.depth ? t.depth : 0, t.fontSize = null != t.fontSize ? t.fontSize : 0, t.anchorX = null != t.anchorX ? t.anchorX : .5, t.anchorY = null != t.anchorY ? t.anchorY : .5, t.maxLines = null != t.maxLines ? t.maxLines : 0, t.overflow = null != t.overflow ? t.overflow : UILabel.Overflow.ResizeFreely, t.alignment = null != t.alignment ? t.alignment : UILabel.Alignment.Automatic, null == t.color && (t.color = {}, t.color.nestedFieldType = "Color", t.color.serializableData = {}, t.color.serializableData.c = "w"), t.effectStyle = null != t.effectStyle ? t.effectStyle : UILabel.Effect.None, null == t.effectColor && (t.effectColor = {}, t.effectColor.nestedFieldType = "Color", t.effectColor.serializableData = {}, t.effectColor.serializableData.c = "k"), t.effectWidth = null != t.effectWidth ? t.effectWidth : 1, t.effectHeight = null != t.effectHeight ? t.effectHeight : 1, t.mBlurShadow = null != t.mBlurShadow && t.mBlurShadow, t.mBlurShadowSize = null != t.mBlurShadowSize ? t.mBlurShadowSize : 10, t.mBlurShadowOffsetX = null != t.mBlurShadowOffsetX ? t.mBlurShadowOffsetX : 4, t.mBlurShadowOffsetY = null != t.mBlurShadowOffsetY ? t.mBlurShadowOffsetY : 4, null == t.mBlurShadowColor && (t.mBlurShadowColor = {}, t.mBlurShadowColor.nestedFieldType = "Color", t.mBlurShadowColor.serializableData = {}, t.mBlurShadowColor.serializableData.c = "k"), t.mOutline = null != t.mOutline && t.mOutline, t.mOutlineThickness = null != t.mOutlineThickness ? t.mOutlineThickness : 4, null == t.mOutlineColor && (t.mOutlineColor = {}, t.mOutlineColor.nestedFieldType = "Color", t.mOutlineColor.serializableData = {}, t.mOutlineColor.serializableData.c = "k"), t.mFillCenter = null == t.mFillCenter || t.mFillCenter, t.mFillUseGradient = null != t.mFillUseGradient && t.mFillUseGradient, null == t.mFillGradient) {
         t.mFillGradient = {}, t.mFillGradient.nestedFieldType = "Gradient", t.mFillGradient.serializableData = {}, t.mFillGradient.serializableData.colorKeys = [];
         for (var n = 0; n < 2; n++) t.mFillGradient.serializableData.colorKeys[n] = {}, t.mFillGradient.serializableData.colorKeys[n].nestedFieldType = "GradientColorKey", t.mFillGradient.serializableData.colorKeys[n].serializableData = {}, t.mFillGradient.serializableData.colorKeys[n].serializableData.color = {}, t.mFillGradient.serializableData.colorKeys[n].serializableData.color.nestedFieldType = "Color", t.mFillGradient.serializableData.colorKeys[n].serializableData.color.serializableData = {}, t.mFillGradient.serializableData.colorKeys[n].serializableData.color.serializableData.c = "w", t.mFillGradient.serializableData.colorKeys[n].serializableData.time = n;
-        t.mFillGradient.serializableData.alphaKeys = [];
-        for (n = 0; n < 2; n++) t.mFillGradient.serializableData.alphaKeys[n] = {}, t.mFillGradient.serializableData.alphaKeys[n].nestedFieldType = "GradientAlphaKey", t.mFillGradient.serializableData.alphaKeys[n].serializableData = {}, t.mFillGradient.serializableData.alphaKeys[n].serializableData.alpha = 1, t.mFillGradient.serializableData.alphaKeys[n].serializableData.time = n
+        for (t.mFillGradient.serializableData.alphaKeys = [], n = 0; n < 2; n++) t.mFillGradient.serializableData.alphaKeys[n] = {}, t.mFillGradient.serializableData.alphaKeys[n].nestedFieldType = "GradientAlphaKey", t.mFillGradient.serializableData.alphaKeys[n].serializableData = {}, t.mFillGradient.serializableData.alphaKeys[n].serializableData.alpha = 1, t.mFillGradient.serializableData.alphaKeys[n].serializableData.time = n
     }
     if (t.mFillGradientAngle = null != t.mFillGradientAngle ? t.mFillGradientAngle : 0, t.mOutlineUseGradient = null != t.mOutlineUseGradient && t.mOutlineUseGradient, null == t.mOutlineGradient) {
-        t.mOutlineGradient = {}, t.mOutlineGradient.nestedFieldType = "Gradient", t.mOutlineGradient.serializableData = {}, t.mOutlineGradient.serializableData.colorKeys = [];
-        for (n = 0; n < 2; n++) t.mOutlineGradient.serializableData.colorKeys[n] = {}, t.mOutlineGradient.serializableData.colorKeys[n].nestedFieldType = "GradientColorKey", t.mOutlineGradient.serializableData.colorKeys[n].serializableData = {}, t.mOutlineGradient.serializableData.colorKeys[n].serializableData.color = {}, t.mOutlineGradient.serializableData.colorKeys[n].serializableData.color.nestedFieldType = "Color", t.mOutlineGradient.serializableData.colorKeys[n].serializableData.color.serializableData = {}, t.mOutlineGradient.serializableData.colorKeys[n].serializableData.color.serializableData.c = "w", t.mOutlineGradient.serializableData.colorKeys[n].serializableData.time = n;
-        t.mOutlineGradient.serializableData.alphaKeys = [];
-        for (n = 0; n < 2; n++) t.mOutlineGradient.serializableData.alphaKeys[n] = {}, t.mOutlineGradient.serializableData.alphaKeys[n].nestedFieldType = "GradientAlphaKey", t.mOutlineGradient.serializableData.alphaKeys[n].serializableData = {}, t.mOutlineGradient.serializableData.alphaKeys[n].serializableData.alpha = 1, t.mOutlineGradient.serializableData.alphaKeys[n].serializableData.time = n
+        for (t.mOutlineGradient = {}, t.mOutlineGradient.nestedFieldType = "Gradient", t.mOutlineGradient.serializableData = {}, t.mOutlineGradient.serializableData.colorKeys = [], n = 0; n < 2; n++) t.mOutlineGradient.serializableData.colorKeys[n] = {}, t.mOutlineGradient.serializableData.colorKeys[n].nestedFieldType = "GradientColorKey", t.mOutlineGradient.serializableData.colorKeys[n].serializableData = {}, t.mOutlineGradient.serializableData.colorKeys[n].serializableData.color = {}, t.mOutlineGradient.serializableData.colorKeys[n].serializableData.color.nestedFieldType = "Color", t.mOutlineGradient.serializableData.colorKeys[n].serializableData.color.serializableData = {}, t.mOutlineGradient.serializableData.colorKeys[n].serializableData.color.serializableData.c = "w", t.mOutlineGradient.serializableData.colorKeys[n].serializableData.time = n;
+        for (t.mOutlineGradient.serializableData.alphaKeys = [], n = 0; n < 2; n++) t.mOutlineGradient.serializableData.alphaKeys[n] = {}, t.mOutlineGradient.serializableData.alphaKeys[n].nestedFieldType = "GradientAlphaKey", t.mOutlineGradient.serializableData.alphaKeys[n].serializableData = {}, t.mOutlineGradient.serializableData.alphaKeys[n].serializableData.alpha = 1, t.mOutlineGradient.serializableData.alphaKeys[n].serializableData.time = n
     }
     t.mOutlineGradientAngle = null != t.mOutlineGradientAngle ? t.mOutlineGradientAngle : 0, t.spacingY = null != t.spacingY ? t.spacingY : 0, t.mArcRadius = null != t.mArcRadius ? t.mArcRadius : 0, deserializeComponentRec(t, this, e, i)
 }, goog.provide("UHT.UIPanel"), goog.require("UHT.Component"), UIPanel.prototype = Object.create(Component.prototype), UIPanel.prototype.constructor = UIPanel, Object.defineProperties(UIPanel.prototype, {
@@ -17525,8 +17124,7 @@ UILabel.prototype.init = function (t) {
             this.pixiObject = new PIXI.Container(null), this.pixiObjectContent = new PIXI.Sprite(e), (i = this.pixiObjectContent).anchor.x = this.anchorX, i.anchor.y = this.anchorY, i.width = this.width, i.height = this.height, i.blendMode = this.atlas.blendMode, this.pixiObject.addChild(i);
             break;
         case UISprite.Type.Filled:
-            e = this.atlas.getTextureInfoForSprite(this, this.spriteName);
-            this.pixiObject = new PIXI.Container(null), this.pixiObjectContent = new PIXI.Sprite(e), (i = this.pixiObjectContent).anchor.x = this.anchorX, i.anchor.y = this.anchorY, i.width = this.width, i.height = this.height, i.blendMode = this.atlas.blendMode, this.pixiObject.addChild(i);
+            e = this.atlas.getTextureInfoForSprite(this, this.spriteName), this.pixiObject = new PIXI.Container(null), this.pixiObjectContent = new PIXI.Sprite(e), (i = this.pixiObjectContent).anchor.x = this.anchorX, i.anchor.y = this.anchorY, i.width = this.width, i.height = this.height, i.blendMode = this.atlas.blendMode, this.pixiObject.addChild(i);
             break;
         case UISprite.Type.Sliced:
             this.pixiObject = new PIXI.Container(null), this.pixiObjectContent = new PIXI.Container(null);
@@ -17609,8 +17207,7 @@ UILabel.prototype.init = function (t) {
     var t = Math.max(.001, 1 - this.zoomAmmount),
         e = this.rectFrameO.clone(),
         i = this.rectTrimO.clone();
-    i.width, e.width, i.height, e.height;
-    i.x *= t, i.y *= t, i.width *= t, i.height *= t, e.width *= t, e.height *= t;
+    i.width, e.width, i.height, e.height, i.x *= t, i.y *= t, i.width *= t, i.height *= t, e.width *= t, e.height *= t;
     var n = this.GetClampedPivot(),
         o = n.x * this.rectFrameO.width - .5 * e.width,
         s = (1 - n.y) * this.rectFrameO.height - .5 * e.height;
@@ -17670,14 +17267,12 @@ Renderer.prototype.checkWindowSize = function () {
         clearBeforeRender: !1,
         preserveDrawingBuffer: t
     };
-    IS_UCBROWSER && (PIXI.SPRITE_BATCH_SIZE = 200), this.renderer = PIXI.autoDetectRenderer(UHTScreen.width, UHTScreen.height, a, e), Renderer.IsWebGL = this.renderer instanceof PIXI.WebGLRenderer, document.body.appendChild(this.renderer.view);
-    this.fpsCounter = new PIXI.Text("urs", {
+    IS_UCBROWSER && (PIXI.SPRITE_BATCH_SIZE = 200), this.renderer = PIXI.autoDetectRenderer(UHTScreen.width, UHTScreen.height, a, e), Renderer.IsWebGL = this.renderer instanceof PIXI.WebGLRenderer, document.body.appendChild(this.renderer.view), this.fpsCounter = new PIXI.Text("urs", {
         font: "30px Arial",
         fill: "#000000",
         stroke: "#FFFFFF",
         strokeThickness: 5
-    });
-    this.debugText = new PIXI.Text("dbg", {
+    }), this.debugText = new PIXI.Text("dbg", {
         font: "100px Arial",
         fill: "#FFFFFF",
         stroke: "#000000",
@@ -17728,14 +17323,12 @@ Renderer.prototype.checkWindowSize = function () {
         o >= 0 && (RegisterPixiChild(i = this.orderedCameras[o].clipMaskContainer, t.container, t.depth), this.cachedMaskCameraContainersPerLayer[e] = i)
     }
 }, Renderer.prototype.getCameraIndexForLayer = function (t) {
-    for (var e = 0; e < this.orderedCameras.length; e++) {
-        if (1 << t == this.orderedCameras[e].cullingMask) return e
-    }
+    for (var e = 0; e < this.orderedCameras.length; e++)
+        if (1 << t == this.orderedCameras[e].cullingMask) return e;
     return -1
 }, Renderer.prototype.getCameraClipMaskIndexForLayer = function (t) {
-    for (var e = 0; e < this.orderedCameras.length; e++) {
-        if (1 << t == this.orderedCameras[e].clipMaskLayer) return e
-    }
+    for (var e = 0; e < this.orderedCameras.length; e++)
+        if (1 << t == this.orderedCameras[e].clipMaskLayer) return e;
     return -1
 }, Renderer.prototype.addZOrderedObjects = function () {
     if (0 != this.foundZOrderedObjects.length) {
@@ -18738,11 +18331,7 @@ GambleV2Protocol.GambleResult = function () {
     if (null == t[i]) return GambleV2Protocol.Parser.data = null, null;
     null == e && (e = GambleV2Protocol.Parser.data = new GambleV2Protocol.GambleData), e.riskAmount = _number.otod(t[i]), null != t[i = "tw"] && (e.totalWin = _number.otod(t[i]));
     var n = !0;
-    if (null != t[i = "go_i"] && (n = !1, e.options = _array.ConvertAll(t[i].split(","), _number.otod)), null != t[i = "g_o"] && (n = !1, e.optionIndex = _number.otoi(t[i])), e.result = GambleV2Protocol.Parser.ParseResult(t), null != e.result) n = !1;
-    else {
-        null != t[i = "na"] && ["g", "go"].indexOf(t[i]) < 0 && (n = !0)
-    }
-    return n && (e.options = null, e.optionIndex = -1, e.result = null), e
+    return null != t[i = "go_i"] && (n = !1, e.options = _array.ConvertAll(t[i].split(","), _number.otod)), null != t[i = "g_o"] && (n = !1, e.optionIndex = _number.otoi(t[i])), e.result = GambleV2Protocol.Parser.ParseResult(t), null != e.result ? n = !1 : null != t[i = "na"] && ["g", "go"].indexOf(t[i]) < 0 && (n = !0), n && (e.options = null, e.optionIndex = -1, e.result = null), e
 }, GambleV2Protocol.Parser.ParseResult = function (t) {
     var e = "g_w";
     if (null == t[e]) return null;
@@ -19009,10 +18598,8 @@ VsGamblingSettings.prototype.GetGamblingSettings = function (t) {
         t.MultipliedSymbolPositions = [];
         for (var e = 0; e < this.MultipliedSymbolPositions.length; e++) t.MultipliedSymbolPositions.push(this.MultipliedSymbolPositions[e])
     }
-    if (null != this.BonusTable && (t.BonusTable = this.BonusTable.Clone()), null != this.MultipliersTable && (t.MultipliersTable = this.MultipliersTable.Clone()), null != this.IWins && (t.IWins = this.IWins.slice()), null != this.lifeWins && (t.lifeWins = this.lifeWins.slice()), null != this.respinSymbols && (t.respinSymbols = this.respinSymbols.slice()), null != this.winSymbols) {
-        t.winSymbols = [];
-        for (e = 0; e < this.winSymbols.length; ++e) t.winSymbols.push(this.winSymbols[e].slice())
-    }
+    if (null != this.BonusTable && (t.BonusTable = this.BonusTable.Clone()), null != this.MultipliersTable && (t.MultipliersTable = this.MultipliersTable.Clone()), null != this.IWins && (t.IWins = this.IWins.slice()), null != this.lifeWins && (t.lifeWins = this.lifeWins.slice()), null != this.respinSymbols && (t.respinSymbols = this.respinSymbols.slice()), null != this.winSymbols)
+        for (t.winSymbols = [], e = 0; e < this.winSymbols.length; ++e) t.winSymbols.push(this.winSymbols[e].slice());
     return t
 }, VsBonusGameData.WheelOfFortune = function () {
     this.items = null, this.itemsStatus = null, this.stopPosition = -1, this.spinsLeft = -1, this.multiplier = -1, this.initialWin = -1
@@ -19114,10 +18701,8 @@ VsGamblingSettings.prototype.GetGamblingSettings = function (t) {
     var t = new VsFreeSpinOption;
     t.FreeSpinsCount = this.FreeSpinsCount, t.FreeSpinsMultiplier = this.FreeSpinsMultiplier, t.FreeSpinsStartingMultiplier = this.FreeSpinsStartingMultiplier, t.FreeSpinsStackedSymbol = this.FreeSpinsStackedSymbol, t.WildSymbolIndex = this.WildSymbolIndex, t.SpecialFeatureName = this.SpecialFeatureName, t.WildWinMultipliers = [];
     for (var e = 0; e < this.WildWinMultipliers.length; ++e) t.WildWinMultipliers.push(this.WildWinMultipliers[e]);
-    t.ReelSymbolsToBeReplaced = [];
-    for (e = 0; e < this.ReelSymbolsToBeReplaced.length; ++e) t.ReelSymbolsToBeReplaced.push(this.ReelSymbolsToBeReplaced[e]);
-    t.RSTBSymbolId = this.RSTBSymbolId, t.TriggerSymbolRandomMultiplier = this.TriggerSymbolRandomMultiplier, t.TSRandomMultipliers = [];
-    for (e = 0; e < this.TSRandomMultipliers.length; ++e) t.TSRandomMultipliers.push(this.TSRandomMultipliers[e]);
+    for (t.ReelSymbolsToBeReplaced = [], e = 0; e < this.ReelSymbolsToBeReplaced.length; ++e) t.ReelSymbolsToBeReplaced.push(this.ReelSymbolsToBeReplaced[e]);
+    for (t.RSTBSymbolId = this.RSTBSymbolId, t.TriggerSymbolRandomMultiplier = this.TriggerSymbolRandomMultiplier, t.TSRandomMultipliers = [], e = 0; e < this.TSRandomMultipliers.length; ++e) t.TSRandomMultipliers.push(this.TSRandomMultipliers[e]);
     return t
 }, VsFreeSpinOption.prototype.CloneHelper = function () {
     return this.Clone()
@@ -20103,7 +19688,7 @@ goog.require("UHT.JackpotHelpers"), goog.provide("UHT.JackpotsManager"), Jackpot
     if (null == e) return null;
     for (var i = [], n = 0; n < e.length; ++n) {
         var o = e[n];
-        if (null != o[JackpotDictionary.jackpotId] && (null != o[JackpotDictionary.jackpotAmount] && null != o[JackpotDictionary.jackpotName] && null != o[JackpotDictionary.jackpotStatus])) {
+        if (null != o[JackpotDictionary.jackpotId] && null != o[JackpotDictionary.jackpotAmount] && null != o[JackpotDictionary.jackpotName] && null != o[JackpotDictionary.jackpotStatus]) {
             var s = new JackpotInformation;
             if (s.JackpotID = Number(o[JackpotDictionary.jackpotId]), s.JackpotOrder = Number(o[JackpotDictionary.jackpotOrder]), s.JackpotAmount = Number(o[JackpotDictionary.jackpotAmount]), s.JackpotName = String(o[JackpotDictionary.jackpotName]), s.JackpotStatus = String(o[JackpotDictionary.jackpotStatus]), null != o[JackpotDictionary.jackpotGroupType] && (s.JackpotGroupType = String(o[JackpotDictionary.jackpotGroupType])), null != o[JackpotDictionary.jackpotMinBet] && (s.JackpotMinBet = Number(o[JackpotDictionary.jackpotMinBet])), null != o[JackpotDictionary.jackpotMinBetUSD] && (s.JackpotMinBetUSD = Number(o[JackpotDictionary.jackpotMinBetUSD])), null != o[JackpotDictionary.jackpotRTP] && (s.JackpotRTP = Number(o[JackpotDictionary.jackpotRTP])), null != o[JackpotDictionary.jackpotAmountUSD] && (s.JackpotAmountUSD = Number(o[JackpotDictionary.jackpotAmountUSD])), null != o[JackpotDictionary.jackpotInstance] && (s.JackpotInstance = Number(o[JackpotDictionary.jackpotInstance])), null != o[JackpotDictionary.multipliersRTP] && (s.multipliersRTP = _number.otod(o[JackpotDictionary.multipliersRTP])), null != o[JackpotDictionary.prevWonAmount] && (s.prevWonAmount = _number.otod(o[JackpotDictionary.prevWonAmount])), null != o[JackpotDictionary.prevWonAmountUSD] && (s.prevWonAmountUSD = _number.otod(o[JackpotDictionary.prevWonAmountUSD])), null != o[JackpotDictionary.nextSeedAmount] && (s.nextSeedAmount = _number.otod(o[JackpotDictionary.nextSeedAmount])), null != o[JackpotDictionary.nextSeedAmountUSD] && (s.nextSeedAmountUSD = _number.otod(o[JackpotDictionary.nextSeedAmountUSD])), null != o[JackpotDictionary.contributePercent] && (s.contributePercent = _number.otod(o[JackpotDictionary.contributePercent])), null != o[JackpotDictionary.babyContributeInitialPercent] && (s.babyContributeInitialPercent = _number.otod(o[JackpotDictionary.babyContributeInitialPercent])), null != o[JackpotDictionary.babyContributePercent] && (s.babyContributePercent = _number.otod(o[JackpotDictionary.babyContributePercent])), null != o[JackpotDictionary.babyAmount] && (s.babyAmount = _number.otod(o[JackpotDictionary.babyAmount])), null != o[JackpotDictionary.babyAmountUSD] && (s.babyAmountUSD = _number.otod(o[JackpotDictionary.babyAmountUSD])), null != o[JackpotDictionary.startNextFromSeed] && (s.startNextFromSeed = _bool.Parse(o[JackpotDictionary.startNextFromSeed])), null != o[JackpotDictionary.jackpotMultipliers]) {
                 var a = o[JackpotDictionary.jackpotMultipliers];
@@ -20918,7 +20503,7 @@ var GameProtocolParser = {
                 i = GameProtocolCommonParser.ParseIfExist(t, GameProtocolDictionary.respin),
                 n = GameProtocolCommonParser.ParseIfExist(t, GameProtocolDictionary.currentRespin),
                 o = GameProtocolCommonParser.ParseIfExist(t, GameProtocolDictionary.totalRespins);
-            if (!("t" == i || "uw" == i || "mc" == i || _string.IsNullOrEmpty(i)) && (i = _string.Trim(i)).length > 0) {
+            if ("t" != i && "uw" != i && "mc" != i && !_string.IsNullOrEmpty(i) && (i = _string.Trim(i)).length > 0) {
                 var s = i.split("~");
                 if ((e = new VsRespin).RespinType = s[0], e.Indices = [], "l" == e.RespinType) {
                     for (var a = [], r = 1; r < s.length; ++r) {
@@ -21391,7 +20976,7 @@ var GameProtocolParser = {
             var i = !1;
             if (XT.GetBool(Vars.DontShowFRBEndWindowOnInit)) {
                 var n = VSProtocolParser.ParseVsFreeRoundEvents(t);
-                if (null != n && n.length > 0) n[0].Type == VsFreeRoundEvent.EventType.Finish && 1 == n.length && (i = !0)
+                null != n && n.length > 0 && n[0].Type == VsFreeRoundEvent.EventType.Finish && 1 == n.length && (i = !0)
             }
             if (null != t[GameProtocolDictionary.FreeRound.RoundsLeft] && null != t[GameProtocolDictionary.FreeRound.TotalWin] && !i) {
                 var o = new VsFreeRound;
@@ -21638,13 +21223,11 @@ var GameProtocolParser = {
             }
             if (!_string.IsNullOrEmpty(o)) {
                 var l = o.split(";");
-                if (l.length > 0) {
-                    e.awards = [];
-                    for (a = 0; a < l.length; a++) {
+                if (l.length > 0)
+                    for (e.awards = [], a = 0; a < l.length; a++) {
                         var u = l[a].split("~");
                         e.awards.push([]), e.awards[a].push(_number.otoi(u[0])), e.awards[a].push(_number.otoi(u[1]))
                     }
-                }
             }
             return e
         },
@@ -22425,9 +22008,7 @@ BalanceManager.I = null, BalanceManager.prototype.Init = function () {
     var i = 0;
     return 0 == (i = (null != t.promotion ? -1 : 1) - (null != e.promotion ? -1 : 1)) && null == t.promotion || (0 == i && (i = t.promotion.status - e.promotion.status), 0 == i && (i = t.type - e.type), 0 == i && (t.type == TournamentProtocol.PromoType.Race && 0 == (i = (null != t.details ? -1 : 1) - (null != e.details ? -1 : 1)) && null != t.details && 0 == (i = (null != t.details.prizePool ? -1 : 1) - (null != e.details.prizePool ? -1 : 1)) && null != t.details.prizePool && (i = e.details.prizePool.totalCount - t.details.prizePool.totalCount), t.type == TournamentProtocol.PromoType.Tournament && (TournamentConnection.instance.CanUseLeaderboards() ? 0 == (i = (null != t.leaderboard ? -1 : 1) - (null != e.leaderboard ? -1 : 1)) && null != t.leaderboard && (i = t.leaderboard.playerPosition - e.leaderboard.playerPosition) : 0 == (i = (null != t.score ? -1 : 1) - (null != e.score ? -1 : 1)) && null != t.score && (i = t.score.position - e.score.position))), 0 == i && (t.promotion.status == TournamentProtocol.StatusCode.Open && (i = t.promotion.endDate - e.promotion.endDate), t.promotion.status == TournamentProtocol.StatusCode.StartsSoon && (i = t.promotion.startDate - e.promotion.startDate), t.promotion.status == TournamentProtocol.StatusCode.Closed && (i = e.promotion.endDate - t.promotion.endDate))), i
 }, TournamentConnection.prototype.Update = function () {
-    (this.isRacePrizesReloaded = !0, !this.isReloadindTournaments && this.tournamentsTimer >= this.reloadTournamentsInterval && (this.isReloadindTournaments = !0, this.Reload(this.tournamentsURL, this.tournamentsReloadedHandler)), !this.isReloadindLeaderboards && this.leaderboardsTimer >= this.reloadLeaderboardsInterval && this.activeTournaments && this.promotionsOpen) && ((!this.CanUseLeaderboards() || this.leaderboardOpen && null != this.selectedPromoHolder && this.selectedPromoHolder.type == TournamentProtocol.PromoType.Tournament) && (this.isReloadindLeaderboards = this.ReloadLeaderboards(this.leaderboardsURL, this.leaderboardReloadedHandler, !1)), this.isReloadindLeaderboards || (this.leaderboardsTimer = 0));
-    (!this.isReloadingTournamentScores && this.tournamentScoresTimer >= this.reloadTournamentScoresInterval && this.activeTournaments && !this.promotionsOpen && (this.isReloadingTournamentScores = this.ReloadLeaderboards(this.tournamentScoresURL, this.tournamentScoresReloadedHandler, !0), this.isReloadingTournamentScores || (this.tournamentScoresTimer = 0)), !this.isReloadindRacePrizes && this.racePrizesTimer >= this.reloadRacePrizesInterval && this.activeRaces && (this.isReloadindRacePrizes = !0, this.Reload(this.racePrizesURL, this.racePrizesReloadedHandler)), !this.isReloadindRaceWinners && this.raceWinnersTimer >= this.reloadRaceWinnersInterval && this.activeRaces && this.promotionsOpen) && (!this.CanUseRaceWinners() || this.leaderboardOpen && null != this.selectedPromoHolder && this.selectedPromoHolder.type == TournamentProtocol.PromoType.Race ? (this.isReloadindRaceWinners = !0, this.ReloadRaceWinners()) : this.raceWinnersTimer = 0);
-    this.tournamentsTimer += Time.deltaTime, this.leaderboardsTimer += Time.deltaTime, this.tournamentScoresTimer += Time.deltaTime, this.racePrizesTimer += Time.deltaTime, this.raceWinnersTimer += Time.deltaTime, this.reloadRaceDetails && (this.reloadRaceDetailsDelay -= Time.deltaTime, this.reloadRaceDetailsDelay <= 0 && (this.reloadRaceDetails = !1, this.Reload(this.raceDetailsURL, this.raceDetailsReloadedHandler))), this.reloadTournamentDetails && (this.reloadTournamentDetailsDelay -= Time.deltaTime, this.reloadTournamentDetailsDelay <= 0 && (this.reloadTournamentDetails = !1, this.Reload(this.detailsURL, this.detailsReloadedHandler))), this.isReloaded && (!this.hasUpdates || this.canUpdate && this.isRaceDetailsReloaded && this.isRacePrizesReloaded && this.isTournamentDetailsReloaded) && (this.ProcessPromotions(), this.xtLayer.SetDetails(this.GetDetails()), this.xtLayer.SetLeaderboards(this.GetLeaderboards()), this.xtLayer.SetTournaments(this.GetPromotions(!0)), this.hasUpdates && this.xtLayer.AnnouncePromotions(), this.canUpdate = !1, this.hasUpdates = !1, this.isReloaded = !1), this.CheckOptResponses()
+    this.isRacePrizesReloaded = !0, !this.isReloadindTournaments && this.tournamentsTimer >= this.reloadTournamentsInterval && (this.isReloadindTournaments = !0, this.Reload(this.tournamentsURL, this.tournamentsReloadedHandler)), !this.isReloadindLeaderboards && this.leaderboardsTimer >= this.reloadLeaderboardsInterval && this.activeTournaments && this.promotionsOpen && ((!this.CanUseLeaderboards() || this.leaderboardOpen && null != this.selectedPromoHolder && this.selectedPromoHolder.type == TournamentProtocol.PromoType.Tournament) && (this.isReloadindLeaderboards = this.ReloadLeaderboards(this.leaderboardsURL, this.leaderboardReloadedHandler, !1)), this.isReloadindLeaderboards || (this.leaderboardsTimer = 0)), !this.isReloadingTournamentScores && this.tournamentScoresTimer >= this.reloadTournamentScoresInterval && this.activeTournaments && !this.promotionsOpen && (this.isReloadingTournamentScores = this.ReloadLeaderboards(this.tournamentScoresURL, this.tournamentScoresReloadedHandler, !0), this.isReloadingTournamentScores || (this.tournamentScoresTimer = 0)), !this.isReloadindRacePrizes && this.racePrizesTimer >= this.reloadRacePrizesInterval && this.activeRaces && (this.isReloadindRacePrizes = !0, this.Reload(this.racePrizesURL, this.racePrizesReloadedHandler)), !this.isReloadindRaceWinners && this.raceWinnersTimer >= this.reloadRaceWinnersInterval && this.activeRaces && this.promotionsOpen && (!this.CanUseRaceWinners() || this.leaderboardOpen && null != this.selectedPromoHolder && this.selectedPromoHolder.type == TournamentProtocol.PromoType.Race ? (this.isReloadindRaceWinners = !0, this.ReloadRaceWinners()) : this.raceWinnersTimer = 0), this.tournamentsTimer += Time.deltaTime, this.leaderboardsTimer += Time.deltaTime, this.tournamentScoresTimer += Time.deltaTime, this.racePrizesTimer += Time.deltaTime, this.raceWinnersTimer += Time.deltaTime, this.reloadRaceDetails && (this.reloadRaceDetailsDelay -= Time.deltaTime, this.reloadRaceDetailsDelay <= 0 && (this.reloadRaceDetails = !1, this.Reload(this.raceDetailsURL, this.raceDetailsReloadedHandler))), this.reloadTournamentDetails && (this.reloadTournamentDetailsDelay -= Time.deltaTime, this.reloadTournamentDetailsDelay <= 0 && (this.reloadTournamentDetails = !1, this.Reload(this.detailsURL, this.detailsReloadedHandler))), this.isReloaded && (!this.hasUpdates || this.canUpdate && this.isRaceDetailsReloaded && this.isRacePrizesReloaded && this.isTournamentDetailsReloaded) && (this.ProcessPromotions(), this.xtLayer.SetDetails(this.GetDetails()), this.xtLayer.SetLeaderboards(this.GetLeaderboards()), this.xtLayer.SetTournaments(this.GetPromotions(!0)), this.hasUpdates && this.xtLayer.AnnouncePromotions(), this.canUpdate = !1, this.hasUpdates = !1, this.isReloaded = !1), this.CheckOptResponses()
 }, TournamentConnection.prototype.Reload = function (t, e) {
     var i = new ServerRequest;
     i.Url = t, i.Handler = e, i.Method = "GET", RequestManager.AddRequest(i)
@@ -22511,10 +22092,8 @@ BalanceManager.I = null, BalanceManager.prototype.Init = function () {
                         var c = a.items[h];
                         _string.IsNullOrEmpty(c.countryID) && (c.countryID = l), this.UpdateWinnerPrize(c, r, u)
                     }
-                    if (this.SortPrizeDropWinners(a.items), a.playerWinsCount > 0) {
-                        null == this.ldbItemTitle_0 && (this.ldbItemTitle_0 = new TournamentProtocol.LeaderboardItem, this.ldbItemTitle_0.winnerContent = TournamentProtocol.WinnerContentType.Title_0, this.ldbItemTitle_0.isPlayer = !0), s.items.push(this.ldbItemTitle_0);
-                        for (h = 0; h < a.items.length; ++h) a.items[h].isPlayer && (a.items[h].valueIndexExtra = 1, s.items.push(a.items[h]))
-                    }
+                    if (this.SortPrizeDropWinners(a.items), a.playerWinsCount > 0)
+                        for (null == this.ldbItemTitle_0 && (this.ldbItemTitle_0 = new TournamentProtocol.LeaderboardItem, this.ldbItemTitle_0.winnerContent = TournamentProtocol.WinnerContentType.Title_0, this.ldbItemTitle_0.isPlayer = !0), s.items.push(this.ldbItemTitle_0), h = 0; h < a.items.length; ++h) a.items[h].isPlayer && (a.items[h].valueIndexExtra = 1, s.items.push(a.items[h]));
                     if (a.playerWinsCount < a.items.length) {
                         null == this.ldbItemTitle_1 && (this.ldbItemTitle_1 = new TournamentProtocol.LeaderboardItem, this.ldbItemTitle_1.winnerContent = TournamentProtocol.WinnerContentType.Title_1), s.items.push(this.ldbItemTitle_1);
                         var p = s.items.length % 2;
@@ -22571,8 +22150,7 @@ BalanceManager.I = null, BalanceManager.prototype.Init = function () {
             var l = this.FindPromoHolderInternal(t[r].id, t[r].type);
             l.isNew || null == l.promotion || !l.promotion.isOpted || t[r].isOpted || (l.isNew = !0, this.hasUpdates = !0), l.promotion = t[r], o.push(l), e.indexOf(t[r].id) < 0 && (s = !0, l.type == TournamentProtocol.PromoType.Race ? this.isRaceDetailsReloaded = !1 : l.type == TournamentProtocol.PromoType.Tournament && (this.isTournamentDetailsReloaded = !1))
         }
-        e.splice(0);
-        for (r = 0; r < a.length; ++r) e.push(a[r]);
+        for (e.splice(0), r = 0; r < a.length; ++r) e.push(a[r]);
         s && (this.hasUpdates = !0, this.Reload(i, n))
     }
 }, TournamentConnection.prototype.FindPromoHolderInternal = function (t, e) {
@@ -22665,13 +22243,11 @@ BalanceManager.I = null, BalanceManager.prototype.Init = function () {
     null == e && (e = new TournamentProtocol.Leaderboard);
     var i = e.items;
     null == i && (i = []);
-    for (var n = t.generatedLeaderboard.items.slice(), o = 0; o < n.length; ++o) {
+    for (var n = t.generatedLeaderboard.items.slice(), o = 0; o < n.length; ++o)
         if (null != (a = this.FindLeaderboardItem(i, n[o].position))) {
             var s = n[o];
             a.type = s.type, a.currency = s.currency, a.amount = s.amount, a.gift = s.gift, a.betMultiplier = s.betMultiplier, a.prize = a.effectiveBetForBetMultiplier * a.betMultiplier, a.freeRoundAmount = s.freeRoundAmount, a.freeRoundLimitType = s.freeRoundLimitType, n[o] = a
-        }
-    }
-    for (o = 0; o < i.length; ++o) {
+        } for (o = 0; o < i.length; ++o) {
         var a;
         null == (a = this.FindLeaderboardItem(n, i[o].position)) && n.push(i[o])
     }
@@ -22707,9 +22283,8 @@ BalanceManager.I = null, BalanceManager.prototype.Init = function () {
     for (var n = [], o = 0; o < this.promoHolders.length; ++o) {
         var s = this.promoHolders[o],
             a = s.promotion;
-        if (null != a && a.type == TournamentProtocol.PromoType.Tournament && a.status != TournamentProtocol.StatusCode.StartsSoon && !a.isActiveInOtherGames && (!i || a.status == TournamentProtocol.StatusCode.Open)) {
-            if (i ? null != s.score : null != s.leaderboard)
-                if (XT.GetInt(TournamentVars.ServerTime) - a.endDate > this.reloadEndedLeaderboardsInterval) continue;
+        if (!(null == a || a.type != TournamentProtocol.PromoType.Tournament || a.status == TournamentProtocol.StatusCode.StartsSoon || a.isActiveInOtherGames || i && a.status != TournamentProtocol.StatusCode.Open)) {
+            if ((i ? null != s.score : null != s.leaderboard) && XT.GetInt(TournamentVars.ServerTime) - a.endDate > this.reloadEndedLeaderboardsInterval) continue;
             n.push(a.id)
         }
     }
@@ -22723,15 +22298,11 @@ BalanceManager.I = null, BalanceManager.prototype.Init = function () {
     var i = TournamentProtocol.TournamentParser.ParseTournamentScoresResponse(t);
     if (null != i) {
         if (null != i.scores)
-            for (var n = 0; n < i.scores.length; ++n) {
-                this.FindPromoHolderInternal(i.scores[n].tournamentID, TournamentProtocol.PromoType.Tournament).score = i.scores[n]
-            }
+            for (var n = 0; n < i.scores.length; ++n) this.FindPromoHolderInternal(i.scores[n].tournamentID, TournamentProtocol.PromoType.Tournament).score = i.scores[n];
         this.isReloaded = !0, this.tournamentScoresReloadedTime = this.leaderboardsDiscardedTime = Time.time
     }
 }, TournamentConnection.prototype.PromotionsOpen = function () {
-    this.promotionsOpen = !0;
-    Time.time;
-    this.CanUseLeaderboards() || this.isReloadindLeaderboards || (this.leaderboardsTimer = this.reloadLeaderboardsInterval), this.CanUseRaceWinners() || this.isReloadindRaceWinners || (this.raceWinnersTimer = this.reloadRaceWinnersInterval)
+    this.promotionsOpen = !0, Time.time, this.CanUseLeaderboards() || this.isReloadindLeaderboards || (this.leaderboardsTimer = this.reloadLeaderboardsInterval), this.CanUseRaceWinners() || this.isReloadindRaceWinners || (this.raceWinnersTimer = this.reloadRaceWinnersInterval)
 }, TournamentConnection.prototype.PromotionsClosed = function () {
     this.promotionsOpen = !1
 }, TournamentConnection.prototype.LeaderboardOpen = function () {
@@ -22796,7 +22367,7 @@ var PromotionsHelper = {
             for (var s = 0; s < i.length; s++) i[s].uid == o && (n = s)
         }
         var a = e.FindPromoHolder(i[n].uid);
-        return null == a ? t : (t.type = a.type, t.style = i[n].clientStyle, t.realUID = a.uid, i[n].status != TournamentProtocol.StatusCode.Open || (t.uid = a.uid, a.type == TournamentProtocol.PromoType.Tournament ? e.CanUseLeaderboards() ? null != a.leaderboard && (t.value = a.leaderboard.playerIndex > -1 || a.leaderboard.playerIndexOmitted > -1 ? a.leaderboard.playerPosition : -1) : null != a.score && (t.value = a.score.position) : a.type == TournamentProtocol.PromoType.Race && null != a.details && null != a.details.prizePool && (t.value = a.details.prizePool.totalCount > 0 ? a.details.prizePool.totalCount : -1), PromotionsHelper.currentPromotionsUUID = t.uid, XT.TriggerEvent(TournamentVars.Evt_Internal_UpdatePromotionWarning)), t)
+        return null == a || (t.type = a.type, t.style = i[n].clientStyle, t.realUID = a.uid, i[n].status != TournamentProtocol.StatusCode.Open || (t.uid = a.uid, a.type == TournamentProtocol.PromoType.Tournament ? e.CanUseLeaderboards() ? null != a.leaderboard && (t.value = a.leaderboard.playerIndex > -1 || a.leaderboard.playerIndexOmitted > -1 ? a.leaderboard.playerPosition : -1) : null != a.score && (t.value = a.score.position) : a.type == TournamentProtocol.PromoType.Race && null != a.details && null != a.details.prizePool && (t.value = a.details.prizePool.totalCount > 0 ? a.details.prizePool.totalCount : -1), PromotionsHelper.currentPromotionsUUID = t.uid, XT.TriggerEvent(TournamentVars.Evt_Internal_UpdatePromotionWarning))), t
     },
     GetPromotionType: function (t) {
         if (_string.IsNullOrEmpty(t)) return TournamentProtocol.PromoType.Invalid;
@@ -23148,9 +22719,8 @@ goog.require("UHT.TournamentProtocol"), TournamentProtocol.TournamentParser = {}
     return n
 }, TournamentProtocol.TournamentParser.ParseBaseResponse = function (t) {
     if (_string.IsNullOrEmpty(t)) return null;
-    var e = _JSON.TryParse(t),
-        i = TournamentProtocol.TournamentParser.ParseResponse(e);
-    return i
+    var e = _JSON.TryParse(t);
+    return TournamentProtocol.TournamentParser.ParseResponse(e)
 }, TournamentProtocol.TournamentParser.ParsePromoKeys = function (t) {
     var e = TournamentProtocol.TournamentParser;
     if (null == t) return null;
@@ -23177,8 +22747,7 @@ goog.require("UHT.TournamentProtocol"), TournamentProtocol.TournamentParser = {}
     return null != n[a] && (s.scores = i.ParseTournamentScores(n[a])), s
 }, TournamentProtocol.TournamentParser.ParseTournamentScores = function (t) {
     var e = TournamentProtocol;
-    e.TournamentParser;
-    if (null == t) return null;
+    if (e.TournamentParser, null == t) return null;
     for (var i = [], n = 0; n < t.length; ++n) {
         var o = t[n];
         if (null != o) {
@@ -23436,8 +23005,7 @@ goog.provide("UHT.TournamentRule"), TournamentRule.prototype.UpdateRules = funct
     if (null != i)
         for (r = n; r < i.length; ++r) s.push(i[r]);
     var l = [];
-    s.length > 0 && l.push(s.join(" "));
-    for (r = o; r < this.paragraphs.length; ++r) l.push(this.paragraphs[r]);
+    for (s.length > 0 && l.push(s.join(" ")), r = o; r < this.paragraphs.length; ++r) l.push(this.paragraphs[r]);
     this.paragraphs = l, this.isStopped = !0, this.isSplit = 0 == this.paragraphs.length
 }, goog.provide("UHT.PromotionRule"), goog.require("UHT.TournamentRule"), PromotionRule.prototype = Object.create(TournamentRule.prototype), PromotionRule.prototype.constructor = PromotionRule, PromotionRule.Unit = function (t, e, i, n, o) {
     this.uid = "", this.text = "", this.url = "", this.startIdx = 0, this.endIdxExcl = 0, this.isLink = !1, this.isVisited = !1, 2 != arguments.length && 5 != arguments.length || (this.text = arguments[0], this.SetURL(arguments[1])), 3 == arguments.length && (this.text = arguments[0], this.startIdx = arguments[1], this.endIdxExcl = arguments[2]), 5 == arguments.length && (this.uid = arguments[2], this.startIdx = arguments[3], this.endIdxExcl = arguments[4])
@@ -23474,8 +23042,7 @@ goog.provide("UHT.TournamentRule"), TournamentRule.prototype.UpdateRules = funct
             var r = n.match(/\bhref=".*?"/i);
             null == r && (r = n.match(/\bhref='.*?'/i)), null != r && (s = r[0].replace("href=", "").replace(/['"]/g, "")), t.push(n), this.links.push(new PromotionRule.Unit(o, s))
         }
-    this.rulesText = this.rules;
-    for (i = 0; i < this.links.length; ++i) this.links[i].uid = this.uid + "Link#" + i, this.links[i].startIdx = this.rulesText.indexOf(t[i]), this.links[i].endIdxExcl = this.links[i].startIdx + this.links[i].text.length, this.rulesText = this.rulesText.substr(0, this.links[i].startIdx) + this.links[i].text + this.rulesText.substr(this.links[i].startIdx + t[i].length)
+    for (this.rulesText = this.rules, i = 0; i < this.links.length; ++i) this.links[i].uid = this.uid + "Link#" + i, this.links[i].startIdx = this.rulesText.indexOf(t[i]), this.links[i].endIdxExcl = this.links[i].startIdx + this.links[i].text.length, this.rulesText = this.rulesText.substr(0, this.links[i].startIdx) + this.links[i].text + this.rulesText.substr(this.links[i].startIdx + t[i].length)
 }, PromotionRule.prototype.ProcessLine = function (t, e) {
     var i = new PromotionRule.Line,
         n = [];
@@ -23490,7 +23057,7 @@ goog.provide("UHT.TournamentRule"), TournamentRule.prototype.UpdateRules = funct
                 o.uid = this.links[s].uid, o.text = this.rulesText.substr(t, a - t), o.SetURL(this.links[s].url), o.endIdxExcl = a
             } else if (this.links[s].startIdx > t) {
                 o.endIdxExcl < this.links[s].startIdx ? (o = new PromotionRule.Unit(this.rulesText.substr(o.endIdxExcl, this.links[s].startIdx - o.endIdxExcl), o.endIdxExcl, this.links[s].startIdx), n.push(o)) : _string.IsNullOrEmpty(o.url) && (o.text = this.rulesText.substr(o.startIdx, this.links[s].startIdx - o.startIdx), o.endIdxExcl = this.links[s].startIdx);
-                var r = null;
+                var r;
                 r = this.links[s].endIdxExcl > i.endIdxExcl ? new PromotionRule.Unit(this.rulesText.substr(this.links[s].startIdx, i.endIdxExcl - this.links[s].startIdx), this.links[s].url, this.links[s].uid, this.links[s].startIdx, i.endIdxExcl) : this.links[s], n.push(r), o = r
             }
         } return o.endIdxExcl < i.endIdxExcl && n.push(new PromotionRule.Unit(this.rulesText.substr(o.endIdxExcl, i.endIdxExcl - o.endIdxExcl), o.endIdxExcl, i.endIdxExcl)), i
@@ -23652,10 +23219,7 @@ TimeScaler.timeScales = {}, TimeScaler.GetDeltaTime = function (t) {
 }, UICamera.prototype.Update = function () {
     if (ServerOptions.isReplay && Input.GetMouseButtonDown(0) && XT.TriggerEvent(ReplaySessionVars.Replay_UserClicked), Time.frameCount != UICamera.lastProcessedFrameCount) {
         UICamera.lastProcessedFrameCount = Time.frameCount;
-        for (var t = UICamera.allUICameras.length - 1; t >= 0; t--) {
-            if (!Globals.InputBlocked || UICamera.allUICameras[t].cachedCamera.ignoreInputBlocked || ServerOptions.isReplay)
-                if (UICamera.allUICameras[t].UpdateCamera()) break
-        }
+        for (var t = UICamera.allUICameras.length - 1; t >= 0 && (Globals.InputBlocked && !UICamera.allUICameras[t].cachedCamera.ignoreInputBlocked && !ServerOptions.isReplay || !UICamera.allUICameras[t].UpdateCamera()); t--);
     }
 }, UICamera.prototype.UpdateCamera = function () {
     var t = null,
@@ -24211,22 +23775,17 @@ XTLinkActivator.prototype = Object.create(Component.prototype), XTLinkActivator.
                 l = UHTMath.lerp(this.localPositionPortrait.y, this.portraitPLN_LimitY, r);
             this.gameObject.transform.localPosition(new UHTMath.Vector3(this.localPositionPortrait.x, l, this.localPositionPortrait.z)), this.gameObject.transform.localScale(this.localScalePortrait), this.applyRotationTransform && this.gameObject.transform.localRotation(UHTMath.Quaternion.euler(this.localRotationPortrait)), GUIArranger.I.ScreenAnchorUpdated()
         } else if (t == LayoutManager.Mode.LandscapeLLN) {
-            a = Math.min(a, this.maxRatioLandLLN), this.landscapeLLN_LimitX = this.localPositionLandscapeLLN.x * (this.maxRatioLandLLN / LayoutManager.I.LandscapeLLNRatio);
-            r = UHTMath.inverseLerp(LayoutManager.I.LandscapeLLNRatio, this.maxRatioLandLLN, a);
+            a = Math.min(a, this.maxRatioLandLLN), this.landscapeLLN_LimitX = this.localPositionLandscapeLLN.x * (this.maxRatioLandLLN / LayoutManager.I.LandscapeLLNRatio), r = UHTMath.inverseLerp(LayoutManager.I.LandscapeLLNRatio, this.maxRatioLandLLN, a);
             var u = UHTMath.lerp(this.localPositionLandscapeLLN.x, this.landscapeLLN_LimitX, r);
             this.gameObject.transform.localPosition(new UHTMath.Vector3(u, this.localPositionLandscapeLLN.y, this.localPositionLandscapeLLN.z)), this.gameObject.transform.localScale(this.localScaleLandscapeLLN), this.applyRotationTransform && this.gameObject.transform.localRotation(UHTMath.Quaternion.euler(this.localRotationLandscapeLLN)), GUIArranger.I.ScreenAnchorUpdated()
-        } else if (n) {
-            a = Math.min(a, this.maxRatioLandLLN), this.landscapeLLN_LimitX = this.localPositionLandscape.x * (this.maxRatioLandLLN / LayoutManager.I.LandscapeWideFullRatio);
-            r = UHTMath.inverseLerp(LayoutManager.I.LandscapeWideFullRatio, this.maxRatioLandLLN, a), u = UHTMath.lerp(this.localPositionLandscape.x, this.landscapeLLN_LimitX, r);
-            this.gameObject.transform.localPosition(new UHTMath.Vector3(u, this.localPositionLandscape.y, this.localPositionLandscape.z)), this.gameObject.transform.localScale(this.localScaleLandscape), this.applyRotationTransform && this.gameObject.transform.localRotation(UHTMath.Quaternion.euler(this.localRotationLandscape)), GUIArranger.I.ScreenAnchorUpdated()
-        }
+        } else n && (a = Math.min(a, this.maxRatioLandLLN), this.landscapeLLN_LimitX = this.localPositionLandscape.x * (this.maxRatioLandLLN / LayoutManager.I.LandscapeWideFullRatio), r = UHTMath.inverseLerp(LayoutManager.I.LandscapeWideFullRatio, this.maxRatioLandLLN, a), u = UHTMath.lerp(this.localPositionLandscape.x, this.landscapeLLN_LimitX, r), this.gameObject.transform.localPosition(new UHTMath.Vector3(u, this.localPositionLandscape.y, this.localPositionLandscape.z)), this.gameObject.transform.localScale(this.localScaleLandscape), this.applyRotationTransform && this.gameObject.transform.localRotation(UHTMath.Quaternion.euler(this.localRotationLandscape)), GUIArranger.I.ScreenAnchorUpdated())
     }
 }, goog.require("UHT.Engine"), ArrangeableTransformComplex.prototype = Object.create(ArrangeableTransform.prototype), ArrangeableTransformComplex.prototype.constructor = ArrangeableTransformComplex, ArrangeableTransformComplex.prototype.BackupTransform = function () {
     this.bIsTransformBackup || (this.backup_localPosition = this.gameObject.transform.localPosition(), this.backup_localScale = this.gameObject.transform.localScale(), this.applyRotationTransform && (this.backup_localRotation = this.gameObject.transform.localEulerAngles()), this.bIsTransformBackup = !0)
 }, ArrangeableTransformComplex.prototype.RestoreTransform = function () {
     this.bIsTransformBackup && (this.gameObject.transform.localPosition(this.backup_localPosition), this.gameObject.transform.localScale(this.backup_localScale), this.applyRotationTransform && this.gameObject.transform.localRotation(UHTMath.Quaternion.euler(this.backup_localRotation)), this.bIsTransformBackup = !1)
 }, ArrangeableTransformComplex.prototype.OnSwitchToPortraitPLN = function () {
-    (this.RestoreTransform(), this.separateForPortraitPLN) ? this.applyOnPortraitPLN && globalRuntime.sceneRoots[1].GetComponentsInChildren(UIRoot, !0)[0].portraitPLNLayoutActive && (this.BackupTransform(), ArrangeableTransform.prototype.OnSwitchToPortraitPLN.call(this)): this.OnSwitchToPortrait()
+    this.RestoreTransform(), this.separateForPortraitPLN ? this.applyOnPortraitPLN && globalRuntime.sceneRoots[1].GetComponentsInChildren(UIRoot, !0)[0].portraitPLNLayoutActive && (this.BackupTransform(), ArrangeableTransform.prototype.OnSwitchToPortraitPLN.call(this)) : this.OnSwitchToPortrait()
 }, ArrangeableTransformComplex.prototype.OnSwitchToPortrait = function () {
     this.RestoreTransform(), this.applyOnPortrait && (this.BackupTransform(), ArrangeableTransform.prototype.OnSwitchToPortrait.call(this))
 }, ArrangeableTransformComplex.prototype.OnSwitchToPortraitIPhone = function () {
@@ -24240,7 +23799,7 @@ XTLinkActivator.prototype = Object.create(Component.prototype), XTLinkActivator.
 }, ArrangeableTransformComplex.prototype.OnSwitchToLandscapeWideFull = function () {
     this.RestoreTransform(), this.separateForLandscapeWideFull ? this.applyOnLandscapeWideFull && (this.BackupTransform(), ArrangeableTransform.prototype.OnSwitchToLandscapeWideFull.call(this)) : this.OnSwitchToLandscapeWide()
 }, ArrangeableTransformComplex.prototype.OnSwitchToLandscapeLLN = function () {
-    (this.RestoreTransform(), this.separateForLandscapeLLN) ? this.applyOnLandscapeLLN && globalRuntime.sceneRoots[1].GetComponentsInChildren(UIRoot, !0)[0].landscapeLLNLayoutActive && (this.BackupTransform(), ArrangeableTransform.prototype.OnSwitchToLandscapeLLN.call(this)): this.OnSwitchToLandscapeWideFull()
+    this.RestoreTransform(), this.separateForLandscapeLLN ? this.applyOnLandscapeLLN && globalRuntime.sceneRoots[1].GetComponentsInChildren(UIRoot, !0)[0].landscapeLLNLayoutActive && (this.BackupTransform(), ArrangeableTransform.prototype.OnSwitchToLandscapeLLN.call(this)) : this.OnSwitchToLandscapeWideFull()
 }, goog.require("UHT.ArrangeableBase"), ArrangeableUIRoot.prototype = Object.create(ArrangeableBase.prototype), ArrangeableUIRoot.prototype.constructor = ArrangeableUIRoot, ArrangeableUIRoot.prototype.OnSwitchToPortrait = function () {
     var t = this.GetComponent(UIRoot);
     t.manualWidth = this.manualWidthPortrait, t.manualHeight = this.manualHeightPortrait
@@ -24605,8 +24164,7 @@ LayoutManager.prototype.Awake = function () {
     if (null != e) {
         if (null == this.cachedfeaturedCategory && (this.cachedfeaturedCategory = e), this.lastUpdatedCategorySymbol != e.symbol)
             for (var i = 0; i < this.featuredCategories.length; ++i) this.featuredCategories[i].UpdateCategory(this.FindLocalizedSymbol(e.symbol));
-        this.lastUpdatedCategorySymbol = e.symbol;
-        for (i = 0; i < this.featuredGames.length; ++i) this.featuredGames[i].SetValues([].concat(e.games));
+        for (this.lastUpdatedCategorySymbol = e.symbol, i = 0; i < this.featuredGames.length; ++i) this.featuredGames[i].SetValues([].concat(e.games));
         for (i = 0; i < this.arrangeFeaturedGamesIfLessThan.length; ++i) this.featuredGamesArrangers[i].Sample(e.games.length / this.arrangeFeaturedGamesIfLessThan[i]);
         "searchresults" == e.symbol ? (null != this.featuredContent && this.featuredContent.SetActive(!1), null != this.searchContent && this.searchContent.SetActive(!0)) : (null != this.featuredContent && this.featuredContent.SetActive(!0), null != this.searchContent && this.searchContent.SetActive(!1))
     }
@@ -24753,10 +24311,8 @@ function LobbyCategory(t) {
             this.games = [];
             for (var e = 0; e < t.games.length; ++e) this.games.push(new LobbyGame(t.games[e]))
         }
-        if (null != t.categories) {
-            this.categories = [];
-            for (e = 0; e < t.categories.length; ++e) this.categories.push(new LobbyCategory(t.categories[e]))
-        }
+        if (null != t.categories)
+            for (this.categories = [], e = 0; e < t.categories.length; ++e) this.categories.push(new LobbyCategory(t.categories[e]))
     }
 }
 var LobbyVars = {
@@ -25184,7 +24740,7 @@ LocaleManager.currencyInfo = new CurrencyProperties, LocaleManager.jackpotCurren
 }, ModificationsManager.prototype.ApplyLabels = function () {
     for (var t = 0; t < this.Labels.length; ++t) {
         var e = this.Labels[t];
-        e.currentPayload = this.ChooseExtraPayload(), e.isSet && (null != e.Target && (this.EditMode && (e.oldContent = e.Target.GetComponent(UILabel).text), e.SetValuesToLabel()))
+        e.currentPayload = this.ChooseExtraPayload(), e.isSet && null != e.Target && (this.EditMode && (e.oldContent = e.Target.GetComponent(UILabel).text), e.SetValuesToLabel())
     }
 }, ModificationsManager.prototype.ApplyTransforms = function () {
     for (var t = 0; t < this.Transforms.length; ++t) {
@@ -25686,8 +25242,7 @@ MultiLobbyConnection.prototype = Object.create(LobbyConnection.prototype), Multi
             var a = s[e.gameLaunchURL];
             a += (a.indexOf("?") > -1 ? "&" : "?") + this.urlQuery + "&gameSymbol=", this.gameLaunchURL = o.gameLaunchURL = a
         }
-        if (null != s[e.gameIconsURL]) "/" != (a = s[e.gameIconsURL])[a.length - 1] && (a += "/"), this.gameIconsURL = o.gameIconsURL = a;
-        null != s[i.dgaWS] && (this.dgaWSUrl = o.dgaWS = s[i.dgaWS], this.useDgaWS = !_string.IsNullOrEmpty(this.dgaWSUrl), this.useDgaWS && (this.dgaVendor = n, this.dgaIds = {}, this.dgaTables = [], this.updatedDgaTableImgIds = [], this.availableDgaTableIds = [], XT.SetObject(MultiLobbyVars.MultiLobby_LiveCasinoGames, this.dgaTables))), null != s[i.casinoId] && (o.casinoId = s[i.casinoId])
+        null != s[e.gameIconsURL] && ("/" != (a = s[e.gameIconsURL])[a.length - 1] && (a += "/"), this.gameIconsURL = o.gameIconsURL = a), null != s[i.dgaWS] && (this.dgaWSUrl = o.dgaWS = s[i.dgaWS], this.useDgaWS = !_string.IsNullOrEmpty(this.dgaWSUrl), this.useDgaWS && (this.dgaVendor = n, this.dgaIds = {}, this.dgaTables = [], this.updatedDgaTableImgIds = [], this.availableDgaTableIds = [], XT.SetObject(MultiLobbyVars.MultiLobby_LiveCasinoGames, this.dgaTables))), null != s[i.casinoId] && (o.casinoId = s[i.casinoId])
     }
     return null == (n.games = this.ParseVendorGames(t)) ? null : (n.lastPlayed = this.ParseCategory(t, i.lastPlayed, MultiLobbyCategorySymbol.LastPlayed), n.landingPage = this.ParseCategory(t, i.landingPage, MultiLobbyCategorySymbol.LandingPage), n.promo = this.ParseCategory(t, i.promo, MultiLobbyCategorySymbol.Promo), n.categories = this.ParseSubcategories(t, i.vendorLobby), n)
 }, MultiLobbyConnection.prototype.ParseCategory = function (t, e, i) {
@@ -25735,11 +25290,10 @@ MultiLobbyConnection.prototype = Object.create(LobbyConnection.prototype), Multi
     if (null != t)
         for (var n = 0; n < t.length; ++n) {
             var o = t[n];
-            if (null != o.games)
-                if (!(o.games.indexOf(i) < 0)) {
-                    var s = new TournamentProtocol.PromoKey;
-                    s.id = o.id, s.type = o.type, e.push(s)
-                }
+            if (null != o.games && !(o.games.indexOf(i) < 0)) {
+                var s = new TournamentProtocol.PromoKey;
+                s.id = o.id, s.type = o.type, e.push(s)
+            }
         }
 }, MultiLobbyConnection.prototype.ExtractDomain = function (t) {
     return t.indexOf("://") > -1 ? t.split("/")[2] : t.split("/")[0]
@@ -25873,10 +25427,8 @@ MultiLobbyConnection.prototype = Object.create(LobbyConnection.prototype), Multi
                     var u = a[l];
                     this.categoriesChanged && (0 == r && (n.subcategoriesIndex = this.categories.length), this.categories.push(u), u.categoryIndex = i, u.isSubcategory = !0, u.subcategoryIndex = r++), u.hasGames = null != u.games && u.games.length > 0, u.hasGames && this.FindUniqueGames(u, o, s)
                 }
-            if (n.hasGames = o.length > 0, n.hasGames) {
-                t.push(n.symbol);
-                for (l = 0; l < o.length; ++l) o[l].nameLower = o[l].name.toLowerCase()
-            }
+            if (n.hasGames = o.length > 0, n.hasGames)
+                for (t.push(n.symbol), l = 0; l < o.length; ++l) o[l].nameLower = o[l].name.toLowerCase()
         }
     }
     this.categoriesChanged || (this.categories = this.categories.slice()), this.categoriesChanged = !1, XT.SetObject(LobbyVars.LobbyCategories, this.categories), XT.SetObject(LobbyVars.LobbyCategorySymbols, t)
@@ -25895,8 +25447,7 @@ MultiLobbyConnection.prototype = Object.create(LobbyConnection.prototype), Multi
         if (this.dgaTablesUpdated && !this.searchIsOpen) {
             this.dgaTablesUpdated = !1, this.dgaUpdateCategories = !0;
             var i = this.categories;
-            this.SetupCategories(!1);
-            for (t = 0; t < i.length; ++t) i[t].isSubcategory || (this.categories[t].subcategoryIndex = i[t].subcategoryIndex)
+            for (this.SetupCategories(!1), t = 0; t < i.length; ++t) i[t].isSubcategory || (this.categories[t].subcategoryIndex = i[t].subcategoryIndex)
         }
     }
     this.searchIsOpen || !this.texturesLoaded && !this.dgaUpdateCategories || (this.texturesLoaded = this.dgaUpdateCategories = !1, this.UpdateTextures(this.textureSuffix, this.featuredCategory), this.UpdateCategories())
@@ -25998,7 +25549,7 @@ MultiLobbyConnection.prototype = Object.create(LobbyConnection.prototype), Multi
                 for (var n = 0; n < this.categories.length; ++n) this.categories[n].UpdateCategory(this.FindLocalizedSymbol(i.symbol));
                 this.show.Start(), this.isVisible = !0
             }
-            if (this.isVisible)(0 == (null == i.games ? 0 : i.games.length) ? this.gamesNotFound : this.gamesFound).Start()
+            this.isVisible && (0 == (null == i.games ? 0 : i.games.length) ? this.gamesNotFound : this.gamesFound).Start()
         }
     }
 }, MultiLobbySearch.prototype.CloseSearch = function () {
@@ -26188,8 +25739,7 @@ MultiLobbyConnection.prototype = Object.create(LobbyConnection.prototype), Multi
         for (var c = 0; c < this.slotHeight; c++) this.screenSymbols[h].push(0)
     }
     var p = e.getElementsByTagName("symbol");
-    t = "", t += GameProtocolDictionary.paytable + "=", this.payoutData = new Array;
-    for (u = 0; u < p.length; u++) {
+    for (t = "", t += GameProtocolDictionary.paytable + "=", this.payoutData = new Array, u = 0; u < p.length; u++) {
         var d = new Array;
         for (l = p[u].getAttribute("payout").split(","), h = 0; h < l.length / 2; h++) t += l[2 * h], d.push(_number.otoi(l[2 * h])), h < l.length / 2 - 1 && (t += ",");
         u < p.length - 1 && (t += ";"), d.reverse(), this.payoutData.push(d)
@@ -26206,9 +25756,7 @@ MultiLobbyConnection.prototype = Object.create(LobbyConnection.prototype), Multi
     this.responseString += t + (e ? "" : "&")
 }, OfflineServer.prototype.HandleRequest = function (t) {
     if (null != t) {
-        for (var e = t.split("&"), i = 0; i < e.length; ++i) {
-            (n = e[i].split("="))[0] == GameProtocolDictionary.coin && n.length > 1 && (this.coinValue = _number.otod(n[1]))
-        }
+        for (var e = t.split("&"), i = 0; i < e.length; ++i)(n = e[i].split("="))[0] == GameProtocolDictionary.coin && n.length > 1 && (this.coinValue = _number.otod(n[1]));
         for (i = 0; i < e.length; ++i) {
             var n;
             (n = e[i].split("="))[0] == GameProtocolDictionary.Actions.action && n.length > 1 && this.SendResponse(n[1])
@@ -26368,9 +25916,7 @@ ReplayAction.prototype.XTRegisterCallbacks = function () {
             break
     }
     if (e < this.options.length) {
-        for (var o = 0; o < this.options[e].colliders.length; o++) {
-            this.options[e].colliders[o].GetComponent(Collider).SendMessage("OnClick")
-        }
+        for (var o = 0; o < this.options[e].colliders.length; o++) this.options[e].colliders[o].GetComponent(Collider).SendMessage("OnClick");
         XT.SetInt(this.options[e].setInt.name, e), XT.TriggerEvent(this.options[e].triggerEvent.name)
     }
 }, ReplayAction.prototype.AnteBetToggle = function (t) {
@@ -26609,9 +26155,7 @@ ReplayConnection.prototype.RequestWinnings = function () {
     XT.UnregisterCallbackEvent(this.OnSpinStarted, this), XT.UnregisterCallbackEvent(this.OnDoLoop, this), XT.UnregisterCallbackEvent(this.OnLoopDone, this), XT.UnregisterCallbackEvent(this.OnBeforeEndOfDisplayLoop, this)
 }, ReplayLineByLineSkipper.prototype.ClickedLineByLineSkipperCollider = function () {
     for (var t = XT.GetObject(Vars.RQManagerObject), e = [], i = 0; i < t.rqiList.length; i++) "RQIMarker" == t.rqiList[i].constructor.name && e.push(i);
-    for (; e.length > 0;) {
-        t.rqiList[e[0]].type == RQIMarker.MarkerType.StartLineByLine ? (t.rqiList.splice(e[0], e[1] - e[0] + 1), e.splice(0, 2)) : (t.rqiList.splice(0, e[0]), e.splice(0, 1))
-    }
+    for (; e.length > 0;) t.rqiList[e[0]].type == RQIMarker.MarkerType.StartLineByLine ? (t.rqiList.splice(e[0], e[1] - e[0] + 1), e.splice(0, 2)) : (t.rqiList.splice(0, e[0]), e.splice(0, 1));
     XT.TriggerEvent(Vars.Evt_Internal_FinalizeDisplayedWin), this.handledCurrentResult = !0
 }, ReplayLineByLineSkipper.prototype.OnSpinStarted = function () {
     this.gameObject.SetActive(!1), this.handledCurrentResult = !1
@@ -26630,8 +26174,7 @@ ReplayConnection.prototype.RequestWinnings = function () {
             for (var e = 0; e < this.createLinkButtons.length; e++) this.createLinkButtons[e].SetActive(!0);
             for (e = 0; e < this.copyLinkButtons.length; e++) this.copyLinkButtons[e].SetActive(!1)
         } else {
-            this.sharedLink = location.href;
-            for (e = 0; e < this.createLinkButtons.length; e++) this.createLinkButtons[e].SetActive(!1);
+            for (this.sharedLink = location.href, e = 0; e < this.createLinkButtons.length; e++) this.createLinkButtons[e].SetActive(!1);
             for (e = 0; e < this.copyLinkButtons.length; e++) this.copyLinkButtons[e].SetActive(!0)
         }
 };
@@ -26697,15 +26240,12 @@ ReplayManager.prototype = Object.create(XTLink.prototype), ReplayManager.prototy
     if (Globals.isMobile) {
         var e = globalRuntime.sceneRoots[1].GetComponentInChildren(window.InterfaceControllerMobile_1, !0),
             i = globalRuntime.sceneRoots[1].GetComponentInChildren(window.InterfaceControllerMobile_2, !0);
-        t = [e.balanceParent, e.bonusBalanceParent, i.balanceParent, i.bonusBalanceParent];
-        for (o = 0; o < e.toggledInBonusGame.active.length; o++) - 1 != e.toggledInBonusGame.active[o].name.indexOf("Balance") && t.push(e.toggledInBonusGame.active[o])
+        for (t = [e.balanceParent, e.bonusBalanceParent, i.balanceParent, i.bonusBalanceParent], o = 0; o < e.toggledInBonusGame.active.length; o++) - 1 != e.toggledInBonusGame.active[o].name.indexOf("Balance") && t.push(e.toggledInBonusGame.active[o])
     } else {
         var n = globalRuntime.sceneRoots[1].GetComponentInChildren(window.InterfaceController, !0);
         t = [n.balanceParent, n.bonusBalanceParent];
         for (var o = 0; o < n.visibleInSpecialFeatures.length; o++)
-            for (var s = 0; s < n.visibleInSpecialFeatures[o].transform.children.length; s++) {
-                "Information" == (a = n.visibleInSpecialFeatures[o].transform.children[s]).gameObject.name && t.push(a.gameObject)
-            }
+            for (var s = 0; s < n.visibleInSpecialFeatures[o].transform.children.length; s++) "Information" == (a = n.visibleInSpecialFeatures[o].transform.children[s]).gameObject.name && t.push(a.gameObject)
     }
     for (o = 0; o < t.length; o++)
         for (s = 0; s < t[o].transform.children.length; s++) {
@@ -26718,23 +26258,20 @@ ReplayManager.prototype = Object.create(XTLink.prototype), ReplayManager.prototy
             i = globalRuntime.sceneRoots[1].GetComponentInChildren(window.InterfaceControllerMobile_2, !0);
         t = [e.menuButtonsParent, i.menuButtonsParent];
         var n = [globalRuntime.sceneRoots[1].GetComponentInChildren(GUIArranger, !0).landscapeObjects.BottomBar];
-        for (r = 0; r < i.contentInterface.transform.children.length; r++) {
+        for (r = 0; r < i.contentInterface.transform.children.length; r++)
             if ("BottomBar" == (h = i.contentInterface.transform.children[r]).gameObject.name) {
                 n.push(h.gameObject);
                 break
-            }
-        }
-        for (r = 0; r < n.length; r++)
-            for (u = 0; u < n[r].transform.children.length; u++) {
-                "AnchoredRight" == (h = n[r].transform.children[u]).gameObject.name && t.push(h.gameObject)
-            }
+            } for (r = 0; r < n.length; r++)
+            for (u = 0; u < n[r].transform.children.length; u++) "AnchoredRight" == (h = n[r].transform.children[u]).gameObject.name && t.push(h.gameObject)
     } else {
         var o = globalRuntime.sceneRoots[1].GetComponentInChildren(window.InterfaceController, !0);
         t = [o.payTableBtn.closed.transform.parent.gameObject, o.settingsBtns[0].closed.transform.parent.gameObject, o.settingsBtns[1].closed.transform.parent.gameObject];
         for (var s = new Array(o.toggledInHiddenMode.length - 1), a = 0, r = 0; r < o.toggledInHiddenMode.length; r++) "Paytable" != o.toggledInHiddenMode[r].name && (s[a] = o.toggledInHiddenMode[r], a++);
         o.toggledInHiddenMode = s;
-        for (var l = o.GetComponentsInChildren(SoundButtonControllerMobile, !0), r = 0; r < l.length; r++) l[r].gameObject.SetActive(!1);
-        for (var r = 0; r < o.visibleInSpecialFeatures.length; r++)
+        var l = o.GetComponentsInChildren(SoundButtonControllerMobile, !0);
+        for (r = 0; r < l.length; r++) l[r].gameObject.SetActive(!1);
+        for (r = 0; r < o.visibleInSpecialFeatures.length; r++)
             for (var u = 0; u < o.visibleInSpecialFeatures[r].transform.children.length; u++) {
                 var h;
                 "Paytable" == (h = o.visibleInSpecialFeatures[r].transform.children[u]).gameObject.name && t.push(h.gameObject)
@@ -27370,8 +26907,7 @@ FlashWrapperHelper.ExternalEvent = function (t, e) {
 }, PromotionsAnnouncer.prototype.NextAnnouncement = function () {
     var t = globalRuntime.sceneRoots[1].GetComponentsInChildren(TournamentsRank, !0);
     if (0 != this.announcements.length) {
-        this.uid = this.announcements[0].uid, XT.SetString(TournamentVars.RankPromotionID, this.uid), XT.SetBool(TournamentVars.DisplayingPromotionsInOtherGames, !0);
-        for (n = 0; n < t.length; n++) t[n].stopRotation.Start(), t[n].OnTournamentsUpdated();
+        for (this.uid = this.announcements[0].uid, XT.SetString(TournamentVars.RankPromotionID, this.uid), XT.SetBool(TournamentVars.DisplayingPromotionsInOtherGames, !0), n = 0; n < t.length; n++) t[n].stopRotation.Start(), t[n].OnTournamentsUpdated();
         this.secondaryUID = "";
         var e = TournamentConnection.instance.FindPromoHolder(this.uid);
         if (this.showMerged = !1, e.type == TournamentProtocol.PromoType.Tournament && e.promotion.displayStyle == TournamentProtocol.DisplayStyle.DropsAndWins && this.announcements.length > 1) {
@@ -27888,22 +27424,18 @@ ScrollableList.prototype = Object.create(Component.prototype), ScrollableList.pr
         var e = this.items[0].valueIdx + this.items.length == this.itemValues.length && (!this.strictMaxValue || Math.abs(this.scrollRemain) < this.numberError);
         this.maxValueReachedIfEmpty && 0 == this.itemValues.length && (e = !0), e == this.reachedMax && this.reachedMaxInit || (this.reachedMax = e, this.StartCATLink(this.reachedMax ? this.maxValueReached : this.maxValueNotReached)), this.reachedMaxInit = !0
     }
-    if (this.CanSpring()) {
-        t = 0 == this.items[0].valueIdx, e = this.items[0].valueIdx + this.items.length == this.itemValues.length;
-        (t || e) && Math.abs(this.scrollRemain) < this.springAmount && this.Spring(t ? 1 : -1)
-    }
+    this.CanSpring() && (t = 0 == this.items[0].valueIdx, e = this.items[0].valueIdx + this.items.length == this.itemValues.length, (t || e) && Math.abs(this.scrollRemain) < this.springAmount && this.Spring(t ? 1 : -1))
 }, ScrollableList.prototype.ScrollItems = function (t, e) {
     if (this.CanScroll(t)) {
         1 != e && (this.scrollDelta = t), this.scrollRemain += t, (0 == this.items[0].valueIdx && this.scrollRemain < 0 || this.items[0].valueIdx + this.items.length == this.itemValues.length && this.scrollRemain > 0) && (this.scrollRemain = 0);
         var i = Math.round(this.scrollRemain / this.itemHeight);
         if (this.scrollRemain -= i * this.itemHeight, i < 0)
-            for (var n = 0; n < Math.abs(i); ++n) {
-                (o = this.items[0].valueIdx - 1) >= 0 && (this.items[this.items.length - 1].UpdateIndexAndValue(o, this.itemValues[o]), this.items.unshift(this.items[this.items.length - 1]), this.items.pop())
-            } else if (i > 0)
-                for (n = 0; n < i; ++n) {
-                    var o;
-                    (o = this.items[this.items.length - 1].valueIdx + 1) < this.itemValues.length && (this.items[0].UpdateIndexAndValue(o, this.itemValues[o]), this.items.push(this.items[0]), this.items.shift())
-                }
+            for (var n = 0; n < Math.abs(i); ++n)(o = this.items[0].valueIdx - 1) >= 0 && (this.items[this.items.length - 1].UpdateIndexAndValue(o, this.itemValues[o]), this.items.unshift(this.items[this.items.length - 1]), this.items.pop());
+        else if (i > 0)
+            for (n = 0; n < i; ++n) {
+                var o;
+                (o = this.items[this.items.length - 1].valueIdx + 1) < this.itemValues.length && (this.items[0].UpdateIndexAndValue(o, this.itemValues[o]), this.items.push(this.items[0]), this.items.shift())
+            }
         this.UpdateItems(this.items[0].valueIdx)
     } else this.scrollDelta = 0
 }, ScrollableList.prototype.UpdateItems = function (t) {
@@ -28109,8 +27641,7 @@ ScrollableList.prototype = Object.create(Component.prototype), ScrollableList.pr
         var n = this.manager.betFormat.replace("{0}", Math.floor(this.round.rtp).toString());
         for (i = 0; i < this.betMultipliers.length; ++i) this.betMultipliers[i].text = n;
         var o = new Date(this.round.playedDate);
-        null != this.date && (this.date.text = DateTime.ToString(o, this.manager.dateFormat)), null != this.time && (this.time.text = DateTime.ToString(o, this.manager.timeFormat)), null != this.odd && this.odd.SetActive(this.valueIdx % 2 == 1), null != this.bet && this.bet.SetValueManually(this.round.bet), null != this.roundID && (this.roundID.text = this.round.roundID.toString());
-        for (i = 0; i < this.buttons.length; ++i) this.buttons[i].UpdateValue(this.round)
+        for (null != this.date && (this.date.text = DateTime.ToString(o, this.manager.dateFormat)), null != this.time && (this.time.text = DateTime.ToString(o, this.manager.timeFormat)), null != this.odd && this.odd.SetActive(this.valueIdx % 2 == 1), null != this.bet && this.bet.SetValueManually(this.round.bet), null != this.roundID && (this.roundID.text = this.round.roundID.toString()), i = 0; i < this.buttons.length; ++i) this.buttons[i].UpdateValue(this.round)
     }
 }, ReplayWinning.prototype.OnPress = function (t) {
     null == this.cachedCamera && (this.cachedCamera = Globals.GetCameraForObject(this.gameObject));
@@ -28738,8 +28269,7 @@ ScrollableList.prototype = Object.create(Component.prototype), ScrollableList.pr
                 var u = r.children[l];
                 u.tint = this.color.rgbAsHex, null != this.panel ? u.alpha = this.color.a * this.panel.alpha : u.alpha = this.color.a, u.worldAlpha = u.alpha
             }
-            t = this.gameObject.transform, e = this.pixiObject, i = t.parent.transform;
-            e.x = i._dangerous_get_position().x, e.y = -i._dangerous_get_position().y, r.x = t._dangerous_get_localPosition().x, r.y = -t._dangerous_get_localPosition().y, e.rotation = -i._dangerous_get_rotation().eulerAnglesRad().z, r.rotation = -t._dangerous_get_localRotation().eulerAnglesRad().z, e.scale.x = i._dangerous_get_scale().x, e.scale.y = i._dangerous_get_scale().y, r.scale.x = t._dangerous_get_localScale().x, r.scale.y = t._dangerous_get_localScale().y
+            t = this.gameObject.transform, e = this.pixiObject, i = t.parent.transform, e.x = i._dangerous_get_position().x, e.y = -i._dangerous_get_position().y, r.x = t._dangerous_get_localPosition().x, r.y = -t._dangerous_get_localPosition().y, e.rotation = -i._dangerous_get_rotation().eulerAnglesRad().z, r.rotation = -t._dangerous_get_localRotation().eulerAnglesRad().z, e.scale.x = i._dangerous_get_scale().x, e.scale.y = i._dangerous_get_scale().y, r.scale.x = t._dangerous_get_localScale().x, r.scale.y = t._dangerous_get_localScale().y
         }
 }, MovieController.prototype.StartPlaying = function () {
     this.deltaMovie && !this.deltaIsOpaque && this.ClearFrameBuffer(), this.time = 0, this.currentFrame = this.startFrame, this.isPlaying = !0
@@ -28794,10 +28324,8 @@ ScrollableList.prototype = Object.create(Component.prototype), ScrollableList.pr
     for (var e = 0; e < this.particlesGenerators.length; e++) this.particlesGenerators[e].enableEmission = t
 }, goog.require("UHT.Engine"), ParticlesControlledActive.prototype = Object.create(Component.prototype), ParticlesControlledActive.prototype.constructor = ParticlesControlledActive, ParticlesControlledActive.prototype.Update = function () {
     for (var t, e = 0, i = 0; i < this.particles.length; ++i) e += this.particles[i].particleCount;
-    if ((t = e > 0) != this.wasEnabled) {
-        this.wasEnabled = t;
-        for (i = 0; i < this.objects.length; ++i) this.objects[i].SetActive(t)
-    }
+    if ((t = e > 0) != this.wasEnabled)
+        for (this.wasEnabled = t, i = 0; i < this.objects.length; ++i) this.objects[i].SetActive(t)
 }, goog.require("UHT.Engine"), ParticlesEnabler.prototype = Object.create(Component.prototype), ParticlesEnabler.prototype.constructor = ParticlesEnabler, ParticlesEnabler.prototype.Awake = function () {
     null == this.particles && (this.particles = this.gameObject.GetComponentsInChildren(ParticleSystem, !0)[0]), this.pEnabled = this.particles.enableEmission, this.pEnabled || this.particles.gameObject.SetActive(!1)
 }, ParticlesEnabler.prototype.OnDisable = function () {
@@ -28913,9 +28441,7 @@ function GameWindow() {
 SpineController.prototype = Object.create(Component.prototype), SpineController.prototype.constructor = SpineController, SpineController.spineAtlasParser = null, SpineController.prototype.Init = function () {
     this.spineData.spineJSON instanceof Object || (this.spineData.spineJSON = JSON.parse(atob(String(this.spineData.spineJSON))));
     for (var t = !0, e = 0; e < this.spineAtlases.length; ++e)
-        for (var i = 0; i < this.spineAtlases[e].atlases.length; ++i) {
-            (a = this.spineAtlases[e].atlases[i]).isLoaded() || (a.initAtlas(), t = !1)
-        }
+        for (var i = 0; i < this.spineAtlases[e].atlases.length; ++i)(a = this.spineAtlases[e].atlases[i]).isLoaded() || (a.initAtlas(), t = !1);
     if (t) {
         if (null == this.spineData.spineAtlas) {
             var n = PIXI.spine.core;
@@ -29920,14 +29446,11 @@ AnimationController.prototype = Object.create(Component.prototype), AnimationCon
         }
         this.chars[i].UpdateValue(this.GetCharSource(t[i]), t, i)
     }
-    this.prevText.length != t.length && this.labelsAnchor.DiscardCache();
-    for (i = 0; i < this.colorAnimators.length; ++i) this.UpdateColorAnimator(this.colorAnimators[i]);
+    for (this.prevText.length != t.length && this.labelsAnchor.DiscardCache(), i = 0; i < this.colorAnimators.length; ++i) this.UpdateColorAnimator(this.colorAnimators[i]);
     this.prevText = t
 }, SplitLabelV3FX.prototype.UpdateColorAnimator = function (t) {
     this.widgets.splice(0), this.widgets = this.widgets.concat(t.targetWidgets);
-    for (var e = 0; e < this.removedChars.length; ++e) {
-        (i = this.widgets.indexOf(this.removedChars[e].label)) > -1 && this.widgets.splice(i, 1)
-    }
+    for (var e = 0; e < this.removedChars.length; ++e)(i = this.widgets.indexOf(this.removedChars[e].label)) > -1 && this.widgets.splice(i, 1);
     for (e = 0; e < this.chars.length; ++e) {
         var i;
         (i = this.widgets.indexOf(this.chars[e].label)) < 0 && this.widgets.push(this.chars[e].label)
@@ -29948,26 +29471,23 @@ AnimationController.prototype = Object.create(Component.prototype), AnimationCon
     if (this.useExtraSpaces)
         for (var e = this.labelsAnchor.width - t, i = Math.round(e / this.extraSpaces.length), n = 0; n < this.extraSpaces.length; ++n) this.extraSpaces[n].width = Math.round((this.extraSpaceWidths[n] + i) * this.extraSpaces[n].resize)
 }, SplitLabelV3FX.prototype.UpdateArcRadius = function () {
-    if (this.considerArcRadius) {
-        this.chars.length;
-        if (null != this.source.rope) {
-            var t = this.source.transform;
-            this.arcPosition.localPosition(t.localPosition()), this.arcRotation.localRotation(t.localRotation()), this.arcScale.localScale(t.localScale().x / this.source.resize, t.localScale().y / this.source.resize, t.localScale().z / this.source.resize);
-            for (var e = -this.source.mArcRadius, i = 2 * UHTMath.PI * e, n = 0, o = 0, s = 0; s < this.chars.length; s++) this.chars[s].width = this.source.pixiObjectContent.context.measureText(this.chars[s].label.text).width, o += this.chars[s].width;
-            for (s = 0; s < this.chars.length; s++) {
-                var a = ((n += .5 * this.chars[s].width) - o / 2) / i * 2 * UHTMath.PI - .5 * UHTMath.PI,
-                    r = Math.cos(a) * e,
-                    l = Math.sin(a) * e;
-                this.chars[s].arcPosition.localPosition(r, l, 0);
-                var u = 180 * (a + .5 * UHTMath.PI) / UHTMath.PI;
-                this.chars[s].arcRotation.localRotation(UHTMath.Quaternion.euler(0, 0, u)), n += .5 * this.chars[s].width, this.chars[s].arcScale.localScale(1, 1, 1);
-                var h = this.chars[s].arcResize.localScale(),
-                    c = this.chars[s].label.resize,
-                    p = this.chars[s].arcResizeConsiderScale,
-                    d = c * (p ? h.x : 1),
-                    m = c * (p ? h.y : 1);
-                this.chars[s].arcResize.localScale(new UHTMath.Vector3(d, m, h.z))
-            }
+    if (this.considerArcRadius && (this.chars.length, null != this.source.rope)) {
+        var t = this.source.transform;
+        this.arcPosition.localPosition(t.localPosition()), this.arcRotation.localRotation(t.localRotation()), this.arcScale.localScale(t.localScale().x / this.source.resize, t.localScale().y / this.source.resize, t.localScale().z / this.source.resize);
+        for (var e = -this.source.mArcRadius, i = 2 * UHTMath.PI * e, n = 0, o = 0, s = 0; s < this.chars.length; s++) this.chars[s].width = this.source.pixiObjectContent.context.measureText(this.chars[s].label.text).width, o += this.chars[s].width;
+        for (s = 0; s < this.chars.length; s++) {
+            var a = ((n += .5 * this.chars[s].width) - o / 2) / i * 2 * UHTMath.PI - .5 * UHTMath.PI,
+                r = Math.cos(a) * e,
+                l = Math.sin(a) * e;
+            this.chars[s].arcPosition.localPosition(r, l, 0);
+            var u = 180 * (a + .5 * UHTMath.PI) / UHTMath.PI;
+            this.chars[s].arcRotation.localRotation(UHTMath.Quaternion.euler(0, 0, u)), n += .5 * this.chars[s].width, this.chars[s].arcScale.localScale(1, 1, 1);
+            var h = this.chars[s].arcResize.localScale(),
+                c = this.chars[s].label.resize,
+                p = this.chars[s].arcResizeConsiderScale,
+                d = c * (p ? h.x : 1),
+                m = c * (p ? h.y : 1);
+            this.chars[s].arcResize.localScale(new UHTMath.Vector3(d, m, h.z))
         }
     }
 }, goog.require("UHT.GenericPoolObject"), SplitLabelV3FXChar.prototype = Object.create(GenericPoolObject.prototype), SplitLabelV3FXChar.prototype.constructor = SplitLabelV3FXChar, SplitLabelV3FXChar.prototype.UpdateValue = function (t, e, i) {
@@ -30145,8 +29665,7 @@ AnimationController.prototype = Object.create(Component.prototype), AnimationCon
 }, WidgetsEnabler.prototype.FindWidgets = function () {
     this.sprites = this.root.GetComponentsInChildren(UISprite, !0), this.spritesActive = _array.create(this.sprites.length);
     for (var t = 0; t < this.sprites.length; ++t) this.spritesActive[t] = this.sprites[t].gameObject.activeSelf;
-    this.labels = this.root.GetComponentsInChildren(UILabel, !0), this.labelsActive = _array.create(this.labels.length);
-    for (t = 0; t < this.labels.length; ++t) this.labelsActive[t] = this.labels[t].gameObject.activeSelf;
+    for (this.labels = this.root.GetComponentsInChildren(UILabel, !0), this.labelsActive = _array.create(this.labels.length), t = 0; t < this.labels.length; ++t) this.labelsActive[t] = this.labels[t].gameObject.activeSelf;
     this.isInit = !0
 }, goog.require("UHT.Engine"), WidgetsUtils.prototype = Object.create(Component.prototype), WidgetsUtils.prototype.constructor = WidgetsUtils, WidgetsUtils.prototype.SetWidth = function (t) {
     for (var e = 0; e < this.sprites.length; ++e) this.sprites[e].width = t;
@@ -30291,7 +29810,7 @@ RequestManager.blockRequests = !1, RequestManager.spinTimer = 0, RequestManager.
 }, RequestManager.IsSpinRequest = function (t) {
     return null != t.Fields[GameProtocolDictionary.Actions.action] && t.Fields[GameProtocolDictionary.Actions.action] == GameProtocolDictionary.Actions.doSpin && !RequestManager.freeSpinsStates.indexOf(VSGameStateManager.GetState()) > -1
 }, RequestManager.MustLimitSpinRequest = function (t) {
-    return !XT.GetBool(Vars.IsDifferentSpinType) && (XT.GetBool(Vars.Jurisdiction_SpinLimit) && RequestManager.spinTimer < XT.GetFloat(Vars.Jurisdiction_SpinLimit_Value))
+    return !XT.GetBool(Vars.IsDifferentSpinType) && XT.GetBool(Vars.Jurisdiction_SpinLimit) && RequestManager.spinTimer < XT.GetFloat(Vars.Jurisdiction_SpinLimit_Value)
 }, goog.require("UHT.Engine"), goog.require("UHT.GameConnection"), goog.require("UHT.BalanceManager"), goog.require("UHT.RequestManager"), goog.require("UHT.Adapter"), goog.require("UHT.JackpotsManager"), goog.require("UHT.ServerOptions"), goog.require("UHT.SwedishRegulationManager"), ServerLink.prototype = Object.create(Component.prototype), ServerLink.prototype.constructor = ServerLink, ServerLink.prototype.scriptUpdatePriority = 6, ServerLink.prototype.Awake = function () {
     this.requestQueue = [], EventManager.Init(), this.connections = [], RequestManager.Init(), this.balanceManager = new BalanceManager, this.balanceManager.Init(), this.adapter = new Adapter, this.adapter.Init(), this.jackpotsManager = new JackpotsManager, this.jackpotsManager.Init(), this.freeRoundsBonusConnection = new FreeRoundsBonusConnection, this.announcementConnection = new AnnouncementConnection, this.swedishRegulationManager = new SwedishRegulationManager, this.swedishRegulationManager.Init(), EventManager.AddHandler(ApplicationEvents.evtRequestInitApplication, this.OnInitApplicationRequest, this), EventManager.AddHandler(ApplicationEvents.evtAppConfigurationReceived, this.OnApplicationConfigReceived, this), EventManager.AddHandler(GameEvents.evtCreateConnectionRequest, this.OnCreateConnectionRequest, this)
 }, ServerLink.prototype.Start = function () {
@@ -30478,10 +29997,10 @@ SoundManager.InvalidSoundHandle = -1, SoundManager.forcedMute = !1, SoundManager
 }, SoundManager.prototype.UpdateSoundEmittersVolume = function () {
     this.playOneShotSource.volume = this.volumeFX * this.internalVolumeFX
 }, SoundManager.prototype.PrepareNewMusicClip = function (t) {
-    var e = -1;
+    var e;
     e = this.nextFreeMusicHandler < this.musicSoundSource.length ? this.nextFreeMusicHandler : this.GetNewMusicSource(), this.nextFreeMusicHandler++, this.musicSoundSource[e].clip = t.clip, this.musicSoundSource[e].loop = !0, t.handler = e, this.musicClips.push(t)
 }, SoundManager.prototype.PrepareNewLoopingClip = function (t) {
-    var e = -1;
+    var e;
     e = this.nextFreeLoopingHandler < this.loopingSources.length ? this.nextFreeLoopingHandler : this.GetNewLoopingSource(), this.nextFreeLoopingHandler++, this.loopingSources[e].clip = t.clip, this.loopingSources[e].loop = !0, t.handler = e, this.loopingClips.push(t)
 }, SoundManager.prototype.GetNewMusicSource = function () {
     var t = instantiate(this.musicSoundSource[0].gameObject);
@@ -30506,26 +30025,21 @@ SoundManager.InvalidSoundHandle = -1, SoundManager.forcedMute = !1, SoundManager
     }
     t.UpdateDuckingStepPriority(), i && t.duckingSteps[e].fadeOutDuration > 0 ? -1 == t.priorityDuckingStepIndex ? (t.duckingFadeOutDuration = t.duckingSteps[e].fadeOutDuration, t.duckingState = MusicVolumeState.fadingOut) : (t.duckingFadeInDuration = t.duckingSteps[e].fadeInDuration, t.duckingFadeOutDuration = t.duckingSteps[e].fadeOutDuration, t.duckingState = MusicVolumeState.fadingIn) : (-1 == t.priorityDuckingStepIndex ? t.duckingVolume = 1 : t.duckingVolume = t.duckingSteps[t.priorityDuckingStepIndex].targetVolume, t.duckingState = MusicVolumeState.idle, XT.GetBool(Vars.MusicIsOn) && (this.musicSoundSource[t.handler].volume = t.GetVolume() * this.internalVolumeMusic))
 }, SoundManager.prototype.PlayLoopingClip = function (t, e) {
-    if (t.handler == SoundManager.InvalidSoundHandle && this.PrepareNewLoopingClip(t), !t.isPlaying) {
-        if (t.isPlaying = !0, this.loopingSources[t.handler].volume = 0, !t.isMuted)
-            if (e && t.volumeFadeInDuration > 0) t.volumeLevel = 0, t.volumeState = MusicVolumeState.fadingIn;
-            else {
-                t.volumeLevel = 1, t.volumeState = MusicVolumeState.idle, XT.GetObject(Vars.SoundState).soundFXIsOn && (this.loopingSources[t.handler].volume = t.GetVolume() * this.internalVolumeFX)
-            } null != t.clip && this.loopingSources[t.handler].Play()
-    }
+    t.handler == SoundManager.InvalidSoundHandle && this.PrepareNewLoopingClip(t), t.isPlaying || (t.isPlaying = !0, this.loopingSources[t.handler].volume = 0, t.isMuted || (e && t.volumeFadeInDuration > 0 ? (t.volumeLevel = 0, t.volumeState = MusicVolumeState.fadingIn) : (t.volumeLevel = 1, t.volumeState = MusicVolumeState.idle, XT.GetObject(Vars.SoundState).soundFXIsOn && (this.loopingSources[t.handler].volume = t.GetVolume() * this.internalVolumeFX))), null != t.clip && this.loopingSources[t.handler].Play())
 }, SoundManager.prototype.StopLoopingClip = function (t, e) {
     t.handler == SoundManager.InvalidSoundHandle && this.PrepareNewLoopingClip(t), t.isPlaying = !1, e && t.volumeFadeOutDuration > 0 ? t.volumeState = MusicVolumeState.fadingOut : (this.loopingSources[t.handler].volume = 0, this.loopingSources[t.handler].Stop(), t.volumeLevel = 0, t.volumeState = MusicVolumeState.idle)
 }, SoundManager.prototype.MuteLoopingClip = function (t, e) {
     t.handler == SoundManager.InvalidSoundHandle && this.PrepareNewLoopingClip(t), t.isMuted = !0, e && t.volumeFadeOutDuration > 0 ? t.volumeState = MusicVolumeState.fadingOut : (this.loopingSources[t.handler].volume = 0, t.volumeState = MusicVolumeState.idle, t.volumeLevel = 0)
 }, SoundManager.prototype.UnmuteLoopingClip = function (t, e) {
-    (t.handler == SoundManager.InvalidSoundHandle && this.PrepareNewLoopingClip(t), t.isMuted = !1, e && t.volumeFadeInDuration > 0) ? t.volumeState = MusicVolumeState.fadingIn: (t.volumeLevel = 1, t.volumeState = MusicVolumeState.idle, XT.GetObject(Vars.SoundState).soundFXIsOn && (this.loopingSources[t.handler].volume = t.GetVolume() * this.internalVolumeFX))
+    t.handler == SoundManager.InvalidSoundHandle && this.PrepareNewLoopingClip(t), t.isMuted = !1, e && t.volumeFadeInDuration > 0 ? t.volumeState = MusicVolumeState.fadingIn : (t.volumeLevel = 1, t.volumeState = MusicVolumeState.idle, XT.GetObject(Vars.SoundState).soundFXIsOn && (this.loopingSources[t.handler].volume = t.GetVolume() * this.internalVolumeFX))
 }, SoundManager.prototype.DuckLoopingClip = function (t, e, i, n) {
-    (t.handler == SoundManager.InvalidSoundHandle && this.PrepareNewLoopingClip(t), i > 0 ? (t.duckingSteps[e].autoUnduck || (t.duckingSteps[e].autoUnduck = !0, t.duckingSteps[e].duckCount++), i > t.duckingSteps[e].autoUnduckTimer && (t.duckingSteps[e].autoUnduckShouldFade = n && t.duckingSteps[e].fadeOutDuration > 0, t.duckingSteps[e].autoUnduckTimer = i)) : t.duckingSteps[e].duckCount++, t.UpdateDuckingStepPriority(), n && t.duckingSteps[e].fadeInDuration > 0) ? (t.duckingFadeInDuration = t.duckingSteps[e].fadeInDuration, t.duckingState = MusicVolumeState.fadingIn) : (t.duckingVolume = t.duckingSteps[t.priorityDuckingStepIndex].targetVolume, t.duckingState = MusicVolumeState.idle, XT.GetObject(Vars.SoundState).soundFXIsOn && (this.loopingSources[t.handler].volume = t.GetVolume() * this.internalVolumeFX))
+    t.handler == SoundManager.InvalidSoundHandle && this.PrepareNewLoopingClip(t), i > 0 ? (t.duckingSteps[e].autoUnduck || (t.duckingSteps[e].autoUnduck = !0, t.duckingSteps[e].duckCount++), i > t.duckingSteps[e].autoUnduckTimer && (t.duckingSteps[e].autoUnduckShouldFade = n && t.duckingSteps[e].fadeOutDuration > 0, t.duckingSteps[e].autoUnduckTimer = i)) : t.duckingSteps[e].duckCount++, t.UpdateDuckingStepPriority(), n && t.duckingSteps[e].fadeInDuration > 0 ? (t.duckingFadeInDuration = t.duckingSteps[e].fadeInDuration, t.duckingState = MusicVolumeState.fadingIn) : (t.duckingVolume = t.duckingSteps[t.priorityDuckingStepIndex].targetVolume, t.duckingState = MusicVolumeState.idle, XT.GetObject(Vars.SoundState).soundFXIsOn && (this.loopingSources[t.handler].volume = t.GetVolume() * this.internalVolumeFX))
 }, SoundManager.prototype.UnduckLoopingClip = function (t, e, i) {
     if (t.handler == SoundManager.InvalidSoundHandle && this.PrepareNewLoopingClip(t), t.duckingSteps[e].duckCount > 0) {
         if (1 == t.duckingSteps[e].duckCount && t.duckingSteps[e].autoUnduck) return;
         if (t.duckingSteps[e].duckCount--, t.duckingSteps[e].duckCount > 0) return
-    }(t.UpdateDuckingStepPriority(), i && t.duckingSteps[e].fadeOutDuration > 0) ? -1 == t.priorityDuckingStepIndex ? (t.duckingFadeOutDuration = t.duckingSteps[e].fadeOutDuration, t.duckingState = MusicVolumeState.fadingOut) : (t.duckingFadeInDuration = t.duckingSteps[e].fadeInDuration, t.duckingFadeOutDuration = t.duckingSteps[e].fadeOutDuration, t.duckingState = MusicVolumeState.fadingIn): (-1 == t.priorityDuckingStepIndex ? t.duckingVolume = 1 : t.duckingVolume = t.duckingSteps[t.priorityDuckingStepIndex].targetVolume, t.duckingState = MusicVolumeState.idle, XT.GetObject(Vars.SoundState).soundFXIsOn && (this.loopingSources[t.handler].volume = t.GetVolume() * this.internalVolumeFX))
+    }
+    t.UpdateDuckingStepPriority(), i && t.duckingSteps[e].fadeOutDuration > 0 ? -1 == t.priorityDuckingStepIndex ? (t.duckingFadeOutDuration = t.duckingSteps[e].fadeOutDuration, t.duckingState = MusicVolumeState.fadingOut) : (t.duckingFadeInDuration = t.duckingSteps[e].fadeInDuration, t.duckingFadeOutDuration = t.duckingSteps[e].fadeOutDuration, t.duckingState = MusicVolumeState.fadingIn) : (-1 == t.priorityDuckingStepIndex ? t.duckingVolume = 1 : t.duckingVolume = t.duckingSteps[t.priorityDuckingStepIndex].targetVolume, t.duckingState = MusicVolumeState.idle, XT.GetObject(Vars.SoundState).soundFXIsOn && (this.loopingSources[t.handler].volume = t.GetVolume() * this.internalVolumeFX))
 }, SoundManager.prototype.UpdateMusicVolume = function () {
     for (var t = 0; t < this.musicClips.length; t++) this.musicSoundSource[this.musicClips[t].handler].volume != this.musicClips[t].GetVolume() * this.volumeMusic * this.internalVolumeMusic && (this.musicSoundSource[this.musicClips[t].handler].volume = this.musicClips[t].GetVolume() * this.volumeMusic * this.internalVolumeMusic)
 }, SoundManager.prototype.UpdateLoopingClipsVolume = function () {
@@ -30540,15 +30054,7 @@ SoundManager.InvalidSoundHandle = -1, SoundManager.forcedMute = !1, SoundManager
                     this.musicClips[t].volumeLevel = 1 == e ? 69 : e
                 } else this.musicClips[t].volumeLevel += Time.deltaTime * (1 / this.musicClips[t].volumeFadeInDuration);
             this.musicClips[t].volumeLevel >= 1 && (this.musicClips[t].volumeLevel = 1, this.musicClips[t].volumeState = MusicVolumeState.idle, this.musicClips[t].currentCurveTime = 1)
-        } else if (this.musicClips[t].volumeState == MusicVolumeState.fadingOut) {
-            if (this.musicClips[t].volumeLevel > 0)
-                if (this.musicClips[t].useFadeCurve) {
-                    this.musicClips[t].currentCurveTime -= Time.deltaTime * (1 / this.musicClips[t].volumeFadeOutDuration);
-                    e = this.musicClips[t].fadeCurve.Evaluate(this.musicClips[t].currentCurveTime);
-                    this.musicClips[t].volumeLevel = 0 == e ? -69 : e
-                } else this.musicClips[t].volumeLevel -= Time.deltaTime * (1 / this.musicClips[t].volumeFadeOutDuration);
-            this.musicClips[t].volumeLevel <= 0 && (this.musicClips[t].volumeLevel = 0, this.musicClips[t].volumeState = MusicVolumeState.idle, this.musicClips[t].currentCurveTime = 0, this.musicClips[t].isPlaying || this.StopMusicClip(this.musicClips[t], !1))
-        }
+        } else this.musicClips[t].volumeState == MusicVolumeState.fadingOut && (this.musicClips[t].volumeLevel > 0 && (this.musicClips[t].useFadeCurve ? (this.musicClips[t].currentCurveTime -= Time.deltaTime * (1 / this.musicClips[t].volumeFadeOutDuration), e = this.musicClips[t].fadeCurve.Evaluate(this.musicClips[t].currentCurveTime), this.musicClips[t].volumeLevel = 0 == e ? -69 : e) : this.musicClips[t].volumeLevel -= Time.deltaTime * (1 / this.musicClips[t].volumeFadeOutDuration)), this.musicClips[t].volumeLevel <= 0 && (this.musicClips[t].volumeLevel = 0, this.musicClips[t].volumeState = MusicVolumeState.idle, this.musicClips[t].currentCurveTime = 0, this.musicClips[t].isPlaying || this.StopMusicClip(this.musicClips[t], !1)));
         for (var i = 0; i < this.musicClips[t].duckingSteps.length; i++) this.musicClips[t].duckingSteps[i].autoUnduck && (this.musicClips[t].duckingSteps[i].autoUnduckTimer > 0 ? this.musicClips[t].duckingSteps[i].autoUnduckTimer -= Time.deltaTime : (this.musicClips[t].duckingSteps[i].autoUnduck = !1, this.UnduckMusicClip(this.musicClips[t], i, this.musicClips[t].duckingSteps[i].autoUnduckShouldFade)));
         this.musicClips[t].duckingState == MusicVolumeState.fadingIn ? this.musicClips[t].duckingVolume < this.musicClips[t].duckingSteps[this.musicClips[t].priorityDuckingStepIndex].targetVolume ? (this.musicClips[t].duckingVolume += Time.deltaTime * (1 / this.musicClips[t].duckingFadeOutDuration), this.musicClips[t].duckingVolume >= this.musicClips[t].duckingSteps[this.musicClips[t].priorityDuckingStepIndex].targetVolume && (this.musicClips[t].duckingVolume = this.musicClips[t].duckingSteps[this.musicClips[t].priorityDuckingStepIndex].targetVolume, this.musicClips[t].duckingState = MusicVolumeState.idle)) : this.musicClips[t].duckingVolume > this.musicClips[t].duckingSteps[this.musicClips[t].priorityDuckingStepIndex].targetVolume && (this.musicClips[t].duckingVolume -= Time.deltaTime * (1 / this.musicClips[t].duckingFadeInDuration), this.musicClips[t].duckingVolume <= this.musicClips[t].duckingSteps[this.musicClips[t].priorityDuckingStepIndex].targetVolume && (this.musicClips[t].duckingVolume = this.musicClips[t].duckingSteps[this.musicClips[t].priorityDuckingStepIndex].targetVolume, this.musicClips[t].duckingState = MusicVolumeState.idle)) : this.musicClips[t].duckingState == MusicVolumeState.fadingOut && (this.musicClips[t].duckingVolume < 1 && (this.musicClips[t].duckingVolume += Time.deltaTime * (1 / this.musicClips[t].duckingFadeOutDuration)), this.musicClips[t].duckingVolume >= 1 && (this.musicClips[t].duckingVolume = 1, this.musicClips[t].duckingState = MusicVolumeState.idle))
     }
@@ -30562,7 +30068,7 @@ SoundManager.InvalidSoundHandle = -1, SoundManager.forcedMute = !1, SoundManager
 var BT_SoundTimerOn = 0,
     BT_SoundTimerOff = 0;
 SoundManager.prototype.Update = function () {
-    (this.ComputeMusicClipsVolume(), this.ComputeLoopingClipsVolume(), this.UpdateMusicVolume(), this.UpdateLoopingClipsVolume(), SoundLoader.soundsAreLoaded) && (XT.GetObject(Vars.SoundState).gameSoundIsOn ? BT_SoundTimerOn += Time.deltaTime : BT_SoundTimerOff += Time.deltaTime, BT_SoundTimerOn + BT_SoundTimerOff > 60 && (globalTracking.SendEvent("uht_behaviour", "SoundEnabled", BT_SoundTimerOn / (BT_SoundTimerOn + BT_SoundTimerOff), "BehaviourTracker"), BT_SoundTimerOn = 0, BT_SoundTimerOff = 0))
+    this.ComputeMusicClipsVolume(), this.ComputeLoopingClipsVolume(), this.UpdateMusicVolume(), this.UpdateLoopingClipsVolume(), SoundLoader.soundsAreLoaded && (XT.GetObject(Vars.SoundState).gameSoundIsOn ? BT_SoundTimerOn += Time.deltaTime : BT_SoundTimerOff += Time.deltaTime, BT_SoundTimerOn + BT_SoundTimerOff > 60 && (globalTracking.SendEvent("uht_behaviour", "SoundEnabled", BT_SoundTimerOn / (BT_SoundTimerOn + BT_SoundTimerOff), "BehaviourTracker"), BT_SoundTimerOn = 0, BT_SoundTimerOff = 0))
 }, goog.provide("UHT.SoundLoader"), goog.require("UHT.AudioClip"), goog.require("UHT.SoundManager");
 var SoundHelper = {
     AudioFormat: {
@@ -30649,7 +30155,7 @@ SoundLoader.LoadSounds = function () {
                     if (e[s].language == i) {
                         1 == e[s].sound && (n += i, o = !0);
                         break
-                    } if (!o) n += UHT_PACKAGES_INFO_OBJ.default_sound_suffix || ""
+                    } o || (n += UHT_PACKAGES_INFO_OBJ.default_sound_suffix || "")
             }
             if (n += "." + SoundHelper.audioFormat, SoundLoader.packageList = [n, "GUI_sounds." + SoundHelper.audioFormat], -1 == LoaderProgress.Sound_Download_Total) {
                 var a = {},
@@ -30658,8 +30164,7 @@ SoundLoader.LoadSounds = function () {
                     (u = r[s].split(":")).length > 1 && (a[u[0].split("?")[0]] = u[1]);
                     for (var l = 0; l < SoundLoader.packageList.length; l++) 0 == u[0].indexOf(SoundLoader.packageList[l]) && (SoundLoader.packageList[l] = u[0])
                 }
-                Modules.LoadSounds(a);
-                for (s = 0; s < r.length; ++s) {
+                for (Modules.LoadSounds(a), s = 0; s < r.length; ++s) {
                     var u = r[s].split(":");
                     for (l = 0; l < SoundLoader.packageList.length; l++) 0 == u[0].indexOf(SoundLoader.packageList[l]) && (SoundLoader.packageList[l] = u[0])
                 }
@@ -30707,8 +30212,7 @@ SoundLoader.LoadSounds = function () {
         SoundLoader.OnSoundsLoaded(t)
     }), 200)
 }, SoundLoader.InitSounds = function () {
-    (new UAParser2).getBrowser();
-    if (IS_UCBROWSER && createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]), createjs.Sound.initializeDefaultPlugins()) {
+    if ((new UAParser2).getBrowser(), IS_UCBROWSER && createjs.Sound.registerPlugins([createjs.HTMLAudioPlugin]), createjs.Sound.initializeDefaultPlugins()) {
         var t = createjs.Sound.getCapabilities();
         SoundHelper.audioFormat = t.ogg ? SoundHelper.AudioFormat.ogg : SoundHelper.AudioFormat.mp3, "Edge" == UHT_UA_INFO.browser.name && (SoundHelper.audioFormat = SoundHelper.AudioFormat.mp3), createjs.Sound.activePlugin instanceof createjs.WebAudioPlugin ? SoundLoader.audioType = SoundLoader.AudioType.web : createjs.Sound.activePlugin instanceof createjs.HTMLAudioPlugin && (createjs.Sound._parsePath = SoundHelper.ParsePath, SoundLoader.audioType = SoundLoader.AudioType.html), SoundLoader.initialized = !0
     }
@@ -30770,7 +30274,7 @@ SoundLoader.LoadSounds = function () {
                 var r = s.resources[a];
                 switch (r.type) {
                     case "Texture":
-                        var l = null;
+                        var l;
                         l = r.isInline ? r.data : e + r.data, this.mapGuidToResource["g" + r.id] = {
                             type: r.type,
                             data: l
@@ -30887,8 +30391,7 @@ SoundLoader.LoadSounds = function () {
                     case "GameObject":
                         var r = a.data;
                         if (0 == n) return null;
-                        l = "m" + n;
-                        if (r.hasOwnProperty(l)) return r[l];
+                        if (l = "m" + n, r.hasOwnProperty(l)) return r[l];
                         break;
                     case "TextAsset":
                         return a.data;
@@ -30989,7 +30492,7 @@ function CheckAndSetPauseForResources() {
         var i = globalRuntime.onWillRenderList.components;
         for (e = 0; e < i.length; e++) {
             var n = i[e];
-            null != n && (n instanceof UIPanel && (n.container.children = []))
+            null != n && n instanceof UIPanel && (n.container.children = [])
         }
     }
     if (t != globalPauseForResources) {
@@ -31123,7 +30626,7 @@ function parseGameData(t, e) {
         nonCachedRetried = !0, mainGameJsonData = null, GUIJsonData = null, mainResources = null, otherResources = null, GUIResources = null, (gameRequests = []).push([]);
         var o = 0;
         for (n = 0; n < UHT_GAME_FILES.length; ++n) {
-            if (gameRequests[o].length > 0) - 1 == gameRequests[o][gameRequests[o].length - 1].url.replace(/[0-9]/g, "").indexOf(UHT_GAME_FILES[n].replace(/[0-9]/g, "")) && (gameRequests.push([]), o++);
+            gameRequests[o].length > 0 && -1 == gameRequests[o][gameRequests[o].length - 1].url.replace(/[0-9]/g, "").indexOf(UHT_GAME_FILES[n].replace(/[0-9]/g, "")) && (gameRequests.push([]), o++);
             var s = new ResourceRequest({
                 url: globalGamePath + UHT_GAME_FILES[n],
                 complete: new EventHandler(null, onGamePartComplete),
@@ -31262,7 +30765,7 @@ goog.provide("UHT.AudioClassesUtils"), goog.require("UHT.SoundManager"), goog.re
 }, AudioClipDelay.prototype.CountToPlayClip = function (t, e) {
     this.currentDelay = e, this.clipToPlay = t
 }, AudioClipDelay.prototype.MustPlay = function () {
-    return null != this.clipToPlay && (!(this.currentDelay > 0) || (this.currentDelay -= Time.deltaTime, !1))
+    return !(null == this.clipToPlay || this.currentDelay > 0 && (this.currentDelay -= Time.deltaTime, 1))
 }, AudioClipMusicAware.prototype.GetClip = function () {
     return XT.GetBool(Vars.MusicIsOn) ? this.clipMusicOn : this.clipMusicOff
 }, AudioClipFastPlayAware.prototype.GetClip = function () {
@@ -31585,7 +31088,7 @@ ValueAnimatorWithBigWin.prototype = Object.create(XTLink.prototype), ValueAnimat
 }, ValueAnimatorWithBigWin.prototype.OnTargetValueChanged = function (t) {
     this.newValue = t, this.skipClicks = 0;
     var e = !0;
-    if ((this.isAnimating && (this.oldValue = this.currentValue), this.delta = this.newValue - this.oldValue, XT.GetBool(Vars.CanAnimateValues) && this.newValue > this.oldValue + 1e-4 && this.animateWhenIncreasing && this.totalBet > 0 && CoinManager.IsInit()) && (this.reallyTriggersBigWin && this.coinCounter.ComputeTargetBigWinLevel(this.delta, this.totalBet), !this.CalculateAnimationTime(this.delta))) {
+    if (this.isAnimating && (this.oldValue = this.currentValue), this.delta = this.newValue - this.oldValue, XT.GetBool(Vars.CanAnimateValues) && this.newValue > this.oldValue + 1e-4 && this.animateWhenIncreasing && this.totalBet > 0 && CoinManager.IsInit() && (this.reallyTriggersBigWin && this.coinCounter.ComputeTargetBigWinLevel(this.delta, this.totalBet), !this.CalculateAnimationTime(this.delta))) {
         this.isAnimating = !0, this.curTime = 0, null != this.multiplierFX && (this.multiplierFX.ComputeStartFXTime(this.oldValue, this.oldValue, this.newValue, this.animationTime), this.multiplierFX.curFXIndex > -1 && (this.curTime = this.multiplierFX.startFXTime[this.multiplierFX.curFXIndex])), "" != this.makeTrueWhenAnimating.name && XT.SetBool(this.makeTrueWhenAnimating.name, !0);
         var i = !0;
         this.vdVariable.variable.name != Vars.BalanceDisplayed ? (0 == XT.GetInt(Vars.VAWBWCounters) && XT.SetBool(Vars.LastWinIsCounting, !0), this.IncreaseVAWBWCounter(this.vdVariable.variable.name)) : XT.SetBool(Vars.BalanceIsCounting, !0), t >= this.totalBet * this.coinCounter.BigWinSteps[0] || this.isJackPot || (i = !1), this.reallyTriggersBigWin && i && (XT.SetInt(Vars.BigWinLevel, 7), XT.TriggerEvent(Vars.Evt_Internal_ShowBigWin), XT.SetBool(Vars.WaitInResultForBigWin, !0)), this.setSkipTheNextBigWin && XT.SetBool(Vars.SkipNextBigWin, !0), this.playSoundsWhenAnimating && XT.SetInt(Vars.CurrentCoinCountTarget, CoinManager.ConvertMoneyToCoins(this.newValue)), this.playSoundsWhenAnimating && !this.isJackPot && (this.coinCounter.ComputeTargetBigWinLevel(this.delta, this.totalBet), XT.TriggerEvent(Vars.Evt_Internal_CoinCounterStart)), e = !1
@@ -31614,10 +31117,8 @@ ValueAnimatorWithBigWin.prototype = Object.create(XTLink.prototype), ValueAnimat
                 this.currentState = o, XT.TriggerEvent(Vars.Evt_Internal_ShowBigWin)
             }
         } else {
-            n = 0;
-            for (n = 0; n < this.coinCounter.BigWinSteps.length && !(this.totalBet * this.coinCounter.BigWinSteps[n] > i); n++);
-            o = WinAnimState.level0 + n;
-            this.currentState != o && (this.currentState = o, n > 0 && this.reallyTriggersBigWin && this.animationTime != this.normalWinTime && (XT.SetInt(Vars.BigWinLevel, this.currentState - WinAnimState.level0), XT.TriggerEvent(Vars.Evt_Internal_ShowBigWin)))
+            for (n = 0, n = 0; n < this.coinCounter.BigWinSteps.length && !(this.totalBet * this.coinCounter.BigWinSteps[n] > i); n++);
+            o = WinAnimState.level0 + n, this.currentState != o && (this.currentState = o, n > 0 && this.reallyTriggersBigWin && this.animationTime != this.normalWinTime && (XT.SetInt(Vars.BigWinLevel, this.currentState - WinAnimState.level0), XT.TriggerEvent(Vars.Evt_Internal_ShowBigWin)))
         }
     }
     t == this.animationTime && (this.reallyTriggersBigWin ? this.currentState == WinAnimState.level0 ? (this.currentState = WinAnimState.idle, this.playSoundsWhenAnimating && !this.isJackPot && XT.TriggerEvent(Vars.Evt_Internal_CoinCounterStop)) : (this.currentState = WinAnimState.hidingBigWin, XT.TriggerEvent(Vars.Evt_Internal_ClearBigWin), this.playSoundsWhenAnimating && !this.isJackPot && XT.TriggerEvent(Vars.Evt_Internal_CoinCounterStop), this.isJackPot && XT.TriggerEvent(Vars.Evt_Internal_JackpotCounterEnded)) : this.currentState = WinAnimState.idle, this.vdVariable.variable.name != Vars.BalanceDisplayed ? (this.DecreaseVAWBWCounter(this.vdVariable.variable.name), 0 == XT.GetInt(Vars.VAWBWCounters) && (XT.SetBool(Vars.LastWinIsCounting, !1), UHTInterfaceBOSS.PostMessage("resultShown"))) : XT.SetBool(Vars.BalanceIsCounting, !1))
@@ -31626,7 +31127,7 @@ ValueAnimatorWithBigWin.prototype = Object.create(XTLink.prototype), ValueAnimat
     if (this.isJackPot) return this.animationTime = 18, !1;
     this.animationTime = CoinManager.ConvertMoneyToCoins(t), this.normalWinTime = this.coinCounter.BigWinSteps[0] - 1;
     var e = CoinManager.ConvertMoneyToCoins(this.totalBet) / this.coinCounter.secondsToCountOneTotalBet;
-    return this.coinCounter.GetTargetBigWinLevel() < 1 && this.coinCounter.forcedSmallWinCountDuration > 0 ? this.animationTime = this.coinCounter.forcedSmallWinCountDuration : this.animationTime /= e, this.normalWinTime /= e, !(!this.canBeSkippedByPreviousBigWin || !XT.GetBool(Vars.SkipNextBigWin)) && (this.animationTime = this.normalWinTime, !0)
+    return this.coinCounter.GetTargetBigWinLevel() < 1 && this.coinCounter.forcedSmallWinCountDuration > 0 ? this.animationTime = this.coinCounter.forcedSmallWinCountDuration : this.animationTime /= e, this.normalWinTime /= e, !(!this.canBeSkippedByPreviousBigWin || !XT.GetBool(Vars.SkipNextBigWin) || (this.animationTime = this.normalWinTime, 0))
 }, ValueAnimatorWithBigWin.prototype.Update = function () {
     if (this.totalBet > 0 && CoinManager.IsInit() && this.isAnimating) {
         if (null != this.multiplierFX && this.multiplierFX.curFXIndex > -1) {
@@ -31787,18 +31288,17 @@ CoinsAndCashHint.prototype.XTRegisterCallbacks = function () {
         this.targetTransform.position(this.anchorLeft || this.anchorRight ? i.x : n.x, this.anchorTop || this.anchorBottom ? i.y : n.y, n.z);
         var u = new UHTMath.Vector3(0, 0, 0);
         if (this.anchorTop ? u.y = -this.topOffset : this.anchorBottom && (u.y = this.bottomOffset), this.anchorLeft ? u.x = this.leftOffset : this.anchorRight && (u.x = -this.rightOffset), this.targetTransform.localPosition(this.targetTransform.localPosition().x + u.x, this.targetTransform.localPosition().y + u.y, this.targetTransform.localPosition().z), this.alsoScaleTheSprite) {
-            var h = Component.FindObjectOfType(ArrangeableUIRoot).gameObject.GetComponent(UIRoot),
-                c = h.manualWidth / h.manualHeight,
-                p = 1;
-            p = this.lastScreenWidth / this.lastScreenHeight < c ? this.lastScreenWidth / h.manualWidth : this.lastScreenHeight / h.manualHeight;
+            var h, c = Component.FindObjectOfType(ArrangeableUIRoot).gameObject.GetComponent(UIRoot),
+                p = c.manualWidth / c.manualHeight;
+            h = this.lastScreenWidth / this.lastScreenHeight < p ? this.lastScreenWidth / c.manualWidth : this.lastScreenHeight / c.manualHeight;
             var d = this.targetTransform.GetComponent(UISprite);
             if (this.scaleHorizontaly) {
-                var m = this.lastScreenWidth / p;
-                m *= h.gameObject.transform._internal_get_scale().x / d.gameObject.transform._internal_get_scale().x, d.width = _number.otoi(m + this.widthOffset)
+                var m = this.lastScreenWidth / h;
+                m *= c.gameObject.transform._internal_get_scale().x / d.gameObject.transform._internal_get_scale().x, d.width = _number.otoi(m + this.widthOffset)
             }
             if (this.scaleVerticaly) {
-                var S = this.lastScreenHeight / p;
-                S *= h.gameObject.transform._internal_get_scale().y / d.gameObject.transform._internal_get_scale().y, d.height = _number.otoi(S + this.heightOffset)
+                var S = this.lastScreenHeight / h;
+                S *= c.gameObject.transform._internal_get_scale().y / d.gameObject.transform._internal_get_scale().y, d.height = _number.otoi(S + this.heightOffset)
             }
         }
         null != this.callWhenChanged && this.callWhenChanged.Start()
@@ -31852,8 +31352,7 @@ CoinsAndCashHint.prototype.XTRegisterCallbacks = function () {
         else
             for (e = 0; e < this.increaseBetAndCoinValueButtons.length; ++e) this.increaseBetAndCoinValueButtons[e].EnableButton()
     } else {
-        this.decreaseBetButton.DisableButton(), this.increaseBetButton.DisableButton(), this.decreaseBetButtonCash.DisableButton(), this.increaseBetButtonCash.DisableButton(), this.decreaseCoinValueButton.DisableButton(), this.increaseCoinValueButton.DisableButton();
-        for (e = 0; e < this.decreaseBetAndCoinValueButtons.length; ++e) this.decreaseBetAndCoinValueButtons[e].DisableButton();
+        for (this.decreaseBetButton.DisableButton(), this.increaseBetButton.DisableButton(), this.decreaseBetButtonCash.DisableButton(), this.increaseBetButtonCash.DisableButton(), this.decreaseCoinValueButton.DisableButton(), this.increaseCoinValueButton.DisableButton(), e = 0; e < this.decreaseBetAndCoinValueButtons.length; ++e) this.decreaseBetAndCoinValueButtons[e].DisableButton();
         for (e = 0; e < this.increaseBetAndCoinValueButtons.length; ++e) this.increaseBetAndCoinValueButtons[e].DisableButton()
     }
 }, BetsControllerMobile.prototype.OnAllowCoinsChanged = function (t) {
@@ -32058,8 +31557,7 @@ GUIMessageResultWin.prototype = Object.create(GUIMessageBase.prototype), GUIMess
     if (null != i && o.push(i), n && o.push(this.localized_Pays.text), null != e) {
         for (var s = 1, a = 0; a < e.length; a++) s *= e[a];
         if (s > 1) {
-            o.push(this.FormatValue(t / s));
-            for (a = 0; a < e.length; a++) e[a] > 1 && (o.push("x"), o.push(String(e[a])));
+            for (o.push(this.FormatValue(t / s)), a = 0; a < e.length; a++) e[a] > 1 && (o.push("x"), o.push(String(e[a])));
             o.push("=")
         }
     }
@@ -32195,10 +31693,7 @@ MessageController.prototype = Object.create(XTLink.prototype), MessageController
             if (this.useMessagesResultWin)
                 for (var i = 0; i < this.messagesResultWin.length; ++i) this.messagesResultWin[i].SetSpecialFlags(e && this.hasFeatureWonText, t && this.hasFeatureWonText), this.ShowMessage(this.messagesResultWin[i]);
             else this.msg_ResultWin.SetSpecialFlags(e && this.hasFeatureWonText, t && this.hasFeatureWonText), this.ShowMessage(this.msg_ResultWin);
-            if (this.HideMessage(this.msg_ResultTeaser), 0 == XT.GetInt(Vars.BigWinLevel)) {
-                i = Random.Range(0, this.event_Win.length);
-                this.event_Win[i].Start()
-            } else this.event_BigWin.Start()
+            this.HideMessage(this.msg_ResultTeaser), 0 == XT.GetInt(Vars.BigWinLevel) ? (i = Random.Range(0, this.event_Win.length), this.event_Win[i].Start()) : this.event_BigWin.Start()
         } else {
             if (this.useMessagesResultWin)
                 for (i = 0; i < this.messagesResultWin.length; ++i) this.HideMessage(this.messagesResultWin[i]);
@@ -32318,9 +31813,7 @@ MessageController.prototype = Object.create(XTLink.prototype), MessageController
             this.UpdateBetBtns(!1), this.InternalSetActive(this.toggledInHiddenMode, !0), this.InternalSetActive(this.visibleInSpecialFeatures, !1), this.InternalSetActive(this.toggledInInterfaceGamble, !0), this.spinBtn.SetActive(!1), this.stopBtn.SetActive(!0), this.ToggleFSMultiplier(!0), this.InternalSetActive(this.dynamicContentNormal, !1), e ? (this.InternalSetActive(this.dynamicContentFreeSpins, !1), this.InternalSetActive(this.dynamicContentFreeSpinsMysteryScatter, i)) : (this.InternalSetActive(this.dynamicContentFreeSpins, i), this.InternalSetActive(this.dynamicContentFreeSpinsMysteryScatter, !1)), this.InternalSetActive(this.dynamicContentAutoplay, !1), this.InternalSetActive(this.dynamicContentBonusRounds, !1), this.InternalSetActive(this.dynamicContentBonusRoundsAutoplay, !1), this.UpdateAutoplayButtons(InterfaceController.AutoplayState.Normal, !1), this.messageController.ChangeToState(VSGameState.ResultFreeSpins);
             break;
         case VSGameState.ResultBonusRounds:
-            this.gambleButton.SetActive(!1), this.UpdateBetBtns(!1), this.InternalSetActive(this.toggledInHiddenMode, !0), this.InternalSetActive(this.visibleInSpecialFeatures, !1), this.InternalSetActive(this.toggledInInterfaceGamble, !0);
-            o = this.InternalCanSpin();
-            this.spinBtn.SetActive(o), this.stopBtn.SetActive(!o), this.ToggleFSMultiplier(!1), this.InternalSetActive(this.dynamicContentNormal, !1), this.InternalSetActive(this.dynamicContentFreeSpins, !1), this.InternalSetActive(this.dynamicContentFreeSpinsMysteryScatter, !1), this.InternalSetActive(this.dynamicContentAutoplay, !1), this.InternalSetActive(this.dynamicContentBonusRounds, !0), this.InternalSetActive(this.dynamicContentBonusRoundsAutoplay, !1), this.UpdateAutoplayButtons(InterfaceController.AutoplayState.Normal, o), this.messageController.ChangeToState(VSGameState.ResultBonusRounds);
+            this.gambleButton.SetActive(!1), this.UpdateBetBtns(!1), this.InternalSetActive(this.toggledInHiddenMode, !0), this.InternalSetActive(this.visibleInSpecialFeatures, !1), this.InternalSetActive(this.toggledInInterfaceGamble, !0), o = this.InternalCanSpin(), this.spinBtn.SetActive(o), this.stopBtn.SetActive(!o), this.ToggleFSMultiplier(!1), this.InternalSetActive(this.dynamicContentNormal, !1), this.InternalSetActive(this.dynamicContentFreeSpins, !1), this.InternalSetActive(this.dynamicContentFreeSpinsMysteryScatter, !1), this.InternalSetActive(this.dynamicContentAutoplay, !1), this.InternalSetActive(this.dynamicContentBonusRounds, !0), this.InternalSetActive(this.dynamicContentBonusRoundsAutoplay, !1), this.UpdateAutoplayButtons(InterfaceController.AutoplayState.Normal, o), this.messageController.ChangeToState(VSGameState.ResultBonusRounds);
             break;
         case VSGameState.ResultBonusRoundsAutoplay:
             this.gambleButton.SetActive(!1), this.UpdateBetBtns(!1), this.InternalSetActive(this.toggledInHiddenMode, !0), this.InternalSetActive(this.visibleInSpecialFeatures, !1), this.InternalSetActive(this.toggledInInterfaceGamble, !0), this.spinBtn.SetActive(!1), this.stopBtn.SetActive(!0), this.ToggleFSMultiplier(!1), this.InternalSetActive(this.dynamicContentNormal, !1), this.InternalSetActive(this.dynamicContentFreeSpins, !1), this.InternalSetActive(this.dynamicContentFreeSpinsMysteryScatter, !1), this.InternalSetActive(this.dynamicContentAutoplay, !1), this.InternalSetActive(this.dynamicContentBonusRounds, !1), this.InternalSetActive(this.dynamicContentBonusRoundsAutoplay, !0), this.UpdateAutoplayButtons(InterfaceController.AutoplayState.Stop, !0), this.messageController.ChangeToState(VSGameState.ResultBonusRoundsAutoplay);
@@ -32392,8 +31885,7 @@ MessageController.prototype = Object.create(XTLink.prototype), MessageController
     null == e && (e = !0);
     var i = this.betUpBtn.GetComponent(ButtonEnabler),
         n = this.betDownBtn.GetComponent(ButtonEnabler);
-    (this.allowBetIncrease = !1, this.allowBetDecrease = !1, t && e) ? (XT.GetBool(Vars.MinBetAndCoinValueReached) ? n.DisableButton() : (n.EnableButton(), this.allowBetDecrease = !0), XT.GetBool(Vars.MaxBetAndCoinValueReached) ? i.DisableButton() : (i.EnableButton(), this.allowBetIncrease = !0)) : (i.DisableButton(), n.DisableButton());
-    this.betUpBtn.SetActive(e), this.betDownBtn.SetActive(e)
+    this.allowBetIncrease = !1, this.allowBetDecrease = !1, t && e ? (XT.GetBool(Vars.MinBetAndCoinValueReached) ? n.DisableButton() : (n.EnableButton(), this.allowBetDecrease = !0), XT.GetBool(Vars.MaxBetAndCoinValueReached) ? i.DisableButton() : (i.EnableButton(), this.allowBetIncrease = !0)) : (i.DisableButton(), n.DisableButton()), this.betUpBtn.SetActive(e), this.betDownBtn.SetActive(e)
 }, InterfaceController.prototype.Update = function () {
     this.allowBetIncrease && Input.GetKeyDown(KeyCode.RightArrow, !0) && !XT.GetBool(Vars.FeaturePurchaseWindowIsOpen) && (XT.TriggerEvent(Vars.Evt_DataToCode_SmartIncreaseBet), this.Pressed_TotalBet_Open()), this.allowBetDecrease && Input.GetKeyDown(KeyCode.LeftArrow, !0) && !XT.GetBool(Vars.FeaturePurchaseWindowIsOpen) && (XT.TriggerEvent(Vars.Evt_DataToCode_SmartDecreaseBet), this.Pressed_TotalBet_Open())
 }, InterfaceController.prototype.OnDisableGambleButton = function () {
@@ -32626,8 +32118,7 @@ SoundPlayer.prototype = Object.create(Component.prototype), SoundPlayer.prototyp
     if (!XT.GetBool(Vars.Logic_IsFreeSpin) && !XT.GetBool(Vars.IsDifferentSpinType) && this.SRisActive && this.firstTimeInResult) {
         this.currentTime = 0, this.targetTime = XT.GetFloat(Vars.Jurisdiction_ResultMinimumTime_Value), XT.GetBool(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins) && (this.targetTime = Math.max(this.targetTime, XT.GetFloat(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins_Value) - XT.GetFloat(Vars.SpinDuration)));
         for (var t = 0; t < this.sprites.length; t++) this.sprites[t].fillAmount = 0;
-        this.isPlaying = !0;
-        for (t = 0; t < this.contents.length; t++) this.contents[t].SetActive(!0);
+        for (this.isPlaying = !0, t = 0; t < this.contents.length; t++) this.contents[t].SetActive(!0);
         this.firstTimeInResult = !1
     }
 }, TimeToSpin.prototype.OnResultMinimumTime = function (t) {
@@ -32642,8 +32133,7 @@ SoundPlayer.prototype = Object.create(Component.prototype), SoundPlayer.prototyp
         if (!(XT.GetInt(Vars.AutoplaySpinsLeft) >= 0 || XT.GetBool(Vars.Logic_IsFreeSpin) || e) && this.SBisActive && !this.SRisActive) {
             this.currentTime = XT.GetFloat(Vars.SpinDuration), this.targetTime = XT.GetFloat(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins_Value);
             for (var i = 0; i < this.sprites.length; i++) this.sprites[i].fillAmount = 0;
-            this.isPlaying = !0;
-            for (i = 0; i < this.contents.length; i++) this.contents[i].SetActive(!0)
+            for (this.isPlaying = !0, i = 0; i < this.contents.length; i++) this.contents[i].SetActive(!0)
         }
     }
 }, TimeToSpin.prototype.Update = function () {
@@ -32652,8 +32142,7 @@ SoundPlayer.prototype = Object.create(Component.prototype), SoundPlayer.prototyp
             this.isPlaying = !1;
             for (var t = 0; t < this.contents.length; t++) this.contents[t].SetActive(!1)
         }
-        this.currentTime += Time.deltaTime, this.currentTime >= this.targetTime && (this.currentTime = this.targetTime);
-        for (t = 0; t < this.widgetMasks.length; t++) this.widgetMasks[t].shapes[0].arc_start = -Math.PI / 2, this.widgetMasks[t].shapes[0].arc_end = -Math.PI / 2 + 2 * Math.PI * this.currentTime / this.targetTime, this.widgetMasks[t].needUpdate = !0
+        for (this.currentTime += Time.deltaTime, this.currentTime >= this.targetTime && (this.currentTime = this.targetTime), t = 0; t < this.widgetMasks.length; t++) this.widgetMasks[t].shapes[0].arc_start = -Math.PI / 2, this.widgetMasks[t].shapes[0].arc_end = -Math.PI / 2 + 2 * Math.PI * this.currentTime / this.targetTime, this.widgetMasks[t].needUpdate = !0
     }
 }, goog.require("UHT.Engine"), BuyFeature_BetButtons.prototype = Object.create(XTLink.prototype), BuyFeature_BetButtons.prototype.constructor = BuyFeature_BetButtons, BuyFeature_BetButtons.prototype.XTRegisterCallbacks = function () {
     XT.RegisterCallbackBool(InterfaceVars.BUY_BetController_visible, this.OnVisibilityChanged, this), XT.RegisterCallbackBool(InterfaceVars.BUY_BetController_blocked, this.OnContentBlocked, this), XT.RegisterCallbackBool(InterfaceVars.BUY_BetController_canIncrease, this.OnUpdateButtonUp, this), XT.RegisterCallbackBool(InterfaceVars.BUY_BetController_canDecrease, this.OnUpdateButtonDown, this), XT.RegisterCallbackBool(Vars.MaxBetAndCoinValueReached, this.OnUpdateButtonUp, this), XT.RegisterCallbackBool(Vars.MinBetAndCoinValueReached, this.OnUpdateButtonDown, this)
@@ -32843,8 +32332,7 @@ V3Animator.prototype = Object.create(Component.prototype), V3Animator.prototype.
     for (var e = String(this.volumePercent), i = 0; i < this.labels.length; ++i) this.labels[i].text = e;
     var n = 0;
     for (i = 0; i < this.catVolume.length; ++i) this.volumePercent >= this.catVolume[i].value && (n = i);
-    this.catVolume[n].cat.Start();
-    for (i = 0; i < this.bars.length; ++i) this.bars[i].transform.localScale(new UHTMath.Vector3(t, 1, 1));
+    for (this.catVolume[n].cat.Start(), i = 0; i < this.bars.length; ++i) this.bars[i].transform.localScale(new UHTMath.Vector3(t, 1, 1));
     var o = UHTMath.Vector3.lerp(this.thumb.localPositionLimitMin, this.thumb.localPositionLimitMax, t);
     if (this.thumb.target.localPosition(o), this.prevThumbPos = o, this.soundManagerInit) {
         var s = XT.GetObject(Vars.SoundState).gameSoundIsOn;
@@ -32887,14 +32375,13 @@ V3Animator.prototype = Object.create(Component.prototype), V3Animator.prototype.
     }
     this.isDesktop ? this.GenerateGridDesktop() : this.GenerateGridMobile()
 }, BetGridManager.prototype.GenerateGridDesktop = function () {
-    var t = XT.GetInt(Vars.NextBetIndex),
-        e = Math.ceil(Math.sqrt(this.cells.length)),
-        i = -1;
-    i = e * (e - 1) >= this.cells.length ? e - 1 : e;
-    for (var n = new UHTMath.Vector3(-(e - 1) * (this.cellWidth + this.cellSpacingX) - .5 * this.cellWidth - this.cellSpacingX, (i - 1) * (this.cellHeight + this.cellSpacingY) + .5 * this.cellHeight + this.cellSpacingY, 0), o = 0; o < this.cells.length; o++) {
-        this.cells[o].transform.localPosition(new UHTMath.Vector3(o % e * (this.cellWidth + this.cellSpacingX), -Math.floor(o / e) * (this.cellHeight + this.cellSpacingY), 0).add(n));
+    var t, e = XT.GetInt(Vars.NextBetIndex),
+        i = Math.ceil(Math.sqrt(this.cells.length));
+    t = i * (i - 1) >= this.cells.length ? i - 1 : i;
+    for (var n = new UHTMath.Vector3(-(i - 1) * (this.cellWidth + this.cellSpacingX) - .5 * this.cellWidth - this.cellSpacingX, (t - 1) * (this.cellHeight + this.cellSpacingY) + .5 * this.cellHeight + this.cellSpacingY, 0), o = 0; o < this.cells.length; o++) {
+        this.cells[o].transform.localPosition(new UHTMath.Vector3(o % i * (this.cellWidth + this.cellSpacingX), -Math.floor(o / i) * (this.cellHeight + this.cellSpacingY), 0).add(n));
         var s = this.cells[o].GetComponent(BetCell);
-        s.SetBetIndex(o), s.OnNextBetIndex(t)
+        s.SetBetIndex(o), s.OnNextBetIndex(e)
     }
     this.background.width = -n.x + .5 * this.cellWidth + this.cellSpacingX, this.background.height = n.y + .5 * this.cellHeight + this.cellSpacingY, this.background.width < this.bkgMinWidth && (this.background.width = this.bkgMinWidth), this.background.height < this.bkgMinHeight && (this.background.height = this.bkgMinHeight);
     var a = 1;
@@ -33016,7 +32503,7 @@ V3Animator.prototype = Object.create(Component.prototype), V3Animator.prototype.
 }, GameHistoryWindow.prototype.Close = function () {
     this.SetVisible(!1), document.body.removeChild(this.root), document.body.removeChild(this.btn), window.removeEventListener("resize", this.resizeHandler, !1), GameHistoryWindow.I = null, ServerOptions.isReplay || (Globals.InputBlocked = !1)
 }, GameHistoryWindow.prototype.OnResize = function () {
-    var t = 1;
+    var t;
     t = window.innerHeight / window.innerWidth > 650 / 600 ? window.innerWidth / 600 : window.innerHeight / 650;
     var e = "-moz-transform:scale(VAL);-webkit-transform:scale(VAL);-ms-transform:scale(VAL);-o-transform:scale(VAL);transform:scale(VAL)".replace(new RegExp("VAL", "g"), String(t));
     this.root.setAttribute("style", e), UHT_DEVICE_TYPE.DESKTOP || this.btn.setAttribute("style", e)
@@ -33340,13 +32827,9 @@ Slider.prototype = Object.create(XTLink.prototype), Slider.prototype.constructor
 }, AutoplayTypeSwitcher.prototype.DoIt = function () {
     this.simpleAutoplay.SetActive(!this.isAdvanced && this.isAllowed), this.advancedAutoplay.SetActive(this.isAdvanced && this.isAllowed)
 }, AutoplayTypeSwitcher.prototype.HideStopOnFeatureWin = function (t) {
-    if (t) {
-        this.HideObjects(["UI Root/XTRoot/Root/GUI/Interface/Windows/AutoplayAnimator/AutoplayWindow/AdvanceAutoplayWindow/StopAutoplay/Checkboxes/IfFeatureIsWon", "UI Root/XTRoot/Root/GUI_mobile/Interface_Landscape/ContentInterface/Windows/AdvanceAutoplayAnimator/AdvanceAutoplayWindow/StopAutoplay/Checkboxes/IfFeatureIsWon", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AdvanceAutoplayAnimator/AdvanceAutoplayWindow/Clipped/Content/StopAutoplay/Checkboxes/IfFeatureIsWon", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AdvanceAutoplayWindow/CheckBoxes/Left/IfFeatureIsWon"])
-    }
+    t && this.HideObjects(["UI Root/XTRoot/Root/GUI/Interface/Windows/AutoplayAnimator/AutoplayWindow/AdvanceAutoplayWindow/StopAutoplay/Checkboxes/IfFeatureIsWon", "UI Root/XTRoot/Root/GUI_mobile/Interface_Landscape/ContentInterface/Windows/AdvanceAutoplayAnimator/AdvanceAutoplayWindow/StopAutoplay/Checkboxes/IfFeatureIsWon", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AdvanceAutoplayAnimator/AdvanceAutoplayWindow/Clipped/Content/StopAutoplay/Checkboxes/IfFeatureIsWon", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AdvanceAutoplayWindow/CheckBoxes/Left/IfFeatureIsWon"])
 }, AutoplayTypeSwitcher.prototype.HideSkipScreens = function (t) {
-    if (t) {
-        this.HideObjects(["UI Root/XTRoot/Root/GUI/Interface/Windows/AutoplayAnimator/AutoplayWindow/AutoplaySimpleWindow/Content/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI/Interface/Windows/AutoplayAnimator/AutoplayWindow/AdvanceAutoplayWindow/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Landscape/ContentInterface/Windows/AutoplaySimpleWindow/Content/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Landscape/ContentInterface/Windows/AdvanceAutoplayAnimator/AdvanceAutoplayWindow/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AutoplaySimpleWindow/Content/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AdvanceAutoplayAnimator/AdvanceAutoplayWindow/Clipped/Content/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AutoplaySimpleWindow/Content/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AdvanceAutoplayWindow/SkipScreens"])
-    }
+    t && this.HideObjects(["UI Root/XTRoot/Root/GUI/Interface/Windows/AutoplayAnimator/AutoplayWindow/AutoplaySimpleWindow/Content/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI/Interface/Windows/AutoplayAnimator/AutoplayWindow/AdvanceAutoplayWindow/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Landscape/ContentInterface/Windows/AutoplaySimpleWindow/Content/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Landscape/ContentInterface/Windows/AdvanceAutoplayAnimator/AdvanceAutoplayWindow/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AutoplaySimpleWindow/Content/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AdvanceAutoplayAnimator/AdvanceAutoplayWindow/Clipped/Content/Checkboxes/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AutoplaySimpleWindow/Content/SkipScreens", "UI Root/XTRoot/Root/GUI_mobile/Interface_Portrait/ContentInterface/Windows/AdvanceAutoplayWindow/SkipScreens"])
 }, AutoplayTypeSwitcher.prototype.HideObjects = function (t) {
     for (var e = globalRuntime.sceneRoots, i = e[1].transform.GetComponentsInChildren(LocalizationRoot, !0)[0].transform, n = 0; n < e.length; ++n)
         for (var o = 0; o < t.length; ++o) {
@@ -33426,8 +32909,7 @@ Slider.prototype = Object.create(XTLink.prototype), Slider.prototype.constructor
         var s = this.gameObject.transform.Find("Keys/Cancel").GetComponentsInChildren(UIButton, !0),
             a = new MessageData(n.onClickEvents[0].eventReceiver, n.onClickEvents[0].methodToCall, n.onClickEvents[0].useParam, "."),
             r = s[0].gameObject.AddComponent("MessageSender");
-        r.onEnabledEvents = [], r.animationEvents = [], r.onClickEvents = [], r.onClickEvents.push(a);
-        for (i = 0; i < s.length; ++i) "ContainerBorder" != s[i].normal && (s[i].normal = o.spriteName, s[i].hover = o.spriteName, s[i].pressed = o.spriteName, s[i].disabled = o.spriteName, s[i].color_pressed = e.color_pressed), s[i].color_normal = e.color_normal, s[i].color_hover = e.color_hover, null != s[i].onClick && s[i].onClick.splice(0)
+        for (r.onEnabledEvents = [], r.animationEvents = [], r.onClickEvents = [], r.onClickEvents.push(a), i = 0; i < s.length; ++i) "ContainerBorder" != s[i].normal && (s[i].normal = o.spriteName, s[i].hover = o.spriteName, s[i].pressed = o.spriteName, s[i].disabled = o.spriteName, s[i].color_pressed = e.color_pressed), s[i].color_normal = e.color_normal, s[i].color_hover = e.color_hover, null != s[i].onClick && s[i].onClick.splice(0)
     }
 }, MobileKeyboard.prototype.OnDisable = function () {
     this.gameObject.SetActive(!1)
@@ -33876,8 +33358,7 @@ FeatureManagerXTCallback.prototype.RegisterCallback = function (t) {
         }
         if (this.featureID != e) return
     }
-    null != t.cat && t.cat.Start();
-    for (i = 0; i < t.messages.length; ++i) {
+    for (null != t.cat && t.cat.Start(), i = 0; i < t.messages.length; ++i) {
         var n = t.messages[i];
         switch (n.paramType) {
             case FeatureManagerParamType.Bool:
@@ -34210,14 +33691,11 @@ CoinManager.prototype = Object.create(XTLink.prototype), CoinManager.prototype.c
         if (o > 0) {
             v = -1;
             for (var M = 1; M <= g; M++)
-                for (var L = 0; L < b.length; L++) {
-                    (P = Math.round(100 * b[L] * M * r)) <= o && P > v && (v = P), (R = Math.round(100 * b[L] * M * l)) <= o && R > v && (v = R)
-                }
+                for (var L = 0; L < b.length; L++)(P = Math.round(100 * b[L] * M * r)) <= o && P > v && (v = P), (R = Math.round(100 * b[L] * M * l)) <= o && R > v && (v = R)
         }
         XT.SetDouble(Vars.MaxTotalBetFromServer, v / 100)
     } else {
-        v = Math.round(100 * t[t.length - 1] * l);
-        if (o > 0) {
+        if (v = Math.round(100 * t[t.length - 1] * l), o > 0) {
             v = -1;
             for (var I = 0; I < t.length; I++) {
                 var P, R;
@@ -34233,9 +33711,7 @@ CoinManager.prototype = Object.create(XTLink.prototype), CoinManager.prototype.c
         for (var i = Math.floor(Math.log10(t)), n = Math.pow(10, 0 | i), o = [1, 2, 5], s = [], a = 0; a < o.length; a++) s.push(n * o[a]);
         var r = Math.pow(10, i + 1),
             l = -1;
-        for (a = 0; a < s.length; a++) {
-            (u = Math.abs(t - s[a])) < r && (r = u, l = a)
-        }
+        for (a = 0; a < s.length; a++)(u = Math.abs(t - s[a])) < r && (r = u, l = a);
         e = s[l]
     } else if (t > 5) e = Math.floor(t);
     else if (t >= 1) e = Math.floor(4 * t) / 4;
@@ -34535,7 +34011,7 @@ GUIArranger.prototype = Object.create(XTLink.prototype), GUIArranger.prototype.c
 }, TimedFreeRoundBonusManager.prototype.Update = function () {
     this.isActive ? this.shouldUpdateTimer && this.UpdateTimer() : this.countingInBackground && this.currentTime - Time.deltaTimeInRealTime > 0 && (this.currentTime -= Time.deltaTimeInRealTime)
 }, TimedFreeRoundBonusManager.prototype.UpdateTimer = function () {
-    null != this.bonusRoundsData && (this.currentTime - this.bonusRoundsData.RoundsLeft > 2 && (this.currentTime = this.bonusRoundsData.RoundsLeft));
+    null != this.bonusRoundsData && this.currentTime - this.bonusRoundsData.RoundsLeft > 2 && (this.currentTime = this.bonusRoundsData.RoundsLeft);
     var t = Math.floor(this.currentTime);
     t < 0 && (t = 0);
     var e = Math.floor(t % 60).toString(),
@@ -34562,28 +34038,20 @@ GUIArranger.prototype = Object.create(XTLink.prototype), GUIArranger.prototype.c
     var t = [];
     this.cachedStartEvent.length > 0 && t.push(this.cachedStartEvent[0].Clone()), XT.SetBool(Vars.ShouldIgnoreNextFinishEventFromServer, !1);
     var e = XT.GetObject(Vars.BonusRoundsEvents);
-    null != e && e.length > 1 && e[1].Type == VsFreeRoundEvent.EventType.Start && t.push(e[1]), XT.SetObject(Vars.BonusRoundsEvents, t);
-    BonusRoundsController.HandleNextEvent(!1, !1, !0);
-    if (XT.SetBool(Vars.ShouldIgnoreNextFinishEventFromServer, !0), null != e && 1 == e.length && e[0].Type == VsFreeRoundEvent.EventType.Start && !e[0].IsFreeRoundPending && (XT.TriggerEvent(Vars.Evt_DataToCode_BonusRoundsOnContinuePressed), this.shouldUpdateTimer = !0, null != this.showTimedFRBInfo))
+    if (null != e && e.length > 1 && e[1].Type == VsFreeRoundEvent.EventType.Start && t.push(e[1]), XT.SetObject(Vars.BonusRoundsEvents, t), BonusRoundsController.HandleNextEvent(!1, !1, !0), XT.SetBool(Vars.ShouldIgnoreNextFinishEventFromServer, !0), null != e && 1 == e.length && e[0].Type == VsFreeRoundEvent.EventType.Start && !e[0].IsFreeRoundPending && (XT.TriggerEvent(Vars.Evt_DataToCode_BonusRoundsOnContinuePressed), this.shouldUpdateTimer = !0, null != this.showTimedFRBInfo))
         for (var i = 0; i < this.showTimedFRBInfo.length; i++) null != this.showTimedFRBInfo && this.showTimedFRBInfo[i].Start()
 }, TimedFreeRoundBonusManager.prototype.DisableTurboSpin = function () {
     if (Globals.isMobile) {
-        for (var t = globalRuntime.sceneRoots[1].GetComponentsInChildren(AutoplayControllerMobile, !0), e = 0; e < t.length; ++e) {
-            null != (a = t[e].transform.Find("Content/Checkboxes/TurboSpin")) && a.gameObject.SetActive(!1)
-        }
+        for (var t = globalRuntime.sceneRoots[1].GetComponentsInChildren(AutoplayControllerMobile, !0), e = 0; e < t.length; ++e) null != (a = t[e].transform.Find("Content/Checkboxes/TurboSpin")) && a.gameObject.SetActive(!1);
         var i = globalRuntime.sceneRoots[1].GetComponentsInChildren(window.InterfaceControllerMobile_1, !0);
-        for (e = 0; e < i.length; ++e) {
-            null != (o = i[e].transform.Find("ContentInterface/DynamicContent/AnchoredRight/Normal/SpinButtons/StartSpin_Button/HoldToAutoplay")) && o.gameObject.SetActive(!1)
-        }
+        for (e = 0; e < i.length; ++e) null != (o = i[e].transform.Find("ContentInterface/DynamicContent/AnchoredRight/Normal/SpinButtons/StartSpin_Button/HoldToAutoplay")) && o.gameObject.SetActive(!1);
         var n = globalRuntime.sceneRoots[1].GetComponentsInChildren(window.InterfaceControllerMobile_2, !0);
         for (e = 0; e < n.length; ++e) {
             var o;
             null != (o = n[e].transform.Find("ContentInterface/DynamicContent/ContentScale/Normal/SpinButtons/StartSpin_Button/HoldToAutoplay")) && o.gameObject.SetActive(!1)
         }
     } else {
-        for (t = globalRuntime.sceneRoots[1].GetComponentsInChildren(AutoplayControllerMobile, !0), e = 0; e < t.length; ++e) {
-            null != (a = t[e].transform.Find("Content/Checkboxes/TurboSpin")) && a.gameObject.SetActive(!1)
-        }
+        for (t = globalRuntime.sceneRoots[1].GetComponentsInChildren(AutoplayControllerMobile, !0), e = 0; e < t.length; ++e) null != (a = t[e].transform.Find("Content/Checkboxes/TurboSpin")) && a.gameObject.SetActive(!1);
         TimedFreeRoundBonusManager.OGMTS_Show = window.GUIMessageTurboSpin.prototype.Show, window.GUIMessageTurboSpin.prototype.Show = function () {
             if (null != this.messages && this.messages.length > 0) {
                 var t = Random.Range(0, this.messages.length);
@@ -34604,22 +34072,16 @@ GUIArranger.prototype = Object.create(XTLink.prototype), GUIArranger.prototype.c
     XT.RegisterCallbackBool(Vars.ContinuousSpin, this.OnXTContinuousSpinChanged, this)
 }, TimedFreeRoundBonusManager.prototype.EnableTurboSpin = function () {
     if (Globals.isMobile) {
-        for (var t = globalRuntime.sceneRoots[1].GetComponentsInChildren(AutoplayControllerMobile, !0), e = 0; e < t.length; ++e) {
-            null != (a = t[e].transform.Find("Content/Checkboxes/TurboSpin")) && a.gameObject.SetActive(!0)
-        }
+        for (var t = globalRuntime.sceneRoots[1].GetComponentsInChildren(AutoplayControllerMobile, !0), e = 0; e < t.length; ++e) null != (a = t[e].transform.Find("Content/Checkboxes/TurboSpin")) && a.gameObject.SetActive(!0);
         var i = globalRuntime.sceneRoots[1].GetComponentsInChildren(window.InterfaceControllerMobile_1, !0);
-        for (e = 0; e < i.length; ++e) {
-            null != (o = i[e].transform.Find("ContentInterface/DynamicContent/AnchoredRight/Normal/SpinButtons/StartSpin_Button/HoldToAutoplay")) && o.gameObject.SetActive(!0)
-        }
+        for (e = 0; e < i.length; ++e) null != (o = i[e].transform.Find("ContentInterface/DynamicContent/AnchoredRight/Normal/SpinButtons/StartSpin_Button/HoldToAutoplay")) && o.gameObject.SetActive(!0);
         var n = globalRuntime.sceneRoots[1].GetComponentsInChildren(window.InterfaceControllerMobile_2, !0);
         for (e = 0; e < n.length; ++e) {
             var o;
             null != (o = n[e].transform.Find("ContentInterface/DynamicContent/ContentScale/Normal/SpinButtons/StartSpin_Button/HoldToAutoplay")) && o.gameObject.SetActive(!0)
         }
     } else {
-        for (t = globalRuntime.sceneRoots[1].GetComponentsInChildren(AutoplayControllerMobile, !0), e = 0; e < t.length; ++e) {
-            null != (a = t[e].transform.Find("Content/Checkboxes/TurboSpin")) && a.gameObject.SetActive(!0)
-        }
+        for (t = globalRuntime.sceneRoots[1].GetComponentsInChildren(AutoplayControllerMobile, !0), e = 0; e < t.length; ++e) null != (a = t[e].transform.Find("Content/Checkboxes/TurboSpin")) && a.gameObject.SetActive(!0);
         null != TimedFreeRoundBonusManager.OGMTS_Show && (window.GUIMessageTurboSpin.prototype.Show = TimedFreeRoundBonusManager.OGMTS_Show)
     }
     var s = globalRuntime.sceneRoots[1].GetComponentsInChildren(AutoplayControllerAdvanced, !0);
@@ -34699,12 +34161,9 @@ VerifyGameAuthenticityManager.prototype.Update = function () {
 }, VerifyGameAuthenticityManager.prototype.InjectHtml = function () {
     if (Globals.isMobile) {
         for (e = VerifyGameAuthenticityManager.htmlMobile.join("\n"), i = VerifyGameAuthenticityManager.textPayloadsMobile[UHT_CONFIG.LANGUAGE] || VerifyGameAuthenticityManager.textPayloadsMobile.en, n = Object.keys(i), o = 0; o < n.length; o++) e = e.replace(new RegExp("{" + n[o] + "}", "g"), i[n[o]]);
-        a = (new DOMParser).parseFromString(e, "text/html");
-        document.body.insertBefore(a.body.firstChild, document.getElementsByTagName("canvas")[0]), (s = document.createElement("style")).textContent = VerifyGameAuthenticityManager.styleMobile.join("\n").replace(/REPLACE_ME/g, globalRuntime.sceneRoots[1].GetComponentsInChildren(CoinsAndCashHint)[0].GetComponentsInChildren(UILabel, !0)[0].fontName), document.head.appendChild(s);
-        r = function () {
+        a = (new DOMParser).parseFromString(e, "text/html"), document.body.insertBefore(a.body.firstChild, document.getElementsByTagName("canvas")[0]), (s = document.createElement("style")).textContent = VerifyGameAuthenticityManager.styleMobile.join("\n").replace(/REPLACE_ME/g, globalRuntime.sceneRoots[1].GetComponentsInChildren(CoinsAndCashHint)[0].GetComponentsInChildren(UILabel, !0)[0].fontName), document.head.appendChild(s), r = function () {
             document.getElementById("verifyWindowContainer").classList.remove("active"), document.getElementById("verifyWindowContainer").classList.add("inactive")
-        };
-        document.getElementById("close").addEventListener("click", r, !1), document.getElementById("closePort").addEventListener("click", r, !1);
+        }, document.getElementById("close").addEventListener("click", r, !1), document.getElementById("closePort").addEventListener("click", r, !1);
         var t = function () {
             var t = XT.GetObject(FOXVars.FOX_Response).rid || 0,
                 e = UHT_GAME_CONFIG_SRC.currency,
@@ -34903,10 +34362,7 @@ Paytable_mobile.prototype.OnPressedPaytableOpen = function () {
                 this.landscapeDragObject.gameObject.transform.localPosition(0, this.landscapeDragObject.localPositionLimitMax.y - i, 0)
             }
         } else this.miniPageFlipper.topPages.length > 3 && this.miniDragObject.gameObject.transform.localPosition(0, this.miniDragObject.localPositionLimitMax.y - 5949, 0);
-    if (e.length > 0 && this.portraitPageFlipper.topPages.length > 3) {
-        i = 4411 + this.portraitScrollValues.lastPageExtraDrag.y;
-        this.portraitDragObject.gameObject.transform.localPosition(0, this.portraitDragObject.localPositionLimitMax.y - i, 0)
-    }
+    e.length > 0 && this.portraitPageFlipper.topPages.length > 3 && (i = 4411 + this.portraitScrollValues.lastPageExtraDrag.y, this.portraitDragObject.gameObject.transform.localPosition(0, this.portraitDragObject.localPositionLimitMax.y - i, 0))
 }, goog.require("UHT.ArrangeableBase"), MiniPaytableScrollbar.prototype = Object.create(ArrangeableBase.prototype), MiniPaytableScrollbar.prototype.constructor = MiniPaytableScrollbar, MiniPaytableScrollbar.scrollStatic = 0, MiniPaytableScrollbar.prototype.XTRegisterCallbacks = function () {
     if (ArrangeableBase.prototype.XTRegisterCallbacks.call(this), !this.isSimpleScrollbar && (XT.RegisterCallbackObject(Vars.MobilePaytableObject, this.OnMobilePaytableChanged, this), XT.RegisterCallbackEvent(Vars.Evt_Internal_PaytableOpen, this.OnPressedPaytableOpen, this), XT.RegisterCallbackEvent(Vars.Evt_Internal_PaytableClose, this.OnPressedPaytableClose, this), Globals.isMini)) {
         var t = this.gameObject.GetComponent(UIPanel);
@@ -35225,14 +34681,7 @@ TournamentPointsNotification.TournamentGeneralPoints = function () {
                     var l = this.localizedLabels[0].text;
                     this.GenerateNotificationMessage(l, r, o.winMultiplier.toString())
                 }
-                if (o.consecutiveWinsScore > 0) {
-                    l = this.localizedLabels[1].text;
-                    this.GenerateNotificationMessage(l, r, o.consecutiveWinsScore.toString())
-                }
-                if (o.consecutiveLossesScore > 0) {
-                    l = this.localizedLabels[2].text;
-                    this.GenerateNotificationMessage(l, r, o.consecutiveLossesScore.toString())
-                }
+                o.consecutiveWinsScore > 0 && (l = this.localizedLabels[1].text, this.GenerateNotificationMessage(l, r, o.consecutiveWinsScore.toString())), o.consecutiveLossesScore > 0 && (l = this.localizedLabels[2].text, this.GenerateNotificationMessage(l, r, o.consecutiveLossesScore.toString()))
             }
         }
 }, TournamentPointsNotification.prototype.GenerateNotificationMessage = function (t, e, i) {
@@ -35408,8 +34857,7 @@ function CustomNotificationButton() {
 BoxColliderAnchorToWidgets.prototype = Object.create(Component.prototype), BoxColliderAnchorToWidgets.prototype.constructor = BoxColliderAnchorToWidgets, BoxColliderAnchorToWidgets.prototype.Start = function () {
     this.labelWidths = [];
     for (var t = 0; t < this.labels.length; ++t) this.labelWidths.push(-1);
-    this.spriteWidths = [];
-    for (t = 0; t < this.sprites.length; ++t) this.spriteWidths.push(-1)
+    for (this.spriteWidths = [], t = 0; t < this.sprites.length; ++t) this.spriteWidths.push(-1)
 }, BoxColliderAnchorToWidgets.prototype.Update = function () {
     for (var t = !1, e = 0; e < this.labels.length; ++e)
         if (this.labels[e].GetWidth() != this.labelWidths[e]) {
@@ -35527,8 +34975,7 @@ CustomNotificationParser.prototype = Object.create(TournamentRule.prototype), Cu
     }
     var i = _string.IsNullOrEmpty(this.notification.title) ? "" : this.notification.title;
     if (this.hasExtraLayout) {
-        this.extraLayout.title.text = i;
-        for (e = t; e < this.extraLayout.buttons.length; ++e) this.extraLayout.buttons[e].UpdateButton(null);
+        for (this.extraLayout.title.text = i, e = t; e < this.extraLayout.buttons.length; ++e) this.extraLayout.buttons[e].UpdateButton(null);
         for (this.extraLayout.parser.rules = "", this.extraLayout.parser.UpdateRules(this.notification.text); !this.extraLayout.parser.isSplit;) this.extraLayout.parser.Split();
         this.extraLayout.scrollableList.SetValues(this.extraLayout.parser.splitRules), this.extraLayout.buttonsCat.StartEvent(t), this.extraLayout.textAnimator.Sample(this.extraLayout.parser.splitRules.length / this.extraLayout.parser.maxNumberOfLines), this.isResponsive && this.extraLayout.responsiveLinesCat.StartEvent(Math.min(this.extraLayout.parser.splitRules.length, this.extraLayout.parser.maxNumberOfLines))
     }
@@ -35849,9 +35296,7 @@ VS_Reel.prototype.InitReel = function () {
 }, VS_Reel.prototype.SetScreenSymbols = function (t) {
     for (var e = 0; e < this.symbolHolders.length; e++) null != this.symbolHolders[this.symbolHolders.length - 1 - e].currentSymbol && this.symbolHolders[this.symbolHolders.length - 1 - e].currentSymbol.symbolId == t[this.reelIndex][e] || (this.symbolHolders[this.symbolHolders.length - 1 - e].ReplaceSymbol(t[this.reelIndex][e]), this.symbolHolders[e].SetOrderedSymbolIdx(e * this.reelsManager.reels.length + this.reelIndex));
     for (var i, n, o = this.currentPosition, s = 0; s < this.symbolHolders.length; s++) this.currentPosition--;
-    (this.currentPosition += t[this.reelIndex].length, this.currentPosition %= t[this.reelIndex].length, XT.GetBool(Vars.HiddenMathematics)) ? (i = XT.GetObject(Vars.SymbolsAboveReels)[this.reelIndex], n = XT.GetObject(Vars.SymbolsBelowReels)[this.reelIndex]) : (i = t[this.reelIndex][o % t[this.reelIndex].length], n = t[this.reelIndex][this.currentPosition % t[this.reelIndex].length]);
-    this.AddBottomLinkedLooperSymbol(n), this.AddTopLinkedLooperSymbol(i), this.lastStackEntered = [];
-    for (e = this.symbolHolders.length - 1; e >= 0; e--) this.FilterTroughStacksSettings(this.symbolHolders[e].currentSymbol.symbolId, !1);
+    for (this.currentPosition += t[this.reelIndex].length, this.currentPosition %= t[this.reelIndex].length, XT.GetBool(Vars.HiddenMathematics) ? (i = XT.GetObject(Vars.SymbolsAboveReels)[this.reelIndex], n = XT.GetObject(Vars.SymbolsBelowReels)[this.reelIndex]) : (i = t[this.reelIndex][o % t[this.reelIndex].length], n = t[this.reelIndex][this.currentPosition % t[this.reelIndex].length]), this.AddBottomLinkedLooperSymbol(n), this.AddTopLinkedLooperSymbol(i), this.lastStackEntered = [], e = this.symbolHolders.length - 1; e >= 0; e--) this.FilterTroughStacksSettings(this.symbolHolders[e].currentSymbol.symbolId, !1);
     this.reelsManager.showTopBottomSymbols && this.FilterTroughStacksSettings(i, !1), this.UpdateSortedSymbolHolders()
 }, VS_Reel.prototype.GetNextSymbol = function () {
     if (this.mustStop) {
@@ -35882,7 +35327,7 @@ VS_Reel.prototype.InitReel = function () {
                         n = !1;
                         break
                     } if (n) {
-                    if (!this.symbolStacksSettings[o].IsPartOfStack(i))(this.lastStackEntered.length < this.symbolStacksSettings[o].stackSize || this.symbolStacksSettings[o].hasFixedSize && this.lastStackEntered.length % this.symbolStacksSettings[o].stackSize != 0) && e ? i = this.symbolStacksSettings[o].stackedSymbolIDs[Random.Range(0, this.symbolStacksSettings[o].stackedSymbolIDs.length)] : n = !1;
+                    this.symbolStacksSettings[o].IsPartOfStack(i) || ((this.lastStackEntered.length < this.symbolStacksSettings[o].stackSize || this.symbolStacksSettings[o].hasFixedSize && this.lastStackEntered.length % this.symbolStacksSettings[o].stackSize != 0) && e ? i = this.symbolStacksSettings[o].stackedSymbolIDs[Random.Range(0, this.symbolStacksSettings[o].stackedSymbolIDs.length)] : n = !1);
                     break
                 }
             }
@@ -35893,8 +35338,7 @@ VS_Reel.prototype.InitReel = function () {
     return i
 }, VS_Reel.prototype.GetNextSymbolInPlace = function (t) {
     var e = !1;
-    this.applySpinInPlaceExtraSettings && 0 == this.holdersStopStarted[t] && (e = !0);
-    if (this.mustStop && !e) {
+    if (this.applySpinInPlaceExtraSettings && 0 == this.holdersStopStarted[t] && (e = !0), this.mustStop && !e) {
         if (this.reelsManager.stopOnScreenSymbols || this.reelsManager.forceStopOnScreenSymbols) return this.GetReelScreenSymbols(XT.GetObject(Vars.ResultScreenSymbols))[this.symbolHolders.length - 1 - t];
         if (this.reelsManager.stopOnInitialScreenSymbols) return this.GetReelScreenSymbols(XT.GetObject(Vars.InitialResultScreenSymbols))[this.symbolHolders.length - 1 - t];
         var i = this.stopPosition - (this.symbolHolders.length - 1 - t);
@@ -35947,12 +35391,10 @@ VS_Reel.prototype.InitReel = function () {
     this.AddLinkedLooper(this.symbolHolders.length - 1, 0, t, !0)
 }, VS_Reel.prototype.AddTopLinkedLooper = function () {
     var t;
-    XT.GetBool(Vars.HiddenMathematics) ? t = XT.GetObject(Vars.SymbolsAboveReels)[this.reelIndex] : t = this.symbolList[this.currentPosition % this.symbolList.length];
-    this.AddTopLinkedLooperSymbol(t)
+    t = XT.GetBool(Vars.HiddenMathematics) ? XT.GetObject(Vars.SymbolsAboveReels)[this.reelIndex] : this.symbolList[this.currentPosition % this.symbolList.length], this.AddTopLinkedLooperSymbol(t)
 }, VS_Reel.prototype.AddBottomLinkedLooper = function () {
     var t;
-    XT.GetBool(Vars.HiddenMathematics) ? t = XT.GetObject(Vars.SymbolsBelowReels)[this.reelIndex] : t = this.symbolList[(this.currentPosition + this.symbolHolders.length) % this.symbolList.length];
-    this.AddBottomLinkedLooperSymbol(t)
+    t = XT.GetBool(Vars.HiddenMathematics) ? XT.GetObject(Vars.SymbolsBelowReels)[this.reelIndex] : this.symbolList[(this.currentPosition + this.symbolHolders.length) % this.symbolList.length], this.AddBottomLinkedLooperSymbol(t)
 }, VS_Reel.prototype.GetLooperTimersAndCleanUp = function (t) {
     var e, i = [],
         n = this.symbolLoopHolders[0].loopAnimation.length,
@@ -35988,8 +35430,7 @@ VS_Reel.prototype.InitReel = function () {
         }
         if (this.holdersSpinning == this.symbolHolders.length) {
             for (n = this.GetLooperTimersAndCleanUp(e), o = this.stopIdx; o >= 0;) this.symbolHolders[o].ReplaceSymbol(this.GetNextSymbol()), this.needToUpdateSymbolsDepth = !0, this.symbolHolders[o].PlayStop(n[o]), o--;
-            this.stopIdx = -1, this.lastStackEntered = [];
-            for (i = this.symbolHolders.length - 1; i >= 0; i--) this.FilterTroughStacksSettings(this.symbolHolders[i].currentSymbol.symbolId, !1);
+            for (this.stopIdx = -1, this.lastStackEntered = [], i = this.symbolHolders.length - 1; i >= 0; i--) this.FilterTroughStacksSettings(this.symbolHolders[i].currentSymbol.symbolId, !1);
             return this.reelsManager.showTopBottomSymbols && null != this.symbolHolders[0].linkedLooper && this.FilterTroughStacksSettings(this.symbolHolders[0].linkedLooper.currentSymbol.symbolId, !1), n
         }
     }
@@ -36000,9 +35441,7 @@ VS_Reel.prototype.InitReel = function () {
         else if (this.stopIdx >= 0) this.symbolHolders[this.stopIdx].ReplaceSymbol(this.GetNextSymbol()), this.symbolHolders[this.stopIdx].PlayStop(e), this.stopIdx--;
     else {
         var i, n;
-        if (XT.GetBool(Vars.HiddenMathematics)) i = XT.GetObject(Vars.SymbolsAboveReels)[this.reelIndex], n = XT.GetObject(Vars.SymbolsBelowReels)[this.reelIndex];
-        else i = this.symbolList[this.currentPosition % this.symbolList.length], n = this.symbolLoopHolders[t].lastSymbolId;
-        this.AddBottomLinkedLooperSymbol(n), this.AddTopLinkedLooperSymbol(i), this.reelsManager.showTopBottomSymbols && this.FilterTroughStacksSettings(i, !1)
+        XT.GetBool(Vars.HiddenMathematics) ? (i = XT.GetObject(Vars.SymbolsAboveReels)[this.reelIndex], n = XT.GetObject(Vars.SymbolsBelowReels)[this.reelIndex]) : (i = this.symbolList[this.currentPosition % this.symbolList.length], n = this.symbolLoopHolders[t].lastSymbolId), this.AddBottomLinkedLooperSymbol(n), this.AddTopLinkedLooperSymbol(i), this.reelsManager.showTopBottomSymbols && this.FilterTroughStacksSettings(i, !1)
     } else this.NewLoop(t, e)
 }, VS_Reel.prototype.StopFinished = function (t) {
     this.holdersSpinning--, 0 == this.holdersSpinning && (this.reelsManager.StopFinished(this.reelIndex), this.currentPosition = this.stopPosition, this.speedCurve = null)
@@ -36138,8 +35577,7 @@ VS_Reel.prototype.InitReel = function () {
     this.startTimer = this.reelDelayStart, (this.IsFastPlayOn() || XT.GetBool(Vars.ContinuousSpin) || this.startFasterForced) && (this.startTimer = this.reelDelayStart * t);
     var i = XT.GetObject(Vars.ReelsStartOrder);
     if (-1 == XT.GetInt(Vars.ReelToBeSpun)) {
-        this.reelsSpinning = t;
-        for (e = 0; e < i.length; e++)
+        for (this.reelsSpinning = t, e = 0; e < i.length; e++)
             if (this.validateReelSpin[i[e]]) {
                 this.reelToStart = i[e];
                 break
@@ -36314,10 +35752,8 @@ VS_SpinExciter.prototype = Object.create(XTLink.prototype), VS_SpinExciter.proto
         s = -1;
     for (i = 0; i < o.length; ++i) o[i].symbolId > s && (s = o[i].symbolId);
     var a = s + 1;
-    this.ExcitedImportantSymbols = [];
-    for (i = 0; i < n; i++) this.ExcitedImportantSymbols.push(_array.create(a, !1));
-    XT.SetObject(Vars.ExcitedImportantSymbols, this.ExcitedImportantSymbols), this.linesDef = XT.GetObject(Vars.LinesDefinitionsObject), this.reelsManager = XT.GetObject(Vars.ReelsManagerObject), this.StillPossibleWinComboPerSymbol = [];
-    for (i = 0; i < n; ++i) this.StillPossibleWinComboPerSymbol[i] = new Array(a)
+    for (this.ExcitedImportantSymbols = [], i = 0; i < n; i++) this.ExcitedImportantSymbols.push(_array.create(a, !1));
+    for (XT.SetObject(Vars.ExcitedImportantSymbols, this.ExcitedImportantSymbols), this.linesDef = XT.GetObject(Vars.LinesDefinitionsObject), this.reelsManager = XT.GetObject(Vars.ReelsManagerObject), this.StillPossibleWinComboPerSymbol = [], i = 0; i < n; ++i) this.StillPossibleWinComboPerSymbol[i] = new Array(a)
 }, VS_SpinExciter.prototype.OnScreenSymbols = function (t) {
     for (var e = t, i = 0; i < e.length; i++) {
         this.symbolList[i] = [];
@@ -36378,10 +35814,8 @@ VS_SpinExciter.prototype = Object.create(XTLink.prototype), VS_SpinExciter.proto
                     p = this.GetSymbolFromReel(c, h, !1);
                 if (i > 1 && o >= this.BonusMinCombo - 1 && s && r && (this.PossibleWinCombo[i] = !0, this.PossibleWinComboBonus[i] = !0), 0 == p) o++;
                 else if (this.BonusPays == SpecialSymbolPayType.OnActivePaylineLeftToRight) break;
-                if (o >= this.BonusMinCombo) {
-                    this.ActualWinCombo[i] = !0, this.ActualWinComboBonus[i] = !0;
-                    for (n = 0; n <= i; n++) this.ShouldAnimateBonus[u.Positions[n]] = !0
-                }
+                if (o >= this.BonusMinCombo)
+                    for (this.ActualWinCombo[i] = !0, this.ActualWinComboBonus[i] = !0, n = 0; n <= i; n++) this.ShouldAnimateBonus[u.Positions[n]] = !0;
                 o + a >= this.BonusMinCombo && (this.StillPossibleWinComboBonus[i] = !0)
             }
         }
@@ -36404,13 +35838,10 @@ VS_SpinExciter.prototype = Object.create(XTLink.prototype), VS_SpinExciter.proto
         for (l = 0; l < this.betLines.length; ++l)
             for (u = this.betLines[l], d = 0, i = 0; i < u.Positions.length; i++) {
                 for (m = !1, S = 0, g = !1, n = i; n < u.Positions.length; n++) this.SymbolsPresentAnywhereOnReel(1, n) > 0 && (m = !0, n != i ? S++ : g = !0);
-                h = (A = u.Positions[i]) % e, c = Math.floor(A / e), p = this.GetSymbolFromReel(c, h, !1);
-                if (i > 1 && d >= this.ScatterMinCombo - 1 && m && g && (this.PossibleWinCombo[i] = !0, this.PossibleWinComboScatter[i] = !0), 1 == p || 2 == p && this.WildSubstitutesScatter) d++;
+                if (h = (A = u.Positions[i]) % e, c = Math.floor(A / e), p = this.GetSymbolFromReel(c, h, !1), i > 1 && d >= this.ScatterMinCombo - 1 && m && g && (this.PossibleWinCombo[i] = !0, this.PossibleWinComboScatter[i] = !0), 1 == p || 2 == p && this.WildSubstitutesScatter) d++;
                 else if (this.ScatterPays == SpecialSymbolPayType.OnActivePaylineLeftToRight) break;
-                if (d >= this.GetScatterMinCombo()) {
-                    this.ActualWinCombo[i] = !0, this.ActualWinComboScatter[i] = !0;
-                    for (n = 0; n <= i; n++) this.ShouldAnimateScatter[u.Positions[n]] = !0
-                }
+                if (d >= this.GetScatterMinCombo())
+                    for (this.ActualWinCombo[i] = !0, this.ActualWinComboScatter[i] = !0, n = 0; n <= i; n++) this.ShouldAnimateScatter[u.Positions[n]] = !0;
                 d + S >= this.GetScatterMinCombo() && (this.StillPossibleWinComboScatter[i] = !0)
             }
     for (l = 0; l < this.betLines.length; ++l) {
@@ -36421,8 +35852,7 @@ VS_SpinExciter.prototype = Object.create(XTLink.prototype), VS_SpinExciter.proto
             C = 0;
         for (i = 0; i < u.Positions.length; i++) {
             var A;
-            h = (A = u.Positions[i]) % e, c = Math.floor(A / e), p = this.GetSymbolFromReel(c, h);
-            if (-1 == T && (T = p), f)
+            if (h = (A = u.Positions[i]) % e, c = Math.floor(A / e), p = this.GetSymbolFromReel(c, h), -1 == T && (T = p), f)
                 if (this.SymbolIsWild(p) || 1 == p) this.StillPossibleWinComboWild[i] = !0;
                 else if (p != b && !this.SymbolIsWild(b) && 1 != b || p < 2) {
                 var v = i,
@@ -36432,9 +35862,7 @@ VS_SpinExciter.prototype = Object.create(XTLink.prototype), VS_SpinExciter.proto
             } else b = p, T = p;
             else if (this.SymbolIsWild(p)) this.StillPossibleWinComboWild[i] = !0, C == i && C++;
             else if (p != b && !this.SymbolIsWild(b) || p < 2) {
-                v = i;
-                C > 0 && this.payoutData[2][C - 1] > this.payoutData[b][v - 1] && (v = C, b = 2);
-                for (M = _array.create(v, 0), n = 0; n < v; n++) M[n] = u.Positions[n];
+                for (v = i, C > 0 && this.payoutData[2][C - 1] > this.payoutData[b][v - 1] && (v = C, b = 2), M = _array.create(v, 0), n = 0; n < v; n++) M[n] = u.Positions[n];
                 u.Positions = M
             } else b = p, T = p;
             u.containsWild || (u.containsWild = this.SymbolIsWild(p))
@@ -36445,8 +35873,7 @@ VS_SpinExciter.prototype = Object.create(XTLink.prototype), VS_SpinExciter.proto
         }
         if (b > (f ? 0 : 1) && (this.symbolExciting[b] || this.payoutThreshold > .001)) {
             for (L = u.Positions.length, i = 0; i < L; i++) this.ActualWinCombo[i] = !0;
-            L > e - 1 && (L = e - 1);
-            for (i = 0; i <= L; i++) null != this.payoutData && (this.AccumulatedPossibleWin[i] += this.payoutData[b][i] * XT.GetDouble(Vars.CurrentWinMultiplier));
+            for (L > e - 1 && (L = e - 1), i = 0; i <= L; i++) null != this.payoutData && (this.AccumulatedPossibleWin[i] += this.payoutData[b][i] * XT.GetDouble(Vars.CurrentWinMultiplier));
             for (i = 0; i <= L; i++) this.PossibleWinCombo[i] = !0, this.PossibleWinComboSymbols[i] = !0, this.hasLoopExciteImportant && (this.ExcitedImportantSymbols[i][b] = !0)
         }
     }
@@ -36511,8 +35938,7 @@ VS_SpinExciter.prototype = Object.create(XTLink.prototype), VS_SpinExciter.proto
                 var r = this.GetSymbolFromReel(_number.otoi(o.Positions[a] / e), _number.otoi(o.Positions[a] % e));
                 s.indexOf(r) < 0 && s.push(r), this.SymbolIsWild(r) && (i = r, o.containsWild = !0)
             }
-            o.containsWild && (o.dominatingSymbol = i);
-            for (a = 0; a < s.length; ++a) this.SymbolIsWild(s[a]) || (o.dominatingSymbol = s[a]);
+            for (o.containsWild && (o.dominatingSymbol = i), a = 0; a < s.length; ++a) this.SymbolIsWild(s[a]) || (o.dominatingSymbol = s[a]);
             this.betLinesServer.push(o)
         }
 }, VS_SpinExciter.prototype.BetLinesFromServer = function (t) {
@@ -36629,17 +36055,13 @@ MenuController.prototype = Object.create(ArrangeableBase.prototype), MenuControl
 }, MenuController.prototype.UpdateButtons = function () {
     for (var t = !1, e = 0; e < this.isEnabled.length; ++e) this.isEnabledPrev[e] != this.isEnabled[e] && (t = !0, this.isEnabledPrev[e] = this.isEnabled[e]);
     if (t) {
-        this.internalOrder.splice(0);
-        for (e = 0; e < this.isEnabled.length; ++e) this.isEnabled[e] && this.internalOrder.push(this.order[e]);
+        for (this.internalOrder.splice(0), e = 0; e < this.isEnabled.length; ++e) this.isEnabled[e] && this.internalOrder.push(this.order[e]);
         var i = this.internalOrder.length;
         if (1 == i) {
             var n = this.order.indexOf(this.internalOrder[0]);
             this.internalOrder[0] != MenuButtonType.Tournament && this.internalOrder[0] != MenuButtonType.PrizeDrop ? this.button.UpdateValue(this.labels[n], this.icons[n]) : i = 0, this.singleArrangementCATS[n].Start()
         } else
-            for (e = 0; e < this.internalOrder.length; ++e) {
-                n = this.order.indexOf(this.internalOrder[e]);
-                this.buttons[e].UpdateValue(this.labels[n], this.icons[n])
-            }
+            for (e = 0; e < this.internalOrder.length; ++e) n = this.order.indexOf(this.internalOrder[e]), this.buttons[e].UpdateValue(this.labels[n], this.icons[n]);
         this.count[i].Start(), this.updateCountArrangement = !0
     }
 }, MenuController.prototype.ButtonClicked = function (t) {
@@ -36854,9 +36276,7 @@ LineByLineSkipper.prototype = Object.create(XTLink.prototype), LineByLineSkipper
     (XT.GetBool(Vars.Jurisdiction_LineByLineGlobal) || XT.GetBool(Vars.Jurisdiction_LineByLineFreespin)) && ((XT.GetObject(Vars.ReceivedFreeSpinsResponse).IsFreeSpin || -1 != XT.GetInt(Vars.AutoplaySpinsLeft) || null != XT.GetObject(Vars.TumblingData)) && this.gameObject.SetActive(!0), XT.TriggerEvent(LineByLineSkipperVars.Evt_LineByLineSkipper_Enabled))
 }, LineByLineSkipper.prototype.ClickedLineByLineSkipperCollider = function () {
     for (var t = XT.GetObject(Vars.RQManagerObject), e = [], i = 0; i < t.rqiList.length; i++) "RQIMarker" == t.rqiList[i].constructor.name && e.push(i);
-    for (; e.length > 0;) {
-        t.rqiList[e[0]].type == RQIMarker.MarkerType.StartLineByLine ? (t.rqiList.splice(e[0], e[1] - e[0] + 1), e.splice(0, 2)) : (t.rqiList.splice(0, e[0]), e.splice(0, 1))
-    }
+    for (; e.length > 0;) t.rqiList[e[0]].type == RQIMarker.MarkerType.StartLineByLine ? (t.rqiList.splice(e[0], e[1] - e[0] + 1), e.splice(0, 2)) : (t.rqiList.splice(0, e[0]), e.splice(0, 1));
     XT.TriggerEvent(Vars.Evt_Internal_FinalizeDisplayedWin), (XT.GetObject(Vars.ReceivedFreeSpinsResponse).IsFreeSpin || null != XT.GetObject(Vars.TumblingData)) && XT.TriggerEvent(Vars.Evt_DataToCode_Pressed_Spin), this.gameObject.SetActive(!1)
 }, LineByLineSkipper.prototype.OnSpinStarted = function () {
     this.gameObject.SetActive(!1)
@@ -36962,9 +36382,8 @@ LineByLineSkipper.prototype = Object.create(XTLink.prototype), LineByLineSkipper
             this.ignoreFirstTumble = !1
         }
         var e = XT.GetObject(Vars.RespinData);
-        if (!(null != e && !e.IsDone)) {
-            var i = -1,
-                n = -1;
+        if (null == e || e.IsDone) {
+            var i, n = -1;
             i = null != t[GameProtocolDictionary.line] ? _number.otoi(t[GameProtocolDictionary.line]) : XT.GetInt(Vars.BetToTotalBetMultiplier), null != t[GameProtocolDictionary.coin] && (n = _number.otod(t[GameProtocolDictionary.coin])), -1 != n && -1 != i && null == t[GameProtocolDictionary.FreeRound.TotalWin] && (this.currentNetPosition -= n * i), this.OnUpdateDisplayedWin()
         }
     }
@@ -37124,7 +36543,7 @@ FeaturePurchaseManager.Params = {
     var e = XT.GetObject(Vars.BonusData),
         i = XT.GetObject(Vars.ReceivedFreeSpinsResponse),
         n = XT.GetObject(Vars.RespinData);
-    return !(i.IsFreeSpin && !i.IsLastFreeSpin || null != e && !e.GameOver) && (!this.isFreeBonusRound && !(this.disableDuringRespins && null != n && !n.IsDone))
+    return !(i.IsFreeSpin && !i.IsLastFreeSpin || null != e && !e.GameOver || this.isFreeBonusRound || this.disableDuringRespins && null != n && !n.IsDone)
 }, FeaturePurchaseManager.prototype.PurchaseFeature = function (t) {
     XT.GetObject(Vars.FeaturePurchase).purchaseIndex = t
 }, FeaturePurchaseManager.prototype.OnBetChanged = function () {
@@ -37373,24 +36792,15 @@ FeaturePurchaseOption.prototype = Object.create(XTLink.prototype), FeaturePurcha
                 for (o = this.allFPLabels[u], s = 0, a = null, r = 0; r < l[n].costLabels.length; r++) null != (a = l[n].costLabels[r]) && o.indexOf(a) < 0 && (o.push(a), (a.gameObject.activeInHierarchy || this.WouldBeActiveInOtherLayout(a.gameObject.transform)) && (s++, this.initiallyActiveFPLabels.push(a)));
                 this.currentFPLabelsCount[u] += s, this.defaultFPLabelsCount[u] += s
             } else this.windowOption = l[n], XT.RegisterCallbackObject(FeaturePurchaseVars.FeaturePurchase_SelectedOption, this.OnSelectedOption, this)
-    } else if (null != (e = globalRuntime.sceneRoots[1].GetComponentsInChildren(FeaturePurchaseV2, !0)[0])) {
-        this.purchaseType = "fp_V2";
-        for (n = 0; n < e.purchaseOptions.length; n++) {
-            o = [], s = 0;
-            this.allFPLabels.push(o);
-            for (a = null, r = 0; r < e.purchaseOptions[n].cost.length; r++) {
+    } else if (null != (e = globalRuntime.sceneRoots[1].GetComponentsInChildren(FeaturePurchaseV2, !0)[0]))
+        for (this.purchaseType = "fp_V2", n = 0; n < e.purchaseOptions.length; n++) {
+            for (o = [], s = 0, this.allFPLabels.push(o), a = null, r = 0; r < e.purchaseOptions[n].cost.length; r++) {
                 var h = e.purchaseOptions[n].cost[r];
                 null != h && (a = h.label), null != a && o.indexOf(a) < 0 && (o.push(a), (a.gameObject.activeInHierarchy || this.WouldBeActiveInOtherLayout(a.gameObject.transform)) && (s++, this.initiallyActiveFPLabels.push(a)))
             }
             this.currentFPLabelsCount.push(s), this.defaultFPLabelsCount.push(s)
-        }
-    } else if (null != (i = globalRuntime.sceneRoots[1].GetComponentsInChildren(FreeSpinsPurchaseDisplayer, !0)[0])) {
-        this.purchaseType = "fsp";
-        for (n = 0; n < i.fsPurchaseCosts.length; n++) {
-            o = [], s = 0;
-            this.allFPLabels.push(o), null != (a = i.fsPurchaseCosts[n]) && o.indexOf(a) < 0 && (o.push(a), (a.gameObject.activeInHierarchy || this.WouldBeActiveInOtherLayout(a.gameObject.transform)) && (s++, this.initiallyActiveFPLabels.push(a))), null != (a = i.fsPurchaseItems[n].costLabel) && o.indexOf(a) < 0 && (o.push(a), (a.gameObject.activeInHierarchy || this.WouldBeActiveInOtherLayout(a.gameObject.transform)) && (s++, this.initiallyActiveFPLabels.push(a))), this.currentFPLabelsCount.push(s), this.defaultFPLabelsCount.push(s)
-        }
-    }
+        } else if (null != (i = globalRuntime.sceneRoots[1].GetComponentsInChildren(FreeSpinsPurchaseDisplayer, !0)[0]))
+            for (this.purchaseType = "fsp", n = 0; n < i.fsPurchaseCosts.length; n++) o = [], s = 0, this.allFPLabels.push(o), null != (a = i.fsPurchaseCosts[n]) && o.indexOf(a) < 0 && (o.push(a), (a.gameObject.activeInHierarchy || this.WouldBeActiveInOtherLayout(a.gameObject.transform)) && (s++, this.initiallyActiveFPLabels.push(a))), null != (a = i.fsPurchaseItems[n].costLabel) && o.indexOf(a) < 0 && (o.push(a), (a.gameObject.activeInHierarchy || this.WouldBeActiveInOtherLayout(a.gameObject.transform)) && (s++, this.initiallyActiveFPLabels.push(a))), this.currentFPLabelsCount.push(s), this.defaultFPLabelsCount.push(s)
 }, BuyFeature_InterfaceLink.prototype.OnAnyCATButtonClick = function () {
     XT.GetBool(InterfaceVars.BUY_BetController_visible) && (this.blockTimer = this.betBlockTime_afterClick, XT.SetBool(InterfaceVars.BUY_BetController_blocked, !0))
 }, BuyFeature_InterfaceLink.prototype.OnSelectedOption = function (t) {
@@ -37462,8 +36872,7 @@ FeaturePurchaseOption.prototype = Object.create(XTLink.prototype), FeaturePurcha
             if (this.optionsOnScreen > 0) {
                 XT.GetBool(InterfaceVars.BUY_BetController_visible) || (XT.SetBool(InterfaceVars.BUY_BetController_visible, !0), VSGameStateManager.ChangeTo(VSGameState.ResultBuyWindowOpen));
                 var a = 0;
-                this.betLimitedByIndex = 0, this.closeTimer = -1;
-                for (i = 0; i < this.currentFPLabelsCount.length; i++) {
+                for (this.betLimitedByIndex = 0, this.closeTimer = -1, i = 0; i < this.currentFPLabelsCount.length; i++) {
                     var r = this.currentFPLabelsCount[i] - this.defaultFPLabelsCount[i];
                     (r > a || r == a && this.GetOptionCost(i) < this.GetOptionCost(this.betLimitedByIndex)) && (a = r, this.betLimitedByIndex = i)
                 }
@@ -37521,10 +36930,8 @@ BigWin.prototype.OnShowBigWin = function () {
         if (null == t || 1 == t.length && "S" == t[0].JackpotGroupType) {
             this.singleJackpotRoot.SetActive(!0);
             for (var e = 0; e < this.orderedClassicJackpotRoots.length; e++) this.orderedClassicJackpotRoots[e].SetActive(!1)
-        } else {
-            this.singleJackpotRoot.SetActive(!1);
-            for (e = 0; e < this.orderedClassicJackpotRoots.length; e++) this.orderedClassicJackpotRoots[e].SetActive(e == XT.GetInt(Vars.FromServer_JackpotWonOrder))
-        }
+        } else
+            for (this.singleJackpotRoot.SetActive(!1), e = 0; e < this.orderedClassicJackpotRoots.length; e++) this.orderedClassicJackpotRoots[e].SetActive(e == XT.GetInt(Vars.FromServer_JackpotWonOrder))
     }
 }, goog.require("UHT.Engine"), BigWinSkipper.prototype = Object.create(XTLink.prototype), BigWinSkipper.prototype.constructor = BigWinSkipper, BigWinSkipper.timeOfFirstClick = -1, BigWinSkipper.prototype.OnClick = function () {
     if (UHT_DEVICE_TYPE.MOBILE) {
@@ -38426,19 +37833,11 @@ JackpotVisualMystery.prototype = Object.create(JackpotVisualBase.prototype), Jac
                 }
             }
             for (var o = 0; o < this.contents.length; o++) this.contents[o].SetActive(!1)
-        } else {
-            null != this.singleJackpotContent && this.singleJackpotContent.SetActive(!1);
-            for (o = 0; o < this.contents.length; o++) {
+        } else
+            for (null != this.singleJackpotContent && this.singleJackpotContent.SetActive(!1), o = 0; o < this.contents.length; o++) {
                 var s = o == e;
-                if (this.contents[o].SetActive(s), s) {
-                    i = "A" == t.JackpotStatus;
-                    if (this.contentAmount[o].SetActive(i), this.contentShut[o].SetActive(!i), null != this.community && o < this.community.length) {
-                        n = null != t.JackpotCommunityDetails;
-                        this.community[o].SetActive(n), (n ? this.communityShow[o] : this.communityHide[o]).Start()
-                    }
-                }
+                this.contents[o].SetActive(s), s && (i = "A" == t.JackpotStatus, this.contentAmount[o].SetActive(i), this.contentShut[o].SetActive(!i), null != this.community && o < this.community.length && (n = null != t.JackpotCommunityDetails, this.community[o].SetActive(n), (n ? this.communityShow[o] : this.communityHide[o]).Start()))
             }
-        }
     }
 }, JackpotVisualMystery.prototype.ShowJackpotVisualWin = function () {
     this.useShowJackpotVisualWinIfRunning && this.showJackpotVisualWinIfRunningStop.IsRunning() && (this.showJackpotVisualWinIfRunningStop.Stop(), this.StartCATLink(this.showJackpotVisualWinIfRunningStart, !0)), this.showJackpotVisualWin.Start()
@@ -38524,13 +37923,10 @@ JackpotVisualMystery.prototype = Object.create(JackpotVisualBase.prototype), Jac
     if (t < 0) {
         null != this.backgroundSingle && this.backgroundSingle.SetActive(!1);
         for (var e = 0; e < this.backgrounds.length; e++) this.backgrounds[e].SetActive(!1)
-    } else if ("S" == this.activeJackpots[t].JackpotGroupType) {
-        null != this.backgroundSingle && this.backgroundSingle.SetActive(!0);
-        for (e = 0; e < this.backgrounds.length; e++) this.backgrounds[e].SetActive(!1)
-    } else {
-        null != this.backgroundSingle && this.backgroundSingle.SetActive(!1);
-        for (e = 0; e < this.backgrounds.length; e++) this.backgrounds[e].SetActive(e == t)
-    }
+    } else if ("S" == this.activeJackpots[t].JackpotGroupType)
+        for (null != this.backgroundSingle && this.backgroundSingle.SetActive(!0), e = 0; e < this.backgrounds.length; e++) this.backgrounds[e].SetActive(!1);
+    else
+        for (null != this.backgroundSingle && this.backgroundSingle.SetActive(!1), e = 0; e < this.backgrounds.length; e++) this.backgrounds[e].SetActive(e == t)
 }, JackpotVisualManager.prototype.OnLayoutChanged = function () {
     if (null != this.activeJackpots) {
         var t = null;
@@ -38855,9 +38251,7 @@ Paytable.prototype.OnPressedPaytableOpen = function () {
 }, Paytable.prototype.ShowPage = function (t) {
     this.ShowPageInt(_number.otoi(t))
 }, Paytable.prototype.ProcessRequirementChecker = function () {
-    for (var t = 0, e = 0; e < this.pageRoot.length; e++) {
-        null == (h = this.pageRoot[e].GetComponent(window.RequirementChecker)) || h.isActive || t++
-    }
+    for (var t = 0, e = 0; e < this.pageRoot.length; e++) null == (h = this.pageRoot[e].GetComponent(window.RequirementChecker)) || h.isActive || t++;
     t > 0 && (this.hasRequirementAwarePages = !0);
     for (var i = 0, n = 0; n < this.pageRoot.length; n++)
         for (var o = this.pageRoot[n].transform.children, s = 0; s < o.length; s++)
@@ -38921,8 +38315,7 @@ VideoSlotsConnection.prototype = Object.create(Component.prototype), VideoSlotsC
     this.xtLayer.InitReelsPositions(this.lastResponse.ReelPositions), this.xtLayer.SetReelStopPositions(this.lastResponse.ReelPositions)
 }, VideoSlotsConnection.prototype.InitNextReels = function () {
     var t = [];
-    this.lastResponse.ReelSetIndex >= 0 ? t = XT.GetObject(Vars.ReelSets)[this.lastResponse.ReelSetIndex] : t = this.lastResponse.VsInitData.NextReelSymbols;
-    this.xtLayer.InitNextReelSymbols(t)
+    t = this.lastResponse.ReelSetIndex >= 0 ? XT.GetObject(Vars.ReelSets)[this.lastResponse.ReelSetIndex] : this.lastResponse.VsInitData.NextReelSymbols, this.xtLayer.InitNextReelSymbols(t)
 }, VideoSlotsConnection.prototype.InitReelSets = function () {
     this.xtLayer.UpdateReelSetIndexes(this.lastResponse.ReelSetIndexCurrent), this.xtLayer.SetReelSets(this.lastResponse.VsInitData.ReelSets)
 }, VideoSlotsConnection.prototype.Start = function () {}, VideoSlotsConnection.prototype.Init = function () {}, VideoSlotsConnection.prototype.OnDestroy = function () {}, VideoSlotsConnection.prototype.OnShowResult = function () {}, VideoSlotsConnection.prototype.OnFreeSpinsClosed = function () {
@@ -39041,9 +38434,7 @@ VideoSlotsConnection.prototype = Object.create(Component.prototype), VideoSlotsC
         }
         this.xtLayer.SetGambleHistory(s), this.canGamble = this.lastResponse.VsGamblingButtonState.GamblingOnSpinAvailable, this.canGamble && null != s && e.InitGamblingOccasion == GamblingOccasions.Spin && (this.canGamble = !1), this.xtLayer.SetCanGambleSpinWin(this.canGamble), (e.IsOccasionEnable(GamblingOccasions.Bonus) || e.IsOccasionEnable(GamblingOccasions.Spin) || e.IsOccasionEnable(GamblingOccasions.FreeSpin)) && (e.SkipGambleOnInit || this.lastResponse.Win <= 0) && this.xtLayer.SkipResultDisplayOnInit(), this.IsFreeSpin() && (this.storedMaxFS = this.FreeSpinMaxNumber()), this.InitReels(), this.InitReelSets(), (null != this.lastResponse.VsInitData && null != this.lastResponse.VsInitData.NextReelSymbols || this.lastResponse.ReelSetIndex >= 0) && this.InitNextReels(), this.xtLayer.SetStackedSymbolIndex(this.lastResponse.StackedSymbolIndex), this.xtLayer.SetBetLines(this.lastResponse.VsInitData.Line), this.xtLayer.SetRandomWildsData(this.lastResponse.RandomWildsData, this.lastResponse.UpSymbols), this.xtLayer.SetWildRandomLineMpConfig(this.lastResponse.VsInitData.WildRandomLineMpConfig), this.xtLayer.SetNASymbolId(this.lastResponse.VsInitData.naSymbolId), this.xtLayer.SetWRLMResponse(this.lastResponse.WRLMResponse), this.xtLayer.SetWRLMCurrentSets(this.lastResponse.WRLMCurrentSets), this.xtLayer.SetRandomAwardsConfig(this.lastResponse.VsInitData.RandomAwardConfig), this.xtLayer.SetRandomAwardResponse(this.lastResponse.RandomAwardResponse), this.xtLayer.SetRandomSymbolMultipliers(this.lastResponse.RandomSymbolMultipliers), this.xtLayer.SetPossibleRandomSymbolMultipliers(this.lastResponse.PossibleRandomSymbolMultipliers), this.xtLayer.SetFreeSpinsChainData(this.lastResponse.FreeSpinsChainData), this.xtLayer.SetOpeningSymbolsData(this.lastResponse.OpeningSymbolsData), this.xtLayer.SetRandomMysterySymbolsIds(this.lastResponse.RandomMysterySymbolId), this.xtLayer.SetPatternedMysterySymbols(this.lastResponse.PatternedMysterySymbols), this.xtLayer.SetInitialMysterySymbolsIds(this.lastResponse.VsInitData.InitialMysterySymbolId), this.xtLayer.SetInitialBGItemValues(this.lastResponse.VsInitData.BGItemValues), this.xtLayer.SetInitialBGItemMasks(this.lastResponse.VsInitData.BGItemMasks), this.xtLayer.InitFirstScreenSymbols(this.lastResponse.WinScreenSymbols), null != this.lastResponse.SymbolsBeforeExpanding && this.lastResponse.SymbolsBeforeExpanding.length > 0 ? this.xtLayer.SetInitialResultScreenSymbols(this.lastResponse.SymbolsBeforeExpanding) : this.xtLayer.SetInitialResultScreenSymbols(this.lastResponse.WinScreenSymbols), this.xtLayer.SetGoldSymbol(this.lastResponse.GoldSymbol), this.xtLayer.SetSymbolReplacementData(this.lastResponse.SymbolReplacementData), this.xtLayer.SetResultScreenSymbols(this.lastResponse.WinScreenSymbols), this.xtLayer.SetSymbolsAbove(this.lastResponse.SymbolsAbove), this.xtLayer.SetSymbolsBelow(this.lastResponse.SymbolsBelow), this.xtLayer.SetNextReelsSymbolsList(this.lastResponse.NextReelsSymbolsList), this.xtLayer.SetHasCoins("CURRENCY" != ServerOptions.amountType), this.Bets = this.lastResponse.VsInitData.Bets, this.xtLayer.SetExplicitMaxTotalBet(this.lastResponse.VsInitData.ExplicitMaxTotalBet), ServerOptions.isReplay && (this.Bets = [this.lastResponse.VsInitData.Bet], this.lastResponse.VsInitData.DefaultBet = this.lastResponse.VsInitData.Bet), this.xtLayer.SetBets(this.Bets, this.lastResponse.VsInitData.Bet, this.lastResponse.VsInitData.DefaultBet), this.xtLayer.SetBalance(this.lastResponse.Balance, !1), this.xtLayer.SetWinValue(this.lastResponse.Win), this.xtLayer.SetSpinCycleWinValue(this.lastResponse.SpinCycleWin), this.xtLayer.SetExtraAwardWin(this.lastResponse.ExtraAwardWin), this.xtLayer.SetRespinCycleWin(this.lastResponse.RespinCycleWin);
         var l = 0;
-        for (r = 0; r < this.lastResponse.VsWinLines.length; ++r) {
-            l += this.lastResponse.VsWinLines[r].WinAmount
-        }
+        for (r = 0; r < this.lastResponse.VsWinLines.length; ++r) l += this.lastResponse.VsWinLines[r].WinAmount;
         this.xtLayer.SetLinesWinValue(l), this.xtLayer.SetWinLines(this.lastResponse.VsWinLines);
         var u = this.lastResponse.isGambleV2();
         if (this.xtLayer.SetGambleV2Response(this.lastResponse.gambleV2Data), this.xtLayer.SetMustOpenGambleV2(u), this.xtLayer.SetMustOpenBonus(this.lastResponse.IsBonus() && !u, this.lastResponse.IsBonusGameOver() && this.lastResponse.NextGameActions.indexOf(NextGameAction.Bonus) > -1), this.isInit = !1, this.xtLayer.SetExpandingSymbolsData(this.lastResponse.ExpandingSymbolsData), this.xtLayer.SetRespinData(this.lastResponse.Respin), this.xtLayer.SetProgressiveFeatureConfig(this.lastResponse.VsInitData.ProgressiveConfig), this.xtLayer.SetProgressiveFeatureData(this.lastResponse.ProgressiveData), this.xtLayer.SetMoneySymbolConfig(this.lastResponse.VsInitData.MoneySymbolConfig), this.xtLayer.SetMoneySymbolData(this.lastResponse.MoneySymbolData), this.xtLayer.SetStickySymbolsData(this.lastResponse.StickySymbols), this.xtLayer.SetMergingSymbolsData(this.lastResponse.MergingSymbols), this.xtLayer.SetJackpotState(this.lastResponse.VsJackpotData), this.WonTheJackpot()) {
@@ -39262,99 +38653,81 @@ VideoSlotsConnection.prototype = Object.create(Component.prototype), VideoSlotsC
     }
     t.assetBundles = [], null != XT.GetObject(Vars.PaytablePayoutData) && XT.TriggerEvent(Vars.Evt_Internal_PaytablePayoutUpdate), this.resourcesLoaded = !0, ModificationsManager.Applied = !0, this.CanTriggerInitReady() && this.TriggerInitReady()
 }, VideoSlotsConnectionXTLayer.prototype.UpdateSettings = function (t, e) {
-    var i, n = !1;
+    var i, n, o = !1;
     if (t || (e.Settings = {}), ServerOptions.isReplay && t && (e.Settings.SoundState = "false_false_false_true_true"), t && null != e.Settings.SoundState) {
-        var o = (i = e.Settings.SoundState).split("_");
-        this.SetSoundState(_bool.Parse(o[0]), _bool.Parse(o[1]), _bool.Parse(o[2]), _bool.Parse(o[3]), _bool.Parse(o[4]))
+        var s = (i = e.Settings.SoundState).split("_");
+        this.SetSoundState(_bool.Parse(s[0]), _bool.Parse(s[1]), _bool.Parse(s[2]), _bool.Parse(s[3]), _bool.Parse(s[4]))
     } else {
-        var s = XT.GetObject(Vars.SoundState);
-        e.Settings.SoundState = [s.gameSoundIsOn.toString(), s.musicIsOn.toString(), s.soundFXIsOn.toString(), s.oldMusicIsOn.toString(), s.oldSoundFXIsOn.toString()].join("_"), n = !0, this.SetSoundState(s.gameSoundIsOn, s.musicIsOn, s.soundFXIsOn, s.oldMusicIsOn, s.oldSoundFXIsOn)
+        var a = XT.GetObject(Vars.SoundState);
+        e.Settings.SoundState = [a.gameSoundIsOn.toString(), a.musicIsOn.toString(), a.soundFXIsOn.toString(), a.oldMusicIsOn.toString(), a.oldSoundFXIsOn.toString()].join("_"), o = !0, this.SetSoundState(a.gameSoundIsOn, a.musicIsOn, a.soundFXIsOn, a.oldMusicIsOn, a.oldSoundFXIsOn)
     }
     if (t && null != e.Settings.FastPlay) i = e.Settings.FastPlay, XT.SetBool(Vars.FastPlay, _bool.Parse(i));
     else {
-        var a = XT.GetBool(Vars.FastPlay);
-        e.Settings.FastPlay = String(a), n = !0
+        var r = XT.GetBool(Vars.FastPlay);
+        e.Settings.FastPlay = String(r), o = !0
     }
     if (t && null != e.Settings.Intro) i = e.Settings.Intro, XT.SetBool(Vars.ShouldDisplayIntro, _bool.Parse(i));
     else {
-        var r = XT.GetBool(Vars.ShouldDisplayIntro);
-        e.Settings.Intro = String(r), n = !0
+        var l = XT.GetBool(Vars.ShouldDisplayIntro);
+        e.Settings.Intro = String(l), o = !0
     }
-    t && null != e.Settings.StopMsg ? (i = e.Settings.StopMsg, XT.SetInt(Vars.MobileTapToStopMessageShowCount, _number.otoi(i))) : (i = XT.GetInt(Vars.MobileTapToStopMessageShowCount).toString(), e.Settings.StopMsg = i, n = !0);
-    t && null != e.Settings.TurboSpinMsg ? (i = e.Settings.TurboSpinMsg, XT.SetInt(Vars.DesktopTurboSpinMessageShowCount, _number.otoi(i))) : (i = XT.GetInt(Vars.DesktopTurboSpinMessageShowCount).toString(), e.Settings.TurboSpinMsg = i, n = !0);
-    if (t && null != e.Settings.BetInfo) {
-        var l = (i = e.Settings.BetInfo).split("_");
-        CoinManager.SetPreviousBetIndices(_number.otoi(l[0]), _number.otoi(l[1]))
+    if (t && null != e.Settings.StopMsg ? (i = e.Settings.StopMsg, XT.SetInt(Vars.MobileTapToStopMessageShowCount, _number.otoi(i))) : (i = XT.GetInt(Vars.MobileTapToStopMessageShowCount).toString(), e.Settings.StopMsg = i, o = !0), t && null != e.Settings.TurboSpinMsg ? (i = e.Settings.TurboSpinMsg, XT.SetInt(Vars.DesktopTurboSpinMessageShowCount, _number.otoi(i))) : (i = XT.GetInt(Vars.DesktopTurboSpinMessageShowCount).toString(), e.Settings.TurboSpinMsg = i, o = !0), t && null != e.Settings.BetInfo) {
+        var u = (i = e.Settings.BetInfo).split("_");
+        CoinManager.SetPreviousBetIndices(_number.otoi(u[0]), _number.otoi(u[1]))
     } else {
-        var u = XT.GetInt(Vars.NextBetIndex),
-            h = XT.GetInt(Vars.CoinValueIndex);
-        i = (u.toString() + "_" + h.toString()).toString(), e.Settings.BetInfo = i, n = !0
+        var h = XT.GetInt(Vars.NextBetIndex),
+            c = XT.GetInt(Vars.CoinValueIndex);
+        i = (h.toString() + "_" + c.toString()).toString(), e.Settings.BetInfo = i, o = !0
     }
     if (t && null != e.Settings.Rated) {
-        var c = _bool.Parse(e.Settings.Rated);
-        XT.SetBool(Vars.GameIsRated, c), XT.SetBool(Vars.RatingSkipped, !c)
+        var p = _bool.Parse(e.Settings.Rated);
+        XT.SetBool(Vars.GameIsRated, p), XT.SetBool(Vars.RatingSkipped, !p)
     } else {
-        c = XT.GetBool(Vars.GameIsRated);
-        var p = XT.GetBool(Vars.RatingSkipped);
-        (c || p) && (e.Settings.Rated = String(c), n = !0)
+        p = XT.GetBool(Vars.GameIsRated);
+        var d = XT.GetBool(Vars.RatingSkipped);
+        (p || d) && (e.Settings.Rated = String(p), o = !0)
     }
     if (t && null != e.Settings.BrowserWarningShown) {
-        var d = _bool.Parse(e.Settings.BrowserWarningShown);
-        XT.SetBool(Vars.BrowserWarningShown, d)
-    } else {
-        (d = XT.GetBool(Vars.BrowserWarningShown)) && (e.Settings.BrowserWarningShown = String(d), n = !0)
-    }
-    if (t && null != e.Settings.BatterySaver ? XT.SetBool(Vars.BatterySaver, _bool.Parse(e.Settings.BatterySaver)) : (e.Settings.BatterySaver = XT.GetBool(Vars.BatterySaver).toString(), n = !0), t && null != e.Settings.ShowIGT) XT.SetBool(Vars.ShowInGameTutorial, _bool.Parse(e.Settings.ShowIGT));
+        var m = _bool.Parse(e.Settings.BrowserWarningShown);
+        XT.SetBool(Vars.BrowserWarningShown, m)
+    } else(m = XT.GetBool(Vars.BrowserWarningShown)) && (e.Settings.BrowserWarningShown = String(m), o = !0);
+    if (t && null != e.Settings.BatterySaver ? XT.SetBool(Vars.BatterySaver, _bool.Parse(e.Settings.BatterySaver)) : (e.Settings.BatterySaver = XT.GetBool(Vars.BatterySaver).toString(), o = !0), t && null != e.Settings.ShowIGT) XT.SetBool(Vars.ShowInGameTutorial, _bool.Parse(e.Settings.ShowIGT));
     else {
-        var m = XT.GetBool(Vars.ShowInGameTutorial);
-        m || (e.Settings.ShowIGT = String(m), n = !0)
+        var S = XT.GetBool(Vars.ShowInGameTutorial);
+        S || (e.Settings.ShowIGT = String(S), o = !0)
     }
-    if (t && null != e.Settings.ShowCCH ? XT.SetBool(InterfaceVars.ShowCoinsAndCashHint, _bool.Parse(e.Settings.ShowCCH)) : (e.Settings.ShowCCH = String(XT.GetBool(InterfaceVars.ShowCoinsAndCashHint)), n = !0), t && null != e.Settings.ShowFPH ? XT.SetBool(InterfaceVars.ShowFastPlayHint, _bool.Parse(e.Settings.ShowFPH)) : (e.Settings.ShowFPH = String(XT.GetBool(InterfaceVars.ShowFastPlayHint)), n = !0), t && null != e.Settings.CustomGameStoredData) {
-        var S = e.BuildDictionaryFromString(e.Settings.CustomGameStoredData, "~", ":");
-        XT.SetObject(Vars.CustomGameStoredData, S), XT.TriggerEvent(Vars.Evt_Internal_CustomGameStoredDataReceived)
+    if (t && null != e.Settings.ShowCCH ? XT.SetBool(InterfaceVars.ShowCoinsAndCashHint, _bool.Parse(e.Settings.ShowCCH)) : (e.Settings.ShowCCH = String(XT.GetBool(InterfaceVars.ShowCoinsAndCashHint)), o = !0), t && null != e.Settings.ShowFPH ? XT.SetBool(InterfaceVars.ShowFastPlayHint, _bool.Parse(e.Settings.ShowFPH)) : (e.Settings.ShowFPH = String(XT.GetBool(InterfaceVars.ShowFastPlayHint)), o = !0), t && null != e.Settings.CustomGameStoredData) {
+        var g = e.BuildDictionaryFromString(e.Settings.CustomGameStoredData, "~", ":");
+        XT.SetObject(Vars.CustomGameStoredData, g), XT.TriggerEvent(Vars.Evt_Internal_CustomGameStoredDataReceived)
     } else {
-        var g = XT.GetObject(Vars.CustomGameStoredData);
-        e.Settings.CustomGameStoredData = e.DictionaryToString(g, "~", ":"), n = !0
+        var y = XT.GetObject(Vars.CustomGameStoredData);
+        e.Settings.CustomGameStoredData = e.DictionaryToString(y, "~", ":"), o = !0
     }
     if (t) {
-        var y = !1;
-        "CURRENCY" != ServerOptions.amountType && null != e.Settings.Coins && (y = _bool.Parse(e.Settings.Coins)), XT.SetBool(Vars.HasCoins, y)
-    } else e.Settings.Coins = String(XT.GetBool(Vars.HasCoins)), n = !0;
-    if (t && null != e.Settings.Volume ? XT.SetFloat(Vars.SoundVolume, _number.otod(e.Settings.Volume)) : (e.Settings.Volume = String(XT.GetFloat(Vars.SoundVolume)), n = !0), t && null != e.Settings.InitialScreen) {
-        for (var f = [], b = e.Settings.InitialScreen.split("_"), T = 0; T < b.length; ++T) f.push(_array.ConvertAll(b[T].split(","), _number.otoi));
-        XT.SetObject(Vars.InitialScreen, f)
+        var f = !1;
+        "CURRENCY" != ServerOptions.amountType && null != e.Settings.Coins && (f = _bool.Parse(e.Settings.Coins)), XT.SetBool(Vars.HasCoins, f)
+    } else e.Settings.Coins = String(XT.GetBool(Vars.HasCoins)), o = !0;
+    if (t && null != e.Settings.Volume ? XT.SetFloat(Vars.SoundVolume, _number.otod(e.Settings.Volume)) : (e.Settings.Volume = String(XT.GetFloat(Vars.SoundVolume)), o = !0), t && null != e.Settings.InitialScreen) {
+        for (var b = [], T = e.Settings.InitialScreen.split("_"), C = 0; C < T.length; ++C) b.push(_array.ConvertAll(T[C].split(","), _number.otoi));
+        XT.SetObject(Vars.InitialScreen, b)
     } else if (this.handlerGameInitReceived) {
-        null == (f = XT.GetObject(Vars.InitialScreen)) && (f = XT.GetObject(Vars.FirstScreenSymbols), XT.SetObject(Vars.InitialScreen, f));
-        for (b = [], T = 0; T < f.length; ++T) b.push(f[T].join(","));
-        e.Settings.InitialScreen = b.join("_"), n = !0
+        for (null == (b = XT.GetObject(Vars.InitialScreen)) && (b = XT.GetObject(Vars.FirstScreenSymbols), XT.SetObject(Vars.InitialScreen, b)), T = [], C = 0; C < b.length; ++C) T.push(b[C].join(","));
+        e.Settings.InitialScreen = T.join("_"), o = !0
     }
     if (t && null != e.Settings.InitialRandomAward) {
-        var C = new RandomAwardsResponse,
-            A = (b = e.Settings.InitialRandomAward.split("_"), parseInt(b[0], 10));
-        isFinite(A) && !isNaN(A) && (C.awardIndex = A), A = parseInt(b[1], 10), isFinite(A) && !isNaN(A) && (C.awardPositionInReel = A), XT.SetObject(Vars.InitialRandomAward, C)
-    } else if (this.handlerGameInitReceived) {
-        if (null == (C = XT.GetObject(Vars.InitialRandomAward)) && (C = XT.GetObject(Vars.RandomAwardsResponse), XT.SetObject(Vars.InitialRandomAward, C)), null != C)(b = []).push(C.awardIndex.toString()), b.push(C.awardPositionInReel.toString()), e.Settings.InitialRandomAward = b.join("_"), n = !0
+        var A = new RandomAwardsResponse,
+            v = (T = e.Settings.InitialRandomAward.split("_"), parseInt(T[0], 10));
+        isFinite(v) && !isNaN(v) && (A.awardIndex = v), v = parseInt(T[1], 10), isFinite(v) && !isNaN(v) && (A.awardPositionInReel = v), XT.SetObject(Vars.InitialRandomAward, A)
+    } else this.handlerGameInitReceived && (null == (A = XT.GetObject(Vars.InitialRandomAward)) && (A = XT.GetObject(Vars.RandomAwardsResponse), XT.SetObject(Vars.InitialRandomAward, A)), null != A && ((T = []).push(A.awardIndex.toString()), T.push(A.awardPositionInReel.toString()), e.Settings.InitialRandomAward = T.join("_"), o = !0));
+    if (t && null != e.Settings.SBPLock ? XT.SetBool(InterfaceVars.SpinButtonPositionLocked, _bool.Parse(e.Settings.SBPLock)) : (e.Settings.SBPLock = String(XT.GetBool(InterfaceVars.SpinButtonPositionLocked)), o = !0), t && null != e.Settings.SBPLand) {
+        var M = e.Settings.SBPLand.split("_");
+        XT.SetObject(InterfaceVars.SpinButtonPositionLandscape, new UHTMath.Vector3(_number.otod(M[0]), _number.otod(M[1]), 0))
+    } else if (null != (n = XT.GetObject(InterfaceVars.SpinButtonPositionLandscape))) {
+        var L = n;
+        e.Settings.SBPLand = String(L.x) + "_" + String(L.y), o = !0
     }
-    if (t && null != e.Settings.SBPLock ? XT.SetBool(InterfaceVars.SpinButtonPositionLocked, _bool.Parse(e.Settings.SBPLock)) : (e.Settings.SBPLock = String(XT.GetBool(InterfaceVars.SpinButtonPositionLocked)), n = !0), t && null != e.Settings.SBPLand) {
-        var v = e.Settings.SBPLand.split("_");
-        XT.SetObject(InterfaceVars.SpinButtonPositionLandscape, new UHTMath.Vector3(_number.otod(v[0]), _number.otod(v[1]), 0))
-    } else {
-        if (null != (L = XT.GetObject(InterfaceVars.SpinButtonPositionLandscape))) {
-            var M = L;
-            e.Settings.SBPLand = String(M.x) + "_" + String(M.y), n = !0
-        }
-    }
-    if (t && null != e.Settings.SBPPort) {
-        v = e.Settings.SBPPort.split("_");
-        XT.SetObject(InterfaceVars.SpinButtonPositionPortrait, new UHTMath.Vector3(_number.otod(v[0]), _number.otod(v[1]), 0))
-    } else {
-        var L;
-        if (null != (L = XT.GetObject(InterfaceVars.SpinButtonPositionPortrait))) {
-            M = L;
-            e.Settings.SBPPort = String(M.x) + "_" + String(M.y), n = !0
-        }
-    }
-    n && EventManager.Trigger(GameEvents.evtUpdateSettingsRequest + this.gameSymbol, e)
+    t && null != e.Settings.SBPPort ? (M = e.Settings.SBPPort.split("_"), XT.SetObject(InterfaceVars.SpinButtonPositionPortrait, new UHTMath.Vector3(_number.otod(M[0]), _number.otod(M[1]), 0))) : null != (n = XT.GetObject(InterfaceVars.SpinButtonPositionPortrait)) && (L = n, e.Settings.SBPPort = String(L.x) + "_" + String(L.y), o = !0);
+    o && EventManager.Trigger(GameEvents.evtUpdateSettingsRequest + this.gameSymbol, e)
 }, VideoSlotsConnectionXTLayer.prototype.OnGameStatus = function (t) {}, VideoSlotsConnectionXTLayer.prototype.OnSoundState = function (t) {
     this.internalGlobalSoundIsOn = t.state == CasinoSoundState.SoundOn, XT.GetObject(Vars.SoundState).globalSoundIsOn = this.internalGlobalSoundIsOn, XT.TriggerEvent(Vars.Evt_Internal_SoundStateChanged)
 }, VideoSlotsConnectionXTLayer.prototype.UpdateReelSetIndexes = function (t) {
@@ -39380,23 +38753,13 @@ VideoSlotsConnection.prototype = Object.create(Component.prototype), VideoSlotsC
         var n = e[i].substr(2),
             o = _number.otoi(n) / 10;
         XT.SetBool(Vars.Jurisdiction_SpinLimit, !0), XT.SetFloat(Vars.Jurisdiction_SpinLimit_Value, o)
-    } else if (0 == e[i].indexOf("SR")) {
-        n = e[i].substr(2), o = _number.otoi(n) / 10;
-        XT.SetBool(Vars.Jurisdiction_ResultMinimumTime, !0), XT.SetFloat(Vars.Jurisdiction_ResultMinimumTime_Value, o)
-    } else if (0 == e[i].indexOf("ST")) {
-        n = e[i].substr(2), o = _number.otoi(n) / 10;
-        XT.SetBool(Vars.Jurisdiction_ResultMinimumTimeTurbo, !0), XT.SetFloat(Vars.Jurisdiction_ResultMinimumTimeTurbo_Value, o)
-    } else if (0 == e[i].indexOf("SB")) {
-        n = e[i].substr(2), o = _number.otoi(n) / 10;
-        XT.SetBool(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins, !0), XT.SetFloat(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins_Value, o), XT.SetFloat(Vars.SpinDuration, o)
-    } else if (0 == e[i].indexOf("MAX" + ServerOptions.currency + "BET")) {
+    } else if (0 == e[i].indexOf("SR")) n = e[i].substr(2), o = _number.otoi(n) / 10, XT.SetBool(Vars.Jurisdiction_ResultMinimumTime, !0), XT.SetFloat(Vars.Jurisdiction_ResultMinimumTime_Value, o);
+    else if (0 == e[i].indexOf("ST")) n = e[i].substr(2), o = _number.otoi(n) / 10, XT.SetBool(Vars.Jurisdiction_ResultMinimumTimeTurbo, !0), XT.SetFloat(Vars.Jurisdiction_ResultMinimumTimeTurbo_Value, o);
+    else if (0 == e[i].indexOf("SB")) n = e[i].substr(2), o = _number.otoi(n) / 10, XT.SetBool(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins, !0), XT.SetFloat(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins_Value, o), XT.SetFloat(Vars.SpinDuration, o);
+    else if (0 == e[i].indexOf("MAX" + ServerOptions.currency + "BET")) {
         var s = "MAX" + ServerOptions.currency + "BET";
-        n = e[i].substr(s.length), o = _number.otoi(n);
-        XT.SetInt(Vars.Jurisdiction_MaxBetCents, o)
-    } else if (0 == e[i].indexOf("MAX" + ServerOptions.currency + "WIN")) {
-        s = "MAX" + ServerOptions.currency + "WIN", n = e[i].substr(s.length), o = _number.otoi(n);
-        XT.SetInt(Vars.Jurisdiction_MaxWin, o)
-    } else "CLK" == e[i] ? XT.SetBool(Vars.Jurisdiction_Clock, !0) : "CLS" == e[i] ? XT.SetBool(Vars.Jurisdiction_Clock_Server, !0) : "GT" == e[i] ? XT.SetBool(Vars.Jurisdiction_GameTitle, !0) : "NOAP" == e[i] ? XT.SetBool(Vars.Jurisdiction_DisableAutoplay, !0) : "MALL" == e[i] ? XT.SetBool(Vars.Jurisdiction_MandatoryAutoplayLossLimit, !0) : "LBLFS" == e[i] ? XT.SetBool(Vars.Jurisdiction_LineByLineFreespin, !0) : "LBLG" == e[i] ? XT.SetBool(Vars.Jurisdiction_LineByLineGlobal, !0) : "BALS" == e[i] ? XT.SetBool(Vars.Jurisdiction_SplitBalance, !0) : "PURL" == e[i] ? XT.SetBool(Vars.Jurisdiction_PromotionURL, !0) : "CREV" == e[i] ? XT.SetBool(Vars.Jurisdiction_ClientRevision, !0) : "GSYM" == e[i] ? XT.SetBool(Vars.Jurisdiction_GameSymbol, !0) : "FCBS" == e[i] ? XT.SetBool(Vars.Jurisdiction_FinishCountersBeforeSpin, !0) : "COCA" == e[i] ? (ServerOptions.amountType = "CURRENCY", this.SetHasCoins(!1)) : "CLMB" == e[i] ? XT.SetBool(Vars.Jurisdiction_CLMBcurrency, !0) : "PORC" == e[i] ? XT.SetBool(Vars.Jurisdiction_TournamentOptOut, !0) : "NOBF" == e[i] ? XT.SetBool(Vars.Jurisdiction_DisableBuyFeature, !0) : "NOI" == e[i] ? XT.SetBool(Vars.GameHasIntro, !1) : "NOST" == e[i] ? XT.SetBool(Vars.DisableStopButton, !0) : "NOFP" == e[i] ? XT.SetBool(Vars.DisableFastPlay, !0) : "NOMM" == e[i] ? XT.SetBool(Vars.DisableNoMoneyMessageFromServer, !0) : "DETXT" == e[i] ? XT.SetBool(Vars.Jurisdiction_Text_DE, !0) : "SHOXC" == e[i] ? XT.SetBool(Vars.Jurisdiction_Show_X_Chance, !0) : "NORP" == e[i] ? window.UHT_REPLAY_DISABLED = !0 : "AP_STFW" == e[i] ? XT.SetBool(Vars.Jurisdiction_Autoplay_StopOnFeatureWin, !0) : "AP_NOSKP" == e[i] ? (XT.SetBool(Vars.Jurisdiction_Autoplay_NoSkipScreens, !0), XT.SetBool(Vars.Autoplay_SkipScreens, !1)) : "SHOIG" == e[i] ? XT.SetBool(Vars.ShowIncompleteGame, !0) : "SHONP" == e[i] ? XT.SetBool(Vars.ShowNetPosition, !0) : "NOAB" == e[i] ? XT.SetBool(Vars.Jurisdiction_DisableAnteBet, !0) : "SISU" == e[i] ? XT.SetBool(Vars.Jurisdiction_ShowSessionUptime, !0) : "GEV" == e[i] ? XT.SetBool(Vars.Jurisdiction_GameEngineVersion, !0) : "NOSTW" == e[i] ? XT.SetBool(Vars.Jurisdiction_NoSpinToWin, !0) : "NOSWC" == e[i] ? XT.SetBool(Vars.Jurisdiction_NoSmallWinCount, !0) : "NOSS" == e[i] ? XT.SetBool(Vars.Jurisdiction_DisableSuperSpin, !0) : "SISUH" == e[i] ? XT.SetBool(Vars.Jurisdiction_ShowHoursInSessionUptime, !0) : "HODOR" == e[i] ? XT.SetBool(Vars.Jurisdiction_DisableContinousSpin, !0) : "WINUPTXT" == e[i] ? XT.SetBool(Vars.Jurisdiction_WinUp_Text, !0) : "SHOEXC" == e[i] ? XT.SetBool("Jurisdiction_ShowOddsOnScreen", !0) : "NWTXT" == e[i] ? XT.SetBool("Jurisdiction_ShowNWText", !0) : "HIDAB" == e[i] && XT.SetBool("Jurisdiction_HideAnteBet", !0)
+        n = e[i].substr(s.length), o = _number.otoi(n), XT.SetInt(Vars.Jurisdiction_MaxBetCents, o)
+    } else 0 == e[i].indexOf("MAX" + ServerOptions.currency + "WIN") ? (s = "MAX" + ServerOptions.currency + "WIN", n = e[i].substr(s.length), o = _number.otoi(n), XT.SetInt(Vars.Jurisdiction_MaxWin, o)) : "CLK" == e[i] ? XT.SetBool(Vars.Jurisdiction_Clock, !0) : "CLS" == e[i] ? XT.SetBool(Vars.Jurisdiction_Clock_Server, !0) : "GT" == e[i] ? XT.SetBool(Vars.Jurisdiction_GameTitle, !0) : "NOAP" == e[i] ? XT.SetBool(Vars.Jurisdiction_DisableAutoplay, !0) : "MALL" == e[i] ? XT.SetBool(Vars.Jurisdiction_MandatoryAutoplayLossLimit, !0) : "LBLFS" == e[i] ? XT.SetBool(Vars.Jurisdiction_LineByLineFreespin, !0) : "LBLG" == e[i] ? XT.SetBool(Vars.Jurisdiction_LineByLineGlobal, !0) : "BALS" == e[i] ? XT.SetBool(Vars.Jurisdiction_SplitBalance, !0) : "PURL" == e[i] ? XT.SetBool(Vars.Jurisdiction_PromotionURL, !0) : "CREV" == e[i] ? XT.SetBool(Vars.Jurisdiction_ClientRevision, !0) : "GSYM" == e[i] ? XT.SetBool(Vars.Jurisdiction_GameSymbol, !0) : "FCBS" == e[i] ? XT.SetBool(Vars.Jurisdiction_FinishCountersBeforeSpin, !0) : "COCA" == e[i] ? (ServerOptions.amountType = "CURRENCY", this.SetHasCoins(!1)) : "CLMB" == e[i] ? XT.SetBool(Vars.Jurisdiction_CLMBcurrency, !0) : "PORC" == e[i] ? XT.SetBool(Vars.Jurisdiction_TournamentOptOut, !0) : "NOBF" == e[i] ? XT.SetBool(Vars.Jurisdiction_DisableBuyFeature, !0) : "NOI" == e[i] ? XT.SetBool(Vars.GameHasIntro, !1) : "NOST" == e[i] ? XT.SetBool(Vars.DisableStopButton, !0) : "NOFP" == e[i] ? XT.SetBool(Vars.DisableFastPlay, !0) : "NOMM" == e[i] ? XT.SetBool(Vars.DisableNoMoneyMessageFromServer, !0) : "DETXT" == e[i] ? XT.SetBool(Vars.Jurisdiction_Text_DE, !0) : "SHOXC" == e[i] ? XT.SetBool(Vars.Jurisdiction_Show_X_Chance, !0) : "NORP" == e[i] ? window.UHT_REPLAY_DISABLED = !0 : "AP_STFW" == e[i] ? XT.SetBool(Vars.Jurisdiction_Autoplay_StopOnFeatureWin, !0) : "AP_NOSKP" == e[i] ? (XT.SetBool(Vars.Jurisdiction_Autoplay_NoSkipScreens, !0), XT.SetBool(Vars.Autoplay_SkipScreens, !1)) : "SHOIG" == e[i] ? XT.SetBool(Vars.ShowIncompleteGame, !0) : "SHONP" == e[i] ? XT.SetBool(Vars.ShowNetPosition, !0) : "NOAB" == e[i] ? XT.SetBool(Vars.Jurisdiction_DisableAnteBet, !0) : "SISU" == e[i] ? XT.SetBool(Vars.Jurisdiction_ShowSessionUptime, !0) : "GEV" == e[i] ? XT.SetBool(Vars.Jurisdiction_GameEngineVersion, !0) : "NOSTW" == e[i] ? XT.SetBool(Vars.Jurisdiction_NoSpinToWin, !0) : "NOSWC" == e[i] ? XT.SetBool(Vars.Jurisdiction_NoSmallWinCount, !0) : "NOSS" == e[i] ? XT.SetBool(Vars.Jurisdiction_DisableSuperSpin, !0) : "SISUH" == e[i] ? XT.SetBool(Vars.Jurisdiction_ShowHoursInSessionUptime, !0) : "HODOR" == e[i] ? XT.SetBool(Vars.Jurisdiction_DisableContinousSpin, !0) : "WINUPTXT" == e[i] ? XT.SetBool(Vars.Jurisdiction_WinUp_Text, !0) : "SHOEXC" == e[i] ? XT.SetBool("Jurisdiction_ShowOddsOnScreen", !0) : "NWTXT" == e[i] ? XT.SetBool("Jurisdiction_ShowNWText", !0) : "HIDAB" == e[i] && XT.SetBool("Jurisdiction_HideAnteBet", !0)
 }, VideoSlotsConnectionXTLayer.prototype.InitReceived = function () {
     this.handlerGameInitReceived = !0, this.CanTriggerInitReady() && this.TriggerInitReady()
 };
@@ -39891,8 +39254,7 @@ AutoplayManager.wasReset = !1, AutoplayManager.fastPlay = !1, AutoplayManager.au
     if (!(XT.GetInt(Vars.AutoplaySpinsLeft) < 0)) {
         var t = !1,
             e = XT.GetObject(Vars.AdvancedAutoplaySettings);
-        if (!t && e.stopOnAnyWin && XT.GetDouble(Vars.SpinCycleWinReceived) > 0 && (t = !0), XT.GetBool(Vars.Jurisdiction_Autoplay_StopOnFeatureWin) && (e.stopIfFeature = !0), !t && e.stopIfFeature)(XT.GetObject(Vars.ReceivedFreeSpinsResponse).IsFreeSpin || XT.GetBool(Vars.FromServer_MustOpenFSBG) || XT.GetBool(Vars.MustOpenBonus)) && (t = !0);
-        !t && e.stopIfSingleWinExceeds && XT.GetDouble(Vars.SpinCycleWinReceived) > e.singleWinValue && (t = !0), !t && e.stopIfCashIncreases && XT.GetDouble(Vars.BalanceReceived) + XT.GetDouble(Vars.BonusBalanceReceived) > e.initialBalance + e.cashIncreasesValue && (t = !0), !t && e.stopIfCashDecreases && XT.GetDouble(Vars.BalanceReceived) + XT.GetDouble(Vars.BonusBalanceReceived) - CoinManager.GetNextTotalBet() < e.initialBalance - e.cashDecreasesValue && (t = !0), t && (XT.SetInt(Vars.AutoplaySpinsLeft, -1), XT.TriggerEvent(Vars.Evt_Internal_StoppedAutoplayByCondition))
+        !t && e.stopOnAnyWin && XT.GetDouble(Vars.SpinCycleWinReceived) > 0 && (t = !0), XT.GetBool(Vars.Jurisdiction_Autoplay_StopOnFeatureWin) && (e.stopIfFeature = !0), !t && e.stopIfFeature && (XT.GetObject(Vars.ReceivedFreeSpinsResponse).IsFreeSpin || XT.GetBool(Vars.FromServer_MustOpenFSBG) || XT.GetBool(Vars.MustOpenBonus)) && (t = !0), !t && e.stopIfSingleWinExceeds && XT.GetDouble(Vars.SpinCycleWinReceived) > e.singleWinValue && (t = !0), !t && e.stopIfCashIncreases && XT.GetDouble(Vars.BalanceReceived) + XT.GetDouble(Vars.BonusBalanceReceived) > e.initialBalance + e.cashIncreasesValue && (t = !0), !t && e.stopIfCashDecreases && XT.GetDouble(Vars.BalanceReceived) + XT.GetDouble(Vars.BonusBalanceReceived) - CoinManager.GetNextTotalBet() < e.initialBalance - e.cashDecreasesValue && (t = !0), t && (XT.SetInt(Vars.AutoplaySpinsLeft, -1), XT.TriggerEvent(Vars.Evt_Internal_StoppedAutoplayByCondition))
     }
 }, AutoplayManager.ResetSettings = function () {
     AutoplayManager.wasReset || (AutoplayManager.wasReset = !0, AutoplayManager.fastPlay = XT.GetBool(Vars.FastPlay), AutoplayManager.autoplayContinuousSpin = XT.GetBool(Vars.AutoplayContinuousSpin), XT.SetBool(Vars.FastPlay, !1), XT.SetBool(Vars.AutoplayContinuousSpin, !1))
@@ -40057,8 +39419,7 @@ StageResultFreeSpin.prototype = Object.create(UHTStage.prototype), StageResultFr
     CoinManager.SetStrictBetMode(t.isBonusRounds);
     var e = (t = BonusRoundsController.HandleNextEvent(!1, !1, !0)).isBonusRounds,
         i = t.messageIsOpened;
-    XT.GetObject(Vars.BonusRoundsData);
-    0 == i && CoinManager.SetStrictBetMode(e)
+    XT.GetObject(Vars.BonusRoundsData), 0 == i && CoinManager.SetStrictBetMode(e)
 }, goog.require("UHT.Engine"), goog.require("UHT.UHTStage"), StageSpin.prototype = Object.create(UHTStage.prototype), StageSpin.prototype.constructor = StageSpin, StageSpin.preventBalanceUpdate = !1, StageSpin.prototype.GetStageName = function () {
     return UHTStageName.Spin
 }, StageSpin.prototype.XTRegisterCallbacks = function () {}, StageSpin.prototype.XTInitVariablesAndEvents = function () {
@@ -40071,16 +39432,11 @@ StageResultFreeSpin.prototype = Object.create(UHTStage.prototype), StageResultFr
         this.shouldResetSpinCycleWinDisplayed = (null == i || i.IsDone) && (!e.IsFreeSpin || e.IsLastFreeSpin), null != this.rq ? (XT.TriggerEvent(Vars.Evt_Internal_InjectRQIBeforeSpinStart), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnRQEnded, null, this)), this.rq.StartRoutines()) : this.OnRQEnded(null), UHTEngine.RegisterUserInteraction()
     }
     if (this.isRQEnded) {
-        this.isRQEnded = !1, XT.GetBool(Vars.Logic_IsFreeSpin) || (XT.GetBool(Vars.ContinuousSpin) ? globalTracking.SendEvent("uht_spin", "started_turbo_spin_fastplay", XT.GetBool(Vars.FastPlay) ? 1 : 0, "SpinTracker") : globalTracking.SendEvent("uht_spin", "started_normal_spin_fastplay", XT.GetBool(Vars.FastPlay) ? 1 : 0, "SpinTracker")), globalTracking.StartTimer("uht_spin", "time_response_received", "SpinTracker");
-        i = XT.GetObject(Vars.RespinData);
-        XT.GetBool(Vars.Logic_IsFreeSpin) || null != i && !i.IsDone || UHTInterfaceBOSS.PostMessage("gameRoundStarted"), UHTInterfaceBOSS.PostMessage("spinStarted"), XT.RegisterCallbackEvent(Vars.Evt_DataToCode_Pressed_Stop, this.OnPressedStop, this), XT.RegisterCallbackEvent(Vars.Evt_DataToCode_StartAutoplay, this.OnStartAutoplay, this), XT.RegisterCallbackEvent(Vars.Evt_DataToCode_StopAutoplay, this.OnStopAutoplay, this), XT.RegisterCallbackEvent(Vars.Evt_Internal_ReelManager_SpinEnded, this.OnSpinEnded, this), XT.RegisterCallbackEvent(Vars.Evt_FromServer_BalanceUpdatedFromResult, this.OnBalanceUpdated, this), XT.RegisterCallbackEvent(Vars.Evt_DataToCode_BonusRoundsOnContinuePressed, this.OnBonusRoundsContinuePressed, this), XT.TriggerEvent(Vars.Evt_Internal_FinalizeDisplayedWin), this.onlySpinVisually || XT.TriggerEvent(Vars.Evt_ToServer_RequestSpin), XT.TriggerEvent(Vars.Evt_Internal_StopIdleSpinCounter), XT.TriggerEvent(Vars.Evt_Internal_SpinStarted), XT.SetBool(Vars.CanSpin, !1), XT.SetBool(Vars.SkipNextBigWin, !1), XT.SetInt(Vars.BigWinLevel, 0), XT.SetBool(Vars.SpinResultIsBigWin, !1), XT.SetBool(Vars.Evt_Internal_ResultDisplayer_SkipNextLoopOccasion, !1);
+        this.isRQEnded = !1, XT.GetBool(Vars.Logic_IsFreeSpin) || (XT.GetBool(Vars.ContinuousSpin) ? globalTracking.SendEvent("uht_spin", "started_turbo_spin_fastplay", XT.GetBool(Vars.FastPlay) ? 1 : 0, "SpinTracker") : globalTracking.SendEvent("uht_spin", "started_normal_spin_fastplay", XT.GetBool(Vars.FastPlay) ? 1 : 0, "SpinTracker")), globalTracking.StartTimer("uht_spin", "time_response_received", "SpinTracker"), i = XT.GetObject(Vars.RespinData), XT.GetBool(Vars.Logic_IsFreeSpin) || null != i && !i.IsDone || UHTInterfaceBOSS.PostMessage("gameRoundStarted"), UHTInterfaceBOSS.PostMessage("spinStarted"), XT.RegisterCallbackEvent(Vars.Evt_DataToCode_Pressed_Stop, this.OnPressedStop, this), XT.RegisterCallbackEvent(Vars.Evt_DataToCode_StartAutoplay, this.OnStartAutoplay, this), XT.RegisterCallbackEvent(Vars.Evt_DataToCode_StopAutoplay, this.OnStopAutoplay, this), XT.RegisterCallbackEvent(Vars.Evt_Internal_ReelManager_SpinEnded, this.OnSpinEnded, this), XT.RegisterCallbackEvent(Vars.Evt_FromServer_BalanceUpdatedFromResult, this.OnBalanceUpdated, this), XT.RegisterCallbackEvent(Vars.Evt_DataToCode_BonusRoundsOnContinuePressed, this.OnBonusRoundsContinuePressed, this), XT.TriggerEvent(Vars.Evt_Internal_FinalizeDisplayedWin), this.onlySpinVisually || XT.TriggerEvent(Vars.Evt_ToServer_RequestSpin), XT.TriggerEvent(Vars.Evt_Internal_StopIdleSpinCounter), XT.TriggerEvent(Vars.Evt_Internal_SpinStarted), XT.SetBool(Vars.CanSpin, !1), XT.SetBool(Vars.SkipNextBigWin, !1), XT.SetInt(Vars.BigWinLevel, 0), XT.SetBool(Vars.SpinResultIsBigWin, !1), XT.SetBool(Vars.Evt_Internal_ResultDisplayer_SkipNextLoopOccasion, !1);
         var n = BonusRoundsController.HandleNextEvent(!0, !0, !0);
-        this.isBonusRounds = n.isBonusRounds;
-        XT.GetObject(Vars.BonusRoundsData), e = XT.GetObject(Vars.ReceivedFreeSpinsResponse);
-        XT.GetBool(Vars.UpdateVSGameStateOnSpin) && (XT.SetDouble(Vars.CurrentWinMultiplier, 1), !e.IsFreeSpin || e.IsFreeSpinsCollected || e.IsFreeSpinsGambled ? XT.GetInt(Vars.AutoplaySpinsLeft) >= 0 ? this.autoRespinsIsInfinite ? VSGameStateManager.ChangeTo(VSGameState.Spin) : this.isBonusRounds ? VSGameStateManager.ChangeTo(VSGameState.SpinBonusRoundsAutoplay) : VSGameStateManager.ChangeTo(VSGameState.SpinAutoplay) : this.isBonusRounds ? VSGameStateManager.ChangeTo(VSGameState.SpinBonusRounds) : this.onlySpinVisually || this.resumeSpinning ? VSGameStateManager.ChangeTo(VSGameState.Result) : VSGameStateManager.ChangeTo(VSGameState.Spin) : (XT.SetDouble(Vars.CurrentWinMultiplier, e.TotalMultiplier), VSGameStateManager.ChangeTo(VSGameState.SpinFreeSpins))), null != this.cat && this.cat.StartEvent(this.startEvent.id)
+        this.isBonusRounds = n.isBonusRounds, XT.GetObject(Vars.BonusRoundsData), e = XT.GetObject(Vars.ReceivedFreeSpinsResponse), XT.GetBool(Vars.UpdateVSGameStateOnSpin) && (XT.SetDouble(Vars.CurrentWinMultiplier, 1), !e.IsFreeSpin || e.IsFreeSpinsCollected || e.IsFreeSpinsGambled ? XT.GetInt(Vars.AutoplaySpinsLeft) >= 0 ? this.autoRespinsIsInfinite ? VSGameStateManager.ChangeTo(VSGameState.Spin) : this.isBonusRounds ? VSGameStateManager.ChangeTo(VSGameState.SpinBonusRoundsAutoplay) : VSGameStateManager.ChangeTo(VSGameState.SpinAutoplay) : this.isBonusRounds ? VSGameStateManager.ChangeTo(VSGameState.SpinBonusRounds) : this.onlySpinVisually || this.resumeSpinning ? VSGameStateManager.ChangeTo(VSGameState.Result) : VSGameStateManager.ChangeTo(VSGameState.Spin) : (XT.SetDouble(Vars.CurrentWinMultiplier, e.TotalMultiplier), VSGameStateManager.ChangeTo(VSGameState.SpinFreeSpins))), null != this.cat && this.cat.StartEvent(this.startEvent.id)
     } else {
-        n = BonusRoundsController.HandleNextEvent(!0, !0, !0);
-        this.isBonusRounds = n.isBonusRounds, Globals.InputBlocked || (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || XT.GetBool(Vars.ContinuousSpin)) && XT.GetBool(Vars.AllowFastStop) && (!XT.GetBool(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins) || XT.GetBool(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins) && XT.GetFloat(Vars.SpinDuration) > XT.GetFloat(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins_Value)) && (XT.GetBool(Vars.DisableStopButton) || XT.TriggerEvent(Vars.Evt_Internal_ReelManager_StopSpin));
+        n = BonusRoundsController.HandleNextEvent(!0, !0, !0), this.isBonusRounds = n.isBonusRounds, Globals.InputBlocked || (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return) || XT.GetBool(Vars.ContinuousSpin)) && XT.GetBool(Vars.AllowFastStop) && (!XT.GetBool(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins) || XT.GetBool(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins) && XT.GetFloat(Vars.SpinDuration) > XT.GetFloat(Vars.Jurisdiction_ResultMinimumTimeBetweenSpins_Value)) && (XT.GetBool(Vars.DisableStopButton) || XT.TriggerEvent(Vars.Evt_Internal_ReelManager_StopSpin));
         var o = null != XT.GetObject(Vars.BonusRoundsData) && 0 == XT.GetObject(Vars.BonusRoundsData).RoundsLeft && GameConnection.I.requestState == RequestState.Collect;
         if (this.spinEnded && !o) {
             if (this.spinEnded = !1, !XT.GetBool(Vars.Logic_IsFreeSpin)) {
@@ -40089,8 +39445,7 @@ StageResultFreeSpin.prototype = Object.create(UHTStage.prototype), StageResultFr
             }
             UHTInterfaceBOSS.PostMessage("spinEnded");
             var a = XT.GetObject(Vars.ReceivedFreeSpinsResponse);
-            i = XT.GetObject(Vars.RespinData);
-            return this.shouldResetSpinCycleWinDisplayed && XT.SetDouble(Vars.SpinCycleWinDisplayed, 0), (null == i || i.IsDone) && (!a.IsFreeSpin || a.IsLastFreeSpin) && (XT.GetBool(Vars.MustOpenBonus) || XT.GetBool(Vars.FromServer_MustOpenFSBG) || null != XT.GetObject(Vars.GambleV2Data) || UHTInterfaceBOSS.PostMessage("gameRoundEnded")), XT.TriggerEvent(Vars.Evt_Internal_SpinEnded), XT.GetBool(Vars.MustPlayJackpot) ? (XT.SetObject(Vars.FromStageName, this.GetStageName()), XT.SetObject(Vars.ToStageName, UHTStageName.Jackpot), UHTAction.ChangeStage(UHTStageName.Transition)) : XT.GetBool(Vars.TriggerBonusBeforeResult) && XT.GetBool(Vars.MustOpenBonus) ? XT.GetBool(BGVars.BonusDataReceived) ? (XT.SetBool(BGVars.BonusDataReceived, !1), XT.SetObject(Vars.FromStageName, this.GetStageName()), XT.SetObject(Vars.ToStageName, UHTStageName.Bonus), UHTAction.ChangeStage(UHTStageName.Transition)) : UHTAction.NoAction() : (a.IsFreeSpin || XT.GetBool(Vars.FromServer_MustOpenFSBG)) && (null == i || i.IsDone && a.IsFreeSpinsStart || !a.IsFreeSpinsStart) ? (XT.SetObject(Vars.FromStageName, this.GetStageName()), XT.SetObject(Vars.ToStageName, UHTStageName.ResultFreeSpin), UHTAction.ChangeStage(UHTStageName.Transition)) : (XT.SetObject(Vars.FromStageName, this.GetStageName()), XT.SetObject(Vars.ToStageName, UHTStageName.Result), UHTAction.ChangeStage(UHTStageName.Transition))
+            return i = XT.GetObject(Vars.RespinData), this.shouldResetSpinCycleWinDisplayed && XT.SetDouble(Vars.SpinCycleWinDisplayed, 0), (null == i || i.IsDone) && (!a.IsFreeSpin || a.IsLastFreeSpin) && (XT.GetBool(Vars.MustOpenBonus) || XT.GetBool(Vars.FromServer_MustOpenFSBG) || null != XT.GetObject(Vars.GambleV2Data) || UHTInterfaceBOSS.PostMessage("gameRoundEnded")), XT.TriggerEvent(Vars.Evt_Internal_SpinEnded), XT.GetBool(Vars.MustPlayJackpot) ? (XT.SetObject(Vars.FromStageName, this.GetStageName()), XT.SetObject(Vars.ToStageName, UHTStageName.Jackpot), UHTAction.ChangeStage(UHTStageName.Transition)) : XT.GetBool(Vars.TriggerBonusBeforeResult) && XT.GetBool(Vars.MustOpenBonus) ? XT.GetBool(BGVars.BonusDataReceived) ? (XT.SetBool(BGVars.BonusDataReceived, !1), XT.SetObject(Vars.FromStageName, this.GetStageName()), XT.SetObject(Vars.ToStageName, UHTStageName.Bonus), UHTAction.ChangeStage(UHTStageName.Transition)) : UHTAction.NoAction() : (a.IsFreeSpin || XT.GetBool(Vars.FromServer_MustOpenFSBG)) && (null == i || i.IsDone && a.IsFreeSpinsStart || !a.IsFreeSpinsStart) ? (XT.SetObject(Vars.FromStageName, this.GetStageName()), XT.SetObject(Vars.ToStageName, UHTStageName.ResultFreeSpin), UHTAction.ChangeStage(UHTStageName.Transition)) : (XT.SetObject(Vars.FromStageName, this.GetStageName()), XT.SetObject(Vars.ToStageName, UHTStageName.Result), UHTAction.ChangeStage(UHTStageName.Transition))
         }
     }
     return UHTAction.NoAction()
@@ -40103,9 +39458,7 @@ StageResultFreeSpin.prototype = Object.create(UHTStage.prototype), StageResultFr
 }, StageSpin.prototype.OnBalanceUpdated = function () {
     StageSpin.preventBalanceUpdate || (XT.SetDouble(Vars.BalanceDisplayed, XT.GetDouble(Vars.BalanceReceived)), XT.SetDouble(Vars.BonusBalance, XT.GetDouble(Vars.BonusBalanceReceived)))
 }, StageSpin.prototype.OnStopAutoplay = function () {
-    XT.SetInt(Vars.AutoplaySpinsLeft, -1);
-    XT.GetObject(Vars.BonusRoundsData);
-    this.isBonusRounds ? VSGameStateManager.ChangeTo(VSGameState.SpinBonusRounds) : VSGameStateManager.ChangeTo(VSGameState.Spin)
+    XT.SetInt(Vars.AutoplaySpinsLeft, -1), XT.GetObject(Vars.BonusRoundsData), this.isBonusRounds ? VSGameStateManager.ChangeTo(VSGameState.SpinBonusRounds) : VSGameStateManager.ChangeTo(VSGameState.Spin)
 }, StageSpin.prototype.OnBonusRoundsContinuePressed = function () {
     XT.TriggerEvent(Vars.Evt_ToServer_ReloadGame)
 }, StageSpin.prototype.OnStartAutoplay = function () {
@@ -40301,9 +39654,7 @@ WinLimitFOX.prototype = Object.create(FOXLink.prototype), WinLimitFOX.prototype.
 }, WinLimitFOX.prototype.CapValuesIfNeeded = function (t) {
     null != t[GameProtocolDictionary.spinCycleWin] && (this.cycleWin = _number.otod(t[GameProtocolDictionary.spinCycleWin]));
     var e = "rs_p";
-    null != t[e] && (0 == _number.otoi(t[e]) && (this.cycleWinBeforeRespins = this.prevCycleWin));
-    null != t[GameProtocolDictionary.freeSpinCurrentWin] && (0 == _number.otod(t[GameProtocolDictionary.freeSpinCurrentWin]) && (this.cycleWinBeforeFreeSpins = this.cycleWin));
-    if (null == t[e = "wl_ta"]) return XT.SetDouble(WinLimitVars.WinLimit_TotalAmount, 0), XT.SetObject(WinLimitVars.WinLimit_UncappedWinLines, null), XT.SetBool(Vars.WinLimitReached, !1), !1;
+    if (null != t[e] && 0 == _number.otoi(t[e]) && (this.cycleWinBeforeRespins = this.prevCycleWin), null != t[GameProtocolDictionary.freeSpinCurrentWin] && 0 == _number.otod(t[GameProtocolDictionary.freeSpinCurrentWin]) && (this.cycleWinBeforeFreeSpins = this.cycleWin), null == t[e = "wl_ta"]) return XT.SetDouble(WinLimitVars.WinLimit_TotalAmount, 0), XT.SetObject(WinLimitVars.WinLimit_UncappedWinLines, null), XT.SetBool(Vars.WinLimitReached, !1), !1;
     XT.SetBool(Vars.WinLimitReached, !0);
     var i, n = _number.otod(t[e]),
         o = String(n - this.prevCycleWin),
@@ -40319,9 +39670,7 @@ WinLimitFOX.prototype = Object.create(FOXLink.prototype), WinLimitFOX.prototype.
         var h = _number.otod(t[GameProtocolDictionary.freeSpinTotalWinMultiplied]);
         h > a && (h = a), t[GameProtocolDictionary.freeSpinTotalWinMultiplied] = String(h)
     }
-    null != t[GameProtocolDictionary.BonusGame.realWin] && ((i = _number.otod(t[GameProtocolDictionary.BonusGame.realWin])) > r && (i = r), t[GameProtocolDictionary.BonusGame.realWin] = i.toString(), this.forceBonusCollectOnCapDuringBonus && (l = !0));
-    null != t.bpw && ((i = _number.otod(t.bpw)) > r && (i = r), this.forceBonusCollectOnCapDuringBonus ? (l = !0, t.bpw = "0", t[GameProtocolDictionary.BonusGame.realWin] = i.toString()) : t.bpw = i.toString());
-    XT.SetDouble(WinLimitVars.WinLimit_TotalAmount, n), XT.SetObject(WinLimitVars.WinLimit_UncappedWinLines, VSProtocolParser.ParseWinLines(t));
+    null != t[GameProtocolDictionary.BonusGame.realWin] && ((i = _number.otod(t[GameProtocolDictionary.BonusGame.realWin])) > r && (i = r), t[GameProtocolDictionary.BonusGame.realWin] = i.toString(), this.forceBonusCollectOnCapDuringBonus && (l = !0)), null != t.bpw && ((i = _number.otod(t.bpw)) > r && (i = r), this.forceBonusCollectOnCapDuringBonus ? (l = !0, t.bpw = "0", t[GameProtocolDictionary.BonusGame.realWin] = i.toString()) : t.bpw = i.toString()), XT.SetDouble(WinLimitVars.WinLimit_TotalAmount, n), XT.SetObject(WinLimitVars.WinLimit_UncappedWinLines, VSProtocolParser.ParseWinLines(t));
     for (var c = 0; null != t[GameProtocolDictionary.winLines(c)];) delete t[GameProtocolDictionary.winLines(c++)];
     var p = "";
     null != t[GameProtocolDictionary.Actions.action] && (p = t[GameProtocolDictionary.Actions.action]);
@@ -40330,7 +39679,7 @@ WinLimitFOX.prototype = Object.create(FOXLink.prototype), WinLimitFOX.prototype.
 }, WinLimitFOX.prototype.OnSpinStarted = function () {
     var t = XT.GetObject(Vars.RespinData),
         e = !(null == t || t.IsDone);
-    !XT.GetBool(Vars.Logic_IsFreeSpin) && !e ? (this.prevCycleWin = 0, this.bonusWinsInFreeSpins = 0) : (this.prevCycleWin = this.cycleWin, e || (this.cycleWinBeforeRespins = this.cycleWin))
+    XT.GetBool(Vars.Logic_IsFreeSpin) || e ? (this.prevCycleWin = this.cycleWin, e || (this.cycleWinBeforeRespins = this.cycleWin)) : (this.prevCycleWin = 0, this.bonusWinsInFreeSpins = 0)
 }, WinLimitFOX.prototype.WeHaveFSChainData = function (t) {
     return null != t[GameProtocolDictionary.FreeSpinsChain.spins] || null != t[GameProtocolDictionary.FreeSpinsChain.multipliers] || null != t[GameProtocolDictionary.FreeSpinsChain.sessionsWonSymbolsCount] || null != t[GameProtocolDictionary.FreeSpinsChain.sessionsWonThisSpin] || null != t[GameProtocolDictionary.FreeSpinsChain.spinsTotal] || null != t[GameProtocolDictionary.FreeSpinsChain.multipliersTotal] || null != t[GameProtocolDictionary.FreeSpinsChain.winsTotal] || null != t[GameProtocolDictionary.FreeSpinsChain.multipliedWinTotal]
 }, goog.require("UHT.Engine"), goog.require("UHT.VS_Reel"), VS_Reel_MJ.prototype = Object.create(VS_Reel.prototype), VS_Reel_MJ.prototype.constructor = VS_Reel_MJ, VS_Reel_MJ.prototype.AddBottomLinkedLooperSymbol = function (t) {
@@ -40428,10 +39777,8 @@ WinLimitFOX.prototype = Object.create(FOXLink.prototype), WinLimitFOX.prototype.
     this.initialSymbolList = XT.GetObject(Vars.InitialResultScreenSymbols);
     for (var r = null != this.initialSymbolList && this.initialSymbolList.length > 0 && !this.forcedFinalSymbolsOnScattersComputation, l = 0; l < this.reelsManager.reels.length; l++) this.SymbolsPresentAnywhereOnReel(t, l) <= 0 || (n += r ? this.InitialSymbolAppearencesOnReel(t, l) : this.SymbolAppearencesOnReel(t, l), l == e || this.ReelStopsAfter(l, e) ? o++ : i += this.SymbolAppearencesOnReel(t, l));
     if (s) {
-        if (this.ScatterIsStacked) {
-            o = 0;
-            for (l = 0; l < this.reelsManager.reels.length; l++)(l == e || this.ReelStopsAfter(l, e)) && this.SymbolsPresentAnywhereOnReel(t, l) > 0 && (o += this.reelsManager.reels[l].symbolHolders.length)
-        }
+        if (this.ScatterIsStacked)
+            for (o = 0, l = 0; l < this.reelsManager.reels.length; l++)(l == e || this.ReelStopsAfter(l, e)) && this.SymbolsPresentAnywhereOnReel(t, l) > 0 && (o += this.reelsManager.reels[l].symbolHolders.length);
         i + o >= this.GetScatterMinCombo() && (this.StillPossibleWinComboScatter[e] = !0);
         var u = this.ScatterIsStacked ? this.reelsManager.reels[e].symbolHolders.length : 1;
         if (this.SymbolsPresentAnywhereOnReel(t, e) > 0 && i >= this.GetScatterMinCombo() - u && (this.AccumulatedPossibleWin[e] += Math.ceil(this.payoutThreshold * (this.optimizeWaysComputation && XT.GetBool(Vars.GameHasWaysInsteadOfLines) ? XT.GetInt(Vars.BetToTotalBetMultiplier) : a)), this.SetReelShouldExcite(e)), n >= this.GetScatterMinCombo())
@@ -40572,12 +39919,10 @@ WinLimitFOX.prototype = Object.create(FOXLink.prototype), WinLimitFOX.prototype.
     this.reelsStartOrderNormal = [];
     for (var e = 0; e < t.length; e++) this.reelsStartOrderNormal[e] = t[e];
     var i = XT.GetObject(Vars.ReelsStopOrderDefault);
-    this.reelsStopOrderNormal = [];
-    for (e = 0; e < i.length; e++) this.reelsStopOrderNormal[e] = i[e];
+    for (this.reelsStopOrderNormal = [], e = 0; e < i.length; e++) this.reelsStopOrderNormal[e] = i[e];
     this.reelDelayStartNormal = this.rm.reelDelayStart, this.reelDelayStopNormal = this.rm.reelDelayStop;
     var n = XT.GetObject(Vars.ExtraReelDelayStopDefault);
-    this.extraReelDelayStopNormal = [];
-    for (e = 0; e < n.length; e++) this.extraReelDelayStopNormal[e] = n[e];
+    for (this.extraReelDelayStopNormal = [], e = 0; e < n.length; e++) this.extraReelDelayStopNormal[e] = n[e];
     this.autoStopDelayNormal = this.rm.autoStopDelay, this.instantStopNormal = this.rm.instantStop, this.firstExcitedReelNormal = this.se.firstExcitedReel;
     var o = XT.GetObject(Vars.ReceivedFreeSpinsResponse);
     o.IsLastFreeSpin || !o.IsFreeSpin && !o.IsFreeSpinsStart ? this.ResetFSTimers() : this.SetFSTimers()
@@ -40719,8 +40064,7 @@ WinLimitFOX.prototype = Object.create(FOXLink.prototype), WinLimitFOX.prototype.
         o.lineStyle(this.thickness, this.color.rgbAsHex, this.color.a), o.moveTo(this.guides[0].x, -this.guides[0].y);
         for (var s = 1; s < this.guides.length; s++) o.lineTo(this.guides[s].x, -this.guides[s].y);
         var a = new PIXI.Graphics;
-        a.lineStyle(this.thickness, 0, this.color.a), a.moveTo(this.guides[0].x, -this.guides[0].y + this.thickness / 2);
-        for (s = 1; s < this.guides.length; s++) a.lineTo(this.guides[s].x, -this.guides[s].y + this.thickness / 2);
+        for (a.lineStyle(this.thickness, 0, this.color.a), a.moveTo(this.guides[0].x, -this.guides[0].y + this.thickness / 2), s = 1; s < this.guides.length; s++) a.lineTo(this.guides[s].x, -this.guides[s].y + this.thickness / 2);
         this.pixiZOrderedContainer.addChild(a), this.pixiZOrderedContainer.addChild(e), this.pixiZOrderedContainer.addChild(n), this.pixiZOrderedContainer.addChild(o), this.pixiZOrderedContainer.addChild(t), this.pixiZOrderedContainer.addChild(i)
     }
 }, WinLineVisual.prototype.XTRegisterCallbacks = function () {
@@ -40855,13 +40199,10 @@ ResultDisplayer.prototype = Object.create(XTLink.prototype), ResultDisplayer.pro
             }
             var i = XT.GetObject(Vars.ReceivedFreeSpinsResponse),
                 n = !1;
-            if (XT.GetBool(Vars.Jurisdiction_LineByLineFreespin) && i.IsFreeSpin && !i.IsFreeSpinsStart && (n = !0), XT.GetBool(Vars.Jurisdiction_LineByLineGlobal) && (n = !0), !this.isMinimalMode && !XT.GetBool(Vars.ForceResultMinimalMode) || n) {
-                this.rq.AddRoutineQueueItem(new RQIMarker(RQIMarker.MarkerType.StartLineByLine)), this.rq.AddRoutineQueueItem(new RQIWaitForSeconds(this.transitionDuration)), (this.curWinLines.length > 1 || XT.GetBool(InterfaceVars.ShowExplicitResult)) && this.QueueDisplayLinesOneByOne(), this.rq.AddRoutineQueueItem(new RQIMarker(RQIMarker.MarkerType.EndLineByLine));
-                for (e = 0; e < this.curWinLines.length; e++) this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnHideLine, this.curWinLines[e].LineNumber, this)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnHideLineWin, e, this))
-            }
+            if (XT.GetBool(Vars.Jurisdiction_LineByLineFreespin) && i.IsFreeSpin && !i.IsFreeSpinsStart && (n = !0), XT.GetBool(Vars.Jurisdiction_LineByLineGlobal) && (n = !0), !this.isMinimalMode && !XT.GetBool(Vars.ForceResultMinimalMode) || n)
+                for (this.rq.AddRoutineQueueItem(new RQIMarker(RQIMarker.MarkerType.StartLineByLine)), this.rq.AddRoutineQueueItem(new RQIWaitForSeconds(this.transitionDuration)), (this.curWinLines.length > 1 || XT.GetBool(InterfaceVars.ShowExplicitResult)) && this.QueueDisplayLinesOneByOne(), this.rq.AddRoutineQueueItem(new RQIMarker(RQIMarker.MarkerType.EndLineByLine)), e = 0; e < this.curWinLines.length; e++) this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnHideLine, this.curWinLines[e].LineNumber, this)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnHideLineWin, e, this));
             if (XT.TriggerEvent(Vars.Evt_Internal_InjectRQIAfterLinesShow), this.mustAnimateScattersWin && (XT.GetBool(Vars.ScatterSymbolIsWild) && this.wildBecomesScatterWhenScatterPays && this.mustSetScattersAsWilds && (this.useScatterWildStates && this.currentScatterWildState != ResultDisplayer.ScatterWildState.WILD || (this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnSetScatterWildAsScatter, this.scatterAsWildPositions, this)), this.rq.AddRoutineQueueItem(new RQIWaitForSeconds(this.scatterWildChangeDuration)), this.useScatterWildStates && (this.currentScatterWildState = ResultDisplayer.ScatterWildState.SCATTER))), this.rq.AddRoutineQueueItem(new RQITriggerEvent(Vars.Evt_CodeToData_ShowScattersWin)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnHideAllSymbolAnimation, null, this)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnAnimateListOfSymbols, this.scatterWinPositions, this)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.SymbolWinPlaySound, 1, this)), this.rq.AddRoutineQueueItem(new RQIWaitForSeconds(this.scatterDuration)), this.rq.AddRoutineQueueItem(new RQITriggerEvent(Vars.Evt_CodeToData_HideScattersWin))), this.mustAnimateScatters && !this.showFSWonBeforeResult && (this.animateScattersLoop || (this.mustAnimateScatters = !1), XT.GetBool(Vars.ScatterSymbolIsWild) && this.mustSetScattersAsWilds && (this.useScatterWildStates && this.currentScatterWildState != ResultDisplayer.ScatterWildState.WILD || (this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnSetScatterWildAsScatter, this.scatterPositions, this)), this.rq.AddRoutineQueueItem(new RQIWaitForSeconds(this.scatterWildChangeDuration)), this.useScatterWildStates && (this.currentScatterWildState = ResultDisplayer.ScatterWildState.SCATTER))), this.mustAnimateScattersWin && this.rq.AddRoutineQueueItem(new RQITriggerEvent(Vars.Evt_CodeToData_ShowScattersWin)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnAnimateListOfSymbols, this.scatterPositions, this)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.SymbolWinPlaySound, 1, this)), this.rq.AddRoutineQueueItem(new RQIWaitForSeconds(this.scatterDuration)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnHideAllSymbolAnimation, null, this)), this.mustAnimateScattersWin && this.rq.AddRoutineQueueItem(new RQITriggerEvent(Vars.Evt_CodeToData_HideScattersWin))), XT.GetObject(Vars.ReceivedFreeSpinsResponse).IsFreeSpin && this.mustAnimateMysteryScatters) {
-                this.mustAnimateMysteryScatters = !1;
-                for (e = 0; e < this.mysteryScatterPositions.length; e++) this.mysteryScatterPositions[e].length > 0 && (this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnSetMysteryScatterIDtoShow, this.mysteryScatterID[e], this)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnSetMysteryScatters, this.mysteryScatterPositions[e], this)), this.rq.AddRoutineQueueItem(new RQITriggerEvent(Vars.Evt_CodeToData_ShowMysteryScatterWin)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnAnimateListOfSymbols, this.mysteryScatterPositions[e], this)), this.rq.AddRoutineQueueItem(new RQIWaitForSeconds(this.mysteryScatterDuration)), this.rq.AddRoutineQueueItem(new RQITriggerEvent(Vars.Evt_CodeToData_HideMysteryScatterWin)));
+                for (this.mustAnimateMysteryScatters = !1, e = 0; e < this.mysteryScatterPositions.length; e++) this.mysteryScatterPositions[e].length > 0 && (this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnSetMysteryScatterIDtoShow, this.mysteryScatterID[e], this)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnSetMysteryScatters, this.mysteryScatterPositions[e], this)), this.rq.AddRoutineQueueItem(new RQITriggerEvent(Vars.Evt_CodeToData_ShowMysteryScatterWin)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnAnimateListOfSymbols, this.mysteryScatterPositions[e], this)), this.rq.AddRoutineQueueItem(new RQIWaitForSeconds(this.mysteryScatterDuration)), this.rq.AddRoutineQueueItem(new RQITriggerEvent(Vars.Evt_CodeToData_HideMysteryScatterWin)));
                 this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnHideAllSymbolAnimation, null, this))
             }
             if (this.mustAnimateBonuses && !this.showBonusWonBeforeResult && (this.animateBonusesLoop || (this.mustAnimateBonuses = !1), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnAnimateListOfSymbols, this.bonusPositions, this)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.SymbolWinPlaySound, 0, this)), this.rq.AddRoutineQueueItem(new RQIWaitForSeconds(this.bonusDuration)), this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnHideAllSymbolAnimation, null, this))), XT.GetBool(Vars.TruncateFSResponseDuringRespin)) {
@@ -40906,10 +40247,7 @@ ResultDisplayer.prototype = Object.create(XTLink.prototype), ResultDisplayer.pro
                 this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.SymbolWinPlaySound, 2, this)), this.symbolWinSoundPlayedOnce = !0, i = !1;
                 break
             } if (i && this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.SymbolWinPlaySound, -1, this)), this.applyDelayOnSymbols ? this.QueueAllLinesDelayed(null) : (this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnShowAllSymbolAnimation, null, this)), this.rq.AddRoutineQueueItem(new RQITriggerEvent(Vars.Evt_Internal_InjectRQIWhileShowingAllLines)), this.rq.AddRoutineQueueItem(new RQIWaitForSeconds(this.allLinesShowDuration))), this.showAllLinesVisual)
-        for (t = 0; t < this.curWinLines.length; t++) {
-            e = this.curWinLines[t].LineNumber;
-            this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnHideLine, e, this))
-        }
+        for (t = 0; t < this.curWinLines.length; t++) e = this.curWinLines[t].LineNumber, this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnHideLine, e, this));
     this.rq.AddRoutineQueueItem(new RQITriggerCallback(this.OnHideAllSymbolAnimation, null, this)), XT.GetDouble(Vars.TotalLinesWinReceived) > 0 && this.rq.AddRoutineQueueItem(new RQITriggerEvent(Vars.Evt_CodeToData_HideAllLinesWin)), this.rq.AddRoutineQueueItem(new RQIWaitForSeconds(this.transitionDuration))
 }, ResultDisplayer.prototype.QueueDisplayLinesOneByOne = function () {
     for (var t = 0; t < this.curWinLines.length; t++) {
@@ -41063,8 +40401,7 @@ ResultDisplayer.prototype = Object.create(XTLink.prototype), ResultDisplayer.pro
             var i = this.FindSymbolsWithID(this.mysteryScatterID[e]);
             if (i.length >= this.calculator.MysteryScatterMinCombo) {
                 var n = XT.GetObject(Vars.ReelsManagerObject).reels;
-                this.mustAnimateMysteryScatters = !0;
-                for (e = 0; e < i.length; ++e)
+                for (this.mustAnimateMysteryScatters = !0, e = 0; e < i.length; ++e)
                     for (var o = i[e] % n.length, s = 0; s < n[o].symbolHolders.length; ++s) this.mysteryScatterPositions[e].push(o + s * n.length)
             }
         }
@@ -41130,7 +40467,7 @@ ResultDisplayer.prototype = Object.create(XTLink.prototype), ResultDisplayer.pro
         if (XT.GetBool(Vars.Jurisdiction_FinishCountersBeforeSpin) && (XT.GetBool(Vars.LastWinIsCounting) || XT.GetBool(Vars.BalanceIsCounting)) && XT.GetInt(Vars.AutoplaySpinsLeft) < 0) return XT.TriggerEvent(Vars.Evt_Internal_FinalizeDisplayedWin), !1;
         XT.TriggerEvent(Vars.Evt_Internal_FinalizeDisplayedWin)
     }
-    return !window.SystemMessageManager.IsMessageOpen() && (!XT.GetBool(Vars.FeaturePurchaseWindowIsOpen) && (0 != XT.GetBool(Vars.CanSpin) && (!this.bonusRoundsMessageWindowIsOpened && (!this.prepareToOpenBonus && (!this.prepareToOpenFSBG && (!!this.isBonusRounds || (this.isRespin ? !(this.IsAutoRespin() && !(XT.GetBool(Vars.DifferentSpinRushedByTurboSpin) && XT.GetBool(Vars.IsDifferentSpinType) && XT.GetBool(Vars.ContinuousSpin))) : !ServerOptions.isReplay && !StageResult.SkipMoneyCheckOnSpin && null != window.UHT_STILLCHECKMONEYONSPIN && CoinManager.GetNextTotalBet() > XT.GetDouble(Vars.BalanceReceived) + XT.GetDouble(Vars.BonusBalanceReceived) && !XT.GetBool(Vars.Logic_IsFreeSpin) ? (XT.TriggerEvent(Vars.Evt_CodeToData_NotEnoughMoneyForSpin), XT.SetDouble(Vars.AlternativeWager, -1), UHTInterfaceBOSS.PostMessage("balanceTooLow"), !1) : JackpotsManager.I.hasActiveJp && !JackpotsManager.I.hasOpenJp ? (window.SystemMessageManager.ShowMessage(window.SystemMessageType.JackpotsAreClosed), !1) : (XT.SetDouble(Vars.AlternativeWager, -1), !XT.GetBool(Vars.SpinNeedsConfirmation) || (this.autoplayRequested && (this.mustStartAutoplayAfterConfirmSpinStart = !0), XT.TriggerEvent(Vars.Evt_CodeToData_ShowSpinConfirmationWindow), !1)))))))))
+    return !(window.SystemMessageManager.IsMessageOpen() || XT.GetBool(Vars.FeaturePurchaseWindowIsOpen) || 0 == XT.GetBool(Vars.CanSpin) || this.bonusRoundsMessageWindowIsOpened || this.prepareToOpenBonus || this.prepareToOpenFSBG || !this.isBonusRounds && (this.isRespin ? this.IsAutoRespin() && !(XT.GetBool(Vars.DifferentSpinRushedByTurboSpin) && XT.GetBool(Vars.IsDifferentSpinType) && XT.GetBool(Vars.ContinuousSpin)) : !ServerOptions.isReplay && !StageResult.SkipMoneyCheckOnSpin && null != window.UHT_STILLCHECKMONEYONSPIN && CoinManager.GetNextTotalBet() > XT.GetDouble(Vars.BalanceReceived) + XT.GetDouble(Vars.BonusBalanceReceived) && !XT.GetBool(Vars.Logic_IsFreeSpin) ? (XT.TriggerEvent(Vars.Evt_CodeToData_NotEnoughMoneyForSpin), XT.SetDouble(Vars.AlternativeWager, -1), UHTInterfaceBOSS.PostMessage("balanceTooLow"), 1) : JackpotsManager.I.hasActiveJp && !JackpotsManager.I.hasOpenJp ? (window.SystemMessageManager.ShowMessage(window.SystemMessageType.JackpotsAreClosed), 1) : (XT.SetDouble(Vars.AlternativeWager, -1), XT.GetBool(Vars.SpinNeedsConfirmation) && (this.autoplayRequested && (this.mustStartAutoplayAfterConfirmSpinStart = !0), XT.TriggerEvent(Vars.Evt_CodeToData_ShowSpinConfirmationWindow), 1))))
 };
 var BT_AUTOPLAY_FirstSent = !1;
 
@@ -41146,9 +40483,7 @@ StageResult.prototype.OnStartAutoplay = function () {
         XT.SetInt(Vars.AutoplaySpinsLeft, XT.GetInt(Vars.AutoplaySpinsRequested) - 1), XT.SetInt(Vars.AutoplaySpinsLeftDisplayed, XT.GetInt(Vars.AutoplaySpinsLeft)), this.mustSpin = !0
     } else this.autoplayRequested = !1
 }, StageResult.prototype.OnStopAutoplay = function () {
-    XT.SetInt(Vars.AutoplaySpinsLeft, -1), XT.SetBool(Vars.ForceDisableGambleSpinWin, !1), this.UpdateGambleButtonState();
-    XT.GetObject(Vars.BonusRoundsData);
-    this.isBonusRounds ? VSGameStateManager.ChangeTo(VSGameState.ResultBonusRounds) : VSGameStateManager.ChangeTo(VSGameState.Result)
+    XT.SetInt(Vars.AutoplaySpinsLeft, -1), XT.SetBool(Vars.ForceDisableGambleSpinWin, !1), this.UpdateGambleButtonState(), XT.GetObject(Vars.BonusRoundsData), this.isBonusRounds ? VSGameStateManager.ChangeTo(VSGameState.ResultBonusRounds) : VSGameStateManager.ChangeTo(VSGameState.Result)
 }, StageResult.prototype.IsJackpotWin = function () {
     return XT.GetBool(Vars.FromServer_IsJackpotWin) && !this.isJackpotWinOnScreen && (XT.GetBool(Vars.WaitInResultForBigWin) || XT.GetBool(Vars.LastWinIsCounting) || (this.isJackpotWinOnScreen = !0)), XT.GetBool(Vars.FromServer_IsJackpotWin)
 }, StageResult.prototype.OnJackpotCollected = function () {
@@ -41162,15 +40497,7 @@ StageResult.prototype.OnStartAutoplay = function () {
             if (!XT.GetBool(Vars.WaitInResultForBigWin) && !XT.GetBool(Vars.LastWinIsCounting)) return void(this.mustSpin = !0);
             XT.TriggerEvent(Vars.Evt_Internal_ResultDisplayer_DoLoop)
         }
-        if (XT.GetInt(Vars.AutoplaySpinsLeft) >= 0) {
-            if (XT.GetBool(Vars.WaitInResultForBigWin) || XT.GetBool(Vars.LastWinIsCounting)) XT.TriggerEvent(Vars.Evt_Internal_ResultDisplayer_DoLoop);
-            else if (this.CanSpin()) this.mustSpin = !0;
-            else if (this.canAutoSpinAfterResultMinimumTime = XT.GetBool(Vars.CanSpinAfterResultMinimumTime), !this.canAutoSpinAfterResultMinimumTime) {
-                XT.SetInt(Vars.AutoplaySpinsLeft, -1);
-                XT.GetObject(Vars.BonusRoundsData);
-                this.isBonusRounds ? VSGameStateManager.ChangeTo(VSGameState.ResultBonusRounds) : VSGameStateManager.ChangeTo(VSGameState.Result)
-            }
-        } else XT.GetBool(Vars.WaitInResultForBigWin) || XT.GetBool(Vars.LastWinIsCounting) || XT.TriggerEvent(Vars.Evt_Internal_StartIdleSpinCounter), XT.TriggerEvent(Vars.Evt_Internal_ResultDisplayer_DoLoop)
+        XT.GetInt(Vars.AutoplaySpinsLeft) >= 0 ? XT.GetBool(Vars.WaitInResultForBigWin) || XT.GetBool(Vars.LastWinIsCounting) ? XT.TriggerEvent(Vars.Evt_Internal_ResultDisplayer_DoLoop) : this.CanSpin() ? this.mustSpin = !0 : (this.canAutoSpinAfterResultMinimumTime = XT.GetBool(Vars.CanSpinAfterResultMinimumTime), this.canAutoSpinAfterResultMinimumTime || (XT.SetInt(Vars.AutoplaySpinsLeft, -1), XT.GetObject(Vars.BonusRoundsData), this.isBonusRounds ? VSGameStateManager.ChangeTo(VSGameState.ResultBonusRounds) : VSGameStateManager.ChangeTo(VSGameState.Result))) : (XT.GetBool(Vars.WaitInResultForBigWin) || XT.GetBool(Vars.LastWinIsCounting) || XT.TriggerEvent(Vars.Evt_Internal_StartIdleSpinCounter), XT.TriggerEvent(Vars.Evt_Internal_ResultDisplayer_DoLoop))
     }
 }, StageResult.prototype.OnBonusRoundsContinuePressed = function () {
     XT.TriggerEvent(Vars.Evt_CodeToData_CloseOtherOpenedBonusRoundsWindows), XT.SetBool(Vars.CanSpin, !0);
@@ -41279,13 +40606,10 @@ VS_SoundLogic.prototype = Object.create(XTLink.prototype), VS_SoundLogic.prototy
                     handle: this.clipsReelSpin[t].handler
                 };
                 this.sndManager.StopLoopingSound(e), this.clipsReelSpin[t].handler = e.handle, this.clipsReelSpin[t].handler = this.sndManager.PlayLooping(this.clipsReelSpin[t].GetClip())
-            } for (var i = 0; i < this.numberOfReels; i++)
-            if (this.reelsStartingSounds[i].clipsReelMusicExcited.IsPlaying()) {
-                e = {
-                    handle: this.reelsStartingSounds[i].clipsReelMusicExcited.handler
-                };
-                this.sndManager.StopLoopingSound(e), this.reelsStartingSounds[i].clipsReelMusicExcited.handler = e.handle, this.reelsStartingSounds[i].clipsReelMusicExcited.handler = this.sndManager.PlayLooping(this.reelsStartingSounds[i].clipsReelMusicExcited.GetClip())
-            } this.UpdateBackgroundMusic()
+            } for (var i = 0; i < this.numberOfReels; i++) this.reelsStartingSounds[i].clipsReelMusicExcited.IsPlaying() && (e = {
+            handle: this.reelsStartingSounds[i].clipsReelMusicExcited.handler
+        }, this.sndManager.StopLoopingSound(e), this.reelsStartingSounds[i].clipsReelMusicExcited.handler = e.handle, this.reelsStartingSounds[i].clipsReelMusicExcited.handler = this.sndManager.PlayLooping(this.reelsStartingSounds[i].clipsReelMusicExcited.GetClip()));
+        this.UpdateBackgroundMusic()
     }
 }, VS_SoundLogic.prototype.OnSoundLogicReelPositions = function (t) {
     this.numberOfReels = t.length, this.reelsExcited = []
@@ -41374,8 +40698,7 @@ VS_SoundLogic.prototype = Object.create(XTLink.prototype), VS_SoundLogic.prototy
                 if ((0 != (i = this.reelsStoppingSounds[this.reelIndex].reelStopWithSpecialSymbol[t].specialSymbolId) || this.stillPossibleWinComboBonus[this.reelIndex]) && (1 != i || this.stillPossibleWinComboScatter[this.reelIndex]) && (2 != i || this.stillPossibleWinComboWild[this.reelIndex]) && (!(i > 2) || this.stillPossibleWinComboPerSymbol[this.reelIndex][i]))
                     for (e = 0; e < this.resultSymbols[this.reelIndex].length; e++)
                         if (i == this.resultSymbols[this.reelIndex][e]) return void(this.reelsExcited[this.reelIndex] ? this.PlayReelStopSound(this.reelsStoppingSounds[this.reelIndex].reelStopWithSpecialSymbol[t].GetExcitedClip()) : this.PlayReelStopSound(this.reelsStoppingSounds[this.reelIndex].reelStopWithSpecialSymbol[t].GetClip()));
-        if (this.reelsExcited[this.reelIndex]) XT.GetObject(Vars.ReelsWinInfo)[this.reelIndex] ? this.PlayReelStopSound(this.reelsStoppingSounds[this.reelIndex].reelStopExcitedWin.GetClip()) : this.PlayReelStopSound(this.reelsStoppingSounds[this.reelIndex].reelStopExcitedLose.GetClip());
-        else this.PlayReelStopSound(this.reelsStoppingSounds[this.reelIndex].reelStopDefault.GetClip())
+        this.reelsExcited[this.reelIndex] ? XT.GetObject(Vars.ReelsWinInfo)[this.reelIndex] ? this.PlayReelStopSound(this.reelsStoppingSounds[this.reelIndex].reelStopExcitedWin.GetClip()) : this.PlayReelStopSound(this.reelsStoppingSounds[this.reelIndex].reelStopExcitedLose.GetClip()) : this.PlayReelStopSound(this.reelsStoppingSounds[this.reelIndex].reelStopDefault.GetClip())
     }
 }, VS_SoundLogic.prototype.OnSoundLogicReelStopEnded = function () {
     this.reelIndex = XT.GetInt(Vars.LastStopEndedReelIndex);
@@ -41548,11 +40871,8 @@ VS_SoundLogic.prototype = Object.create(XTLink.prototype), VS_SoundLogic.prototy
                 c = this.isDisplayingCoins && XT.GetBool(Vars.HasCoins) ? CoinManager.ConvertMoneyToCoins(t[n[h]] * i).toString() : LocaleManager.FormatValue(t[n[h]] * i, this.formatOptions), n[h] == o[h] ? e += (this.showOnlyValue ? "" : ("" == e ? "" : "\n") + (n[h] + 1) + this.valueDelimiter) + c : this.ignoreRightUpperRange && !this.updatedUpperRange ? (this.updatedUpperRange = !0, e += (this.showOnlyValue ? "" : ("" == e ? "" : "\n") + (o[h] + 1) + this.rightUpperRangeReplacer + this.valueDelimiter) + c) : e += (this.showOnlyValue ? "" : ("" == e ? "" : "\n") + (o[h] + 1) + this.rangeDelimiter + (n[h] + 1) + this.valueDelimiter) + c
             }
     } else
-        for (r = t.length - 1; r >= 0; r--)
-            if (t[r] > 0) {
-                c = "";
-                c = this.isDisplayingCoins && XT.GetBool(Vars.HasCoins) ? CoinManager.ConvertMoneyToCoins(t[r] * i).toString() : LocaleManager.FormatValue(t[r] * i, this.formatOptions), e += (this.showOnlyValue ? "" : ("" == e ? "" : "\n") + (r + 1) + " - ") + c
-            } return e
+        for (r = t.length - 1; r >= 0; r--) t[r] > 0 && (c = "", c = this.isDisplayingCoins && XT.GetBool(Vars.HasCoins) ? CoinManager.ConvertMoneyToCoins(t[r] * i).toString() : LocaleManager.FormatValue(t[r] * i, this.formatOptions), e += (this.showOnlyValue ? "" : ("" == e ? "" : "\n") + (r + 1) + " - ") + c);
+    return e
 }, goog.require("UHT.XTLink"), RTPInfoSelector.prototype = Object.create(XTLink.prototype), RTPInfoSelector.prototype.constructor = RTPInfoSelector, RTPInfoSelector.prototype.XTRegisterCallbacks = function () {
     XT.RegisterCallbackEvent(Vars.Evt_Internal_GameInit, this.OnGameInit, this)
 }, RTPInfoSelector.prototype.OnGameInit = function () {
@@ -41951,8 +41271,7 @@ var CustomMsgManager = {
                         return !1
                     }
                 }
-                SystemMessageManager.canShowMessage = !1;
-                for (s = i.length - 1; s >= 0; --s) SystemMessageManager.ShowMessage(i[s].id, !1, i[s].text, null, i[s]);
+                for (SystemMessageManager.canShowMessage = !1, s = i.length - 1; s >= 0; --s) SystemMessageManager.ShowMessage(i[s].id, !1, i[s].text, null, i[s]);
                 SystemMessageManager.canShowMessage = !0, SystemMessageManager.InternalShowMessage()
             }
         }
@@ -42285,11 +41604,10 @@ var SystemMessageManager = {
         },
         LoadLocalizedMessages: function () {
             var t = JSON.parse(String(UHT_SYSTEM_MESSAGES).replace(/\n/g, "<br>")),
-                e = "en",
-                i = UHT_CONFIG.LANGUAGE;
-            null != t[i] ? (SystemMessageManager.locale = i, SystemMessageManager.localizedTexts = SystemMessageManager.Merge(t.en, t[i])) : (SystemMessageManager.locale = e, SystemMessageManager.localizedTexts = t.en), SystemMessageManager.initialized = !0, UHT_SYSTEM_MESSAGES = null;
-            var n = document.getElementById("DeferredLoadingText");
-            null != n && (n.innerHTML = SystemMessageManager.LocalizedText("DeferredLoading"))
+                e = UHT_CONFIG.LANGUAGE;
+            null != t[e] ? (SystemMessageManager.locale = e, SystemMessageManager.localizedTexts = SystemMessageManager.Merge(t.en, t[e])) : (SystemMessageManager.locale = "en", SystemMessageManager.localizedTexts = t.en), SystemMessageManager.initialized = !0, UHT_SYSTEM_MESSAGES = null;
+            var i = document.getElementById("DeferredLoadingText");
+            null != i && (i.innerHTML = SystemMessageManager.LocalizedText("DeferredLoading"))
         },
         Merge: function (t, e) {
             var i = {};
@@ -42392,11 +41710,10 @@ SystemMessageManager.ShowMessage = function (t, e, i, n, o) {
             var n = (i = t.shownMessages[t.shownMessages.length - 1]).id;
             if (1 == i.nonIntrusive) t.TriggerMessageClosed(), XT.SetObject(CustomNotificationVars.CustomNotification, i), XT.TriggerEvent(CustomNotificationVars.Evt_Internal_ShowNonIntrusiveNotification);
             else {
-                if (!UHT_CONFIG.MINI_MODE) XT.SetObject(CustomNotificationVars.CustomNotification, i), XT.TriggerEvent(CustomNotificationVars.Evt_Internal_ShowIntrusiveNotification);
-                else {
+                if (UHT_CONFIG.MINI_MODE) {
                     if (!t.msgFontLoaded[n]) return void setTimeout(t.InternalShowMessage, 100);
                     e = ["sys-msg-root-visible", n].join(" ")
-                }
+                } else XT.SetObject(CustomNotificationVars.CustomNotification, i), XT.TriggerEvent(CustomNotificationVars.Evt_Internal_ShowIntrusiveNotification);
                 t.msgOpenWasTriggered || (UHTEventBroker.Trigger(UHTEventBroker.Type.Game, JSON.stringify({
                     common: "EVT_MESSAGE_OPENED",
                     args: null
@@ -42643,14 +41960,11 @@ setTimeout(CheckTimeout, 6e4), IPhone8Helper.prototype = Object.create(IPhone7He
 };
 var FullScreenIPhoneHelper = {
     Init: function () {
-        if (!UHT_FRAME && ("iPhone" == UHT_UA_INFO.device.model && "Mobile Safari" == UHT_UA_INFO.browser.name))
+        if (!UHT_FRAME && "iPhone" == UHT_UA_INFO.device.model && "Mobile Safari" == UHT_UA_INFO.browser.name)
             if (7 == _number.otoui(UHT_UA_INFO.os.version)) var t = new IPhone7Helper;
-            else {
-                t = new IPhone8Helper;
-                window.addEventListener("resize", (function () {
-                    t.ResizeHandler.apply(t, arguments)
-                }), !1), t.ResizeHandler()
-            }
+            else t = new IPhone8Helper, window.addEventListener("resize", (function () {
+                t.ResizeHandler.apply(t, arguments)
+            }), !1), t.ResizeHandler()
     },
     USING_NEW_IMPLEMENTATION: !0
 };
