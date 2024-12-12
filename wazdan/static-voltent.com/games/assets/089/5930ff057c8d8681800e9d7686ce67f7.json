@@ -1,0 +1,1328 @@
+{
+  "a": [
+    {
+      "l": "de",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Versuchen Sie das Glücksspiel-Feature"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Versuchen Sie 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Warten Sie nicht auf das Hold & Collect™ Bonus Game - kaufen Sie es",
+            "o": "Warten Sie nicht auf den Hold the Jackpot™ Bonus Game - kaufen Sie es"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "5 Bonus-Symbole in der mittleren Reihe lösen das Hold & Collect™ Bonus Game aus",
+            "o": "5 Bonus-Symbole in der mittleren Reihe lösen das Hold the Jackpot™ Bonus Game aus"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Gewinnen Sie bis zum <!--dtext:winUpTo--> Einsatz!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "Noch <!--dtext:bonusGrandCount--> Bonus-Symbole bis zum GRAND Bonus",
+            "o": "Noch <!--dtext:bonusGrandCount--> Bonus-Symbole bis zum GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "no",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Prøv Gamble Funksjonen"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Prøv 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Ikke vent på Hold & Collect™ Bonus Game - kjøp det",
+            "o": "Ikke vent på Hold the Jackpot™ Bonus Game - kjøp det"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Treff 5 Bonus symboler på midterste rad for å utløse Hold & Collect™ Bonus Game",
+            "o": "Treff 5 Bonus symboler på midterste rad for å utløse Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Vinn opp til <!--dtext:winUpTo--> din innsats!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> flere Bonus symboler til GRAND Bonus",
+            "o": "<!--dtext:bonusGrandCount--> flere Bonus symboler til GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "ru",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Попробуйте функцию Gamble"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Испытайте 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Не ждите, пока выпадет Hold & Collect™ Bonus Game - купите его",
+            "o": "Не ждите, пока выпадет Hold the Jackpot™ Bonus Game - купите его"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "При выпадении 5 символов Bonus в среднем ряду активируется Hold & Collect™ Bonus Game",
+            "o": "При выпадении 5 символов Bonus в среднем ряду активируется Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Выиграйте до <!--dtext:winUpTo--> от суммы ставки!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "Еще <!--dtext:bonusGrandCount--> символов Bonus до GRAND Bonus",
+            "o": "Еще <!--dtext:bonusGrandCount--> символов Bonus до GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "fi",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Kokeile Uhkapeliominaisuutta"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Kokeile 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Älä odota Hold & Collect™ Bonus Gamea - vaan osta se",
+            "o": "Älä odota Hold the Jackpot™ Bonus Gamea - vaan osta se"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Vedä 5 Bonus -symbolia keskiriville aktivoidaksesi Hold & Collect™ Bonus Gamen",
+            "o": "Vedä 5 Bonus -symbolia keskiriville aktivoidaksesi Hold the Jackpot™ Bonus Gamen"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Voita panoksesi jopa <!--dtext:winUpTo-->-kertaisena!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> bonus-symbolia lisää GRAND Bonukseen",
+            "o": "<!--dtext:bonusGrandCount--> Bonus-symbolia lisää GRAND Jackpottiin"
+          }
+        }
+      ]
+    },
+    {
+      "l": "pt",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Experimente o Modo Aposta"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Experimente 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Não espere pelo Hold & Collect™ Bonus Game - compre-o",
+            "o": "Não espere pelo Hold the Jackpot™ Bonus Game - compre-o"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Obtenha 5 símbolos Bonus na linha central para ativar o Hold & Collect™ Bonus Game",
+            "o": "Obtenha 5 símbolos Bonus na linha central para ativar o Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Ganhe até <!--dtext:winUpTo--> a sua aposta!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "Mais <!--dtext:bonusGrandCount--> símbolos Bonus até ao GRAND Bonus",
+            "o": "Mais <!--dtext:bonusGrandCount--> símbolos Bonus até ao GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "bg",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Опитайте Бонус играта \"Рискувай\""
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Опитайте 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Не чакайте да спечелите Hold & Collect™ Bonus Game - купете я",
+            "o": "Не чакайте да спечелите Hold the Jackpot™ Bonus Game - купете я"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Изтеглете 5 символа Bonus на средния ред, за да активирате Hold & Collect™ Bonus Game",
+            "o": "Изтеглете 5 символа Bonus на средния ред, за да активирате Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Спечелете до <!--dtext:winUpTo--> залога!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "Още <!--dtext:bonusGrandCount--> символа Bonus до спечелване на GRAND Bonus",
+            "o": "Още <!--dtext:bonusGrandCount--> символа Bonus до спечелване на GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "lt",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Išbandykite Lošimo Funkcija"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Išbandykite 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Nelaukite Hold & Collect™ Bonus Game - įsigykite jį",
+            "o": "Nelaukite Hold the Jackpot™ Bonus Game - įsigykite jį"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Išsukite 5 Bonus simbolius vidurinėje eilutėje, kad suaktyvintumėte Hold & Collect™ Bonus Game",
+            "o": "Išsukite 5 Bonus simbolius vidurinėje eilutėje, kad suaktyvintumėte Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Laimėkite iki <!--dtext:winUpTo--> savo statymo!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> Bonus simbolių iki GRAND Bonus",
+            "o": "<!--dtext:bonusGrandCount--> Bonus simbolių iki GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "hr",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Iskušajte igru riskiranja"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Iskušajte 3 različite razine postojanosti Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Ne čekajte bonus igru Hold & Collect™ Bonus Game - kupite je",
+            "o": "Ne čekajte bonus igru Hold the Jackpot™ Bonus Game - kupite je"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Sakupite 5 Bonus simbola na srednjem retku za aktivaciju bonus igre Hold & Collect™ Bonus Game",
+            "o": "Sakupite 5 Bonus simbola na srednjem retku za aktivaciju bonus igre Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Osvojite do <!--dtext:winUpTo--> iznos uloga!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "Još <!--dtext:bonusGrandCount--> Bonus simbola do GRAND Bonusa",
+            "o": "Još <!--dtext:bonusGrandCount--> Bonus simbola do GRAND Jackpota"
+          }
+        }
+      ]
+    },
+    {
+      "l": "lv",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Izmēģiniet Azartspēles Funkcija"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Izmēģiniet 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Negaidiet līdz Hold & Collect™ Bonus Game - nopērciet to",
+            "o": "Negaidiet līdz Hold the Jackpot™ Bonus Game papildspēles iegūšanai - nopērciet to"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Iegūstiet 5 Bonus simbolus uz vidējās rindas, lai aktivizētu Hold & Collect™ Bonus Game",
+            "o": "Iegūstiet 5 Bonus simbolus uz vidējās rindas, lai aktivizētu Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Laimē līdz pat <!--dtext:winUpTo--> savu likmi!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> vēl Bonus simboli līdz GRAND Bonus",
+            "o": "<!--dtext:bonusGrandCount--> vēl Bonus simboli līdz GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "fr",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Essayez la Fonction Mettre en jeu"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Essayez 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "N'attendez pas le Hold & Collect™ Bonus Game - achetez-les",
+            "o": "N'attendez pas le Hold the Jackpot™ Bonus Game - achetez-le"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Obtenez 5 symboles Bonus sur la rangée centrale pour déclencher le Hold & Collect™ Bonus Game",
+            "o": "Obtenez 5 symboles Bonus sur la rangée centrale pour déclencher le Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Gagnez jusqu'à <!--dtext:winUpTo--> votre mise !"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> symboles Bonus supplémentaires pour le GRAND Bonus",
+            "o": "<!--dtext:bonusGrandCount--> symboles Bonus supplémentaires pour le GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "hu",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Próbálja ki a Kockáztatás Funkciót"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Próbáljon ki 3 Volatility Levels™-t"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Ne várjon a Hold & Collect™ Bonus Game-re - vásárolja meg",
+            "o": "Ne várjon a Hold the Jackpot™ Bonus Game-re - vásárolja meg"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "A Hold & Collect™ Bonus Game aktiválásához pörgessen ki 5 Bonus szimbólumot a középső sorba",
+            "o": "A Hold the Jackpot™ Bonus Game aktiválásához pörgessen ki 5 Bonus szimbólumot a középső sorba"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Nyerje meg akár a tét <!--dtext:winUpTo-->-szeresét!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "További <!--dtext:bonusGrandCount--> Bonus szimbólum a GRAND Bonus-hoz",
+            "o": "További <!--dtext:bonusGrandCount--> Bonus szimbólum a GRAND Jackpot-hoz"
+          }
+        }
+      ]
+    },
+    {
+      "l": "hy",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Փորձեք դրամախաղի առանձնահատկությունը"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Փորձեք 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Մի՛ սպասեք Hold & Collect™ Bonus Game՝ գնե՛ք այն",
+            "o": "Մի՛ սպասեք Hold the Jackpot™ Bonus Game՝ գնե՛ք այն"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Պատկերեք 5 Bonus նշանները միջին շարքում, որպեսզի գործարկեք Hold & Collect™ Bonus Game",
+            "o": "Պատկերեք 5 Bonus նշանները միջին շարքում, որպեսզի գործարկեք Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Շահե՛ք մինչև <!--dtext:winUpTo--> Ձեր խաղադրույքը"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> ավել Bonus նշաններ՝ GRAND Bonus համար",
+            "o": "<!--dtext:bonusGrandCount--> ավել Bonus նշաններ՝ GRAND Jackpot համար"
+          }
+        }
+      ]
+    },
+    {
+      "l": "uk",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Спробуйте функцію розиграшу"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Спробуйте 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "o": "Не чекайте на Hold the Jackpot™ Bonus, купіть його"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Отримайте 5 симв. Bonus на центральному рядку, щоб запустити Hold & Collect™ Bonus Game",
+            "o": "Отримайте 5 симв. Bonus на центральному рядку, щоб запустити Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Виграйте до <!--dtext:winUpTo--> від вашої ставки!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "o": "Ще <!--dtext:bonusGrandCount--> симв. Bonus до GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "mk",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Испробај ја функцијата Коцкање"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Испробај 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Извлечете 5 симболи Bonus на средниот ред за да ја активирате Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Освојте до <!--dtext:winUpTo--> од вашиот облог!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "Уште <!--dtext:bonusGrandCount--> симболи Bonus до GRAND Bonus",
+            "o": "Уште <!--dtext:bonusGrandCount--> симболи Bonus до GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "sr",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Probajte Mogućnost Kockanje"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Isprobajte 3 nivoa Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Ne čekajte na igru Hold & Collect™ Bonus Game - kupite je",
+            "o": "Ne čekajte na igru Hold the Jackpot™ Bonus Game - kupite je"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Izvucite 5 Bonus simbol(a) u srednjem redu da biste aktivirali igru Hold & Collect™ Bonus Game",
+            "o": "Izvucite 5 Bonus simbol(a) u srednjem redu da biste aktivirali igru Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Osvojite do <!--dtext:winUpTo--> uloga!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "Još <!--dtext:bonusGrandCount--> Bonus simbol(a) do GRAND Bonusa",
+            "o": "Još <!--dtext:bonusGrandCount--> Bonus simbol(a) do GRAND Jackpota"
+          }
+        }
+      ]
+    },
+    {
+      "l": "sv",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Prova Chansfunktion"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Prova 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Vänta inte på Hold & Collect™ Bonus Game - köp den",
+            "o": "Vänta inte på Hold the Jackpot™ Bonus Game - köp den"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Få 5 Bonus-symboler på raden i mitten för att aktivera Hold & Collect™ Bonus Game",
+            "o": "Få 5 Bonus-symboler på raden i mitten för att aktivera Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Vinn upp till <!--dtext:winUpTo--> din insats!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> Bonus-symboler till för att nå GRAND Bonus",
+            "o": "<!--dtext:bonusGrandCount--> Bonus-symboler till för att nå GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "el",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Δοκιμάστε τη λειτουργία Ρίσκο"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Δοκιμάστε 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Μην περιμένετε για το Hold & Collect™ Bonus Game - αγοράστε το",
+            "o": "Μην περιμένετε για το Hold the Jackpot™ Bonus Game - αγοράστε το"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Πετύχετε 5 σύμβολα Bonus στη μεσαία σειρά για να ενεργοποιήσετε το Hold & Collect™ Bonus Game",
+            "o": "Πετύχετε 5 σύμβολα Bonus στη μεσαία σειρά για να ενεργοποιήσετε το Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Κερδίστε έως και <!--dtext:winUpTo--> το στοίχημά σας!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> ακόμα σύμβολα Bonus για το GRAND Bonus",
+            "o": "<!--dtext:bonusGrandCount--> ακόμα σύμβολα Bonus για το GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "en",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Try the Gamble Feature"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Try 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Don't wait for Hold & Collect™ Bonus Game - buy it",
+            "o": "Don't wait for Hold the Jackpot™ Bonus Game - buy it"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Draw 5 Bonus symbols on the middle row to trigger Hold & Collect™ Bonus Game",
+            "o": "Draw 5 Bonus symbols on the middle row to trigger Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Win up to <!--dtext:winUpTo--> your bet!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> more Bonus symbols to GRAND Bonus",
+            "o": "<!--dtext:bonusGrandCount--> more Bonus symbols to GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "it",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Prova la Funzione Rischio"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Prova 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Non attendere Hold & Collect™ Bonus Game - acquistalo",
+            "o": "Non attendere Hold the Jackpot™ Bonus Game - acquistalo"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Estrai 5 simboli Bonus sulla fila centrale per attivare Hold & Collect™ Bonus Game",
+            "o": "Estrai 5 simboli Bonus sulla fila centrale per attivare Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Vinci fino a <!--dtext:winUpTo--> la puntata!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "Hai bisogno di altri <!--dtext:bonusGrandCount--> simboli Bonus per ottenere GRAND Bonus",
+            "o": "Hai bisogno di altri <!--dtext:bonusGrandCount--> simboli Bonus per ottenere GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "zh",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "尝试赌博功能"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "尝试3种Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "不用苦等Hold & Collect™ Bonus Game - 直接购买",
+            "o": "不用苦等Hold the Jackpot™ Bonus Game - 直接购买"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "在中间行上出现5个Bonus符号可触发Hold & Collect™ Bonus Game",
+            "o": "在中间行上出现5个Bonus符号可触发Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "赢取最多<!--dtext:winUpTo-->赌注！"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "额外<!--dtext:bonusGrandCount-->个bonus符号可获GRAND Bonus",
+            "o": "额外<!--dtext:bonusGrandCount-->个Bonus符号可获GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "es",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Pruebe la Función Arriesgar"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Pruebe 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "No espere al Hold & Collect™ Bonus Game - cómprelo",
+            "o": "No espere al Hold the Jackpot™ Bonus Game - cómprelo"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Obtenga 5 símbolos Bonus en la fila central para originar el Hold & Collect™ Bonus Game",
+            "o": "Obtenga 5 símbolos Bonus en la fila central para originar el Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "¡Gane hasta <!--dtext:winUpTo--> su apuesta!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> símbllos Bonus más para el GRAND Bonus",
+            "o": "<!--dtext:bonusGrandCount--> símbolos Bonus más para el GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "et",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Proovi Riskifunktsiooni"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Proovi 3 Volatility Levels™ taset"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Ära oota vooru Hold & Collect™ Bonus Game - osta see",
+            "o": "Ära oota vooru Hold the Jackpot™ Bonus Game - osta see"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Vooru Hold & Collect™ Bonus Game teenimiseks pead spinnima keskmisele reale vähemalt 5 Bonus-sümbolit",
+            "o": "Vooru Hold the Jackpot™ Bonus Game teenimiseks pead spinnima keskmisele reale vähemalt 5 Bonus-sümbolit"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Võid võita kuni <!--dtext:winUpTo--> panuse!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "Auhinna GRAND Bonus teenimiseks spinni veel <!--dtext:bonusGrandCount--> sümbolit Bonus",
+            "o": "Auhinna GRAND Jackpot teenimiseks spinni veel <!--dtext:bonusGrandCount--> sümbolit Bonus"
+          }
+        }
+      ]
+    },
+    {
+      "l": "cs",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Zkuste funkci Riskování"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Zkuste 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Nečekejte na Hold & Collect™ Bonus Game - kupte si ji",
+            "o": "Nečekejte na Hold the Jackpot™ Bonus Game - kupte si ji"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Vylosováním 5 symbolů Bonus v prostřední řadě spustíte Hold & Collect™ Bonus Game",
+            "o": "Vylosováním 5 symbolů Bonus v prostřední řadě spustíte Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Vyhrajte až <!--dtext:winUpTo--> své sázky!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> další symboly Bonus pro GRAND Bonus",
+            "o": "<!--dtext:bonusGrandCount--> další bosymboly Bonus pro GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "ja",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "ギャンブル機能をお試しください"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "3つのVolatility Levels™を試す"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Hold & Collect™ Bonus Gameのチャンスを待たずに、購入しましょう",
+            "o": "Hold the Jackpot™ Bonus Gameのチャンスを待たずに、購入しましょう"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "中列でBonusシンボルを5個揃えると、HHHold & Collect™ Bonus Game発されます",
+            "o": "中列でBonusシンボルを5個揃えると、Hold the Jackpot™ Bonus Gameが誘発されます"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "最大<!--dtext:winUpTo-->ベットを獲得！"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "さらに<!--dtext:bonusGrandCount-->個のBonusシンボルでGRAND Bonusを獲得",
+            "o": "さらに<!--dtext:bonusGrandCount-->個のBonusシンボルでGRAND Jackpotを獲得"
+          }
+        }
+      ]
+    },
+    {
+      "l": "pl",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Wypróbuj Grę Ryzyka"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Wypróbuj 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Nie czekaj na Hold & Collect™ Bonus Game - kup go!",
+            "o": "Nie czekaj na Hold the Jackpot™ Bonus Game - kup go!"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Wylosuj 5 symbol(i/e) Bonus w środkowym rzędzie, aby aktywować Hold & Collect™ Bonus Game",
+            "o": "Wylosuj 5 symbol(i/e) Bonus w środkowym rzędzie, aby aktywować Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Wygraj nawet <!--dtext:winUpTo--> stawki!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "Wylosuj jeszcze <!--dtext:bonusGrandCount--> symbol(i/e) BONUS, aby wygrać GRAND Bonus",
+            "o": "Wylosuj jeszcze <!--dtext:bonusGrandCount--> symbol(i/e) BONUS, aby wygrać GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "da",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Prøv Gamblefunktion"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Prøv 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Vent ikke på Hold & Collect™ Bonus Game - køb den!",
+            "o": "Vent ikke på Hold the Jackpot™ Bonus Game - køb den"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Træk 5 Bonus-symboler på midterrækken for at udløse Hold & Collect™ Bonus Game",
+            "o": "Træk 5 Bonus-symboler på midterrækken for at udløse Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Vind op til <!--dtext:winUpTo--> din indsats!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> yderligere Bonus-symboler for GRAND Bonus",
+            "o": "<!--dtext:bonusGrandCount--> yderligere Bonus-symboler for GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "ro",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Încercați Funcția Pariere"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Încercați 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Nu mai așteptați Hold & Collect™ Bonus Game - cumpărați-l",
+            "o": "Nu mai așteptați Hold the Jackpot™ Bonus Game - cumpărați-l"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Extrageți 5 simboluri Bonus pe rândul din mijloc pentru a activa Hold & Collect™ Bonus Game",
+            "o": "Extrageți 5 simboluri Bonus pe rândul din mijloc pentru a activa Hold the Jackpot™ Bonus Game"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Câștigați până la de <!--dtext:winUpTo--> miza dvs.!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "Încă <!--dtext:bonusGrandCount--> simboluri Bonus până la GRAND Bonus",
+            "o": "Încă <!--dtext:bonusGrandCount--> simboluri Bonus până la GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "nl",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Probeer de gokfeature"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "Probeer 3 Volatility Levels™"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Wacht niet op Hold & Collect™ Bonus Game - koop ze",
+            "o": "Wacht niet op Hold the Jackpot™ Bonus Game - koop ze"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Laat 5 Bonus -symbolen op de middelste rij vallen om Hold & Collect™ Bonus Game te activeren",
+            "o": "Laat 5 Bonus-symbolen op de middelste rij vallen om Hold the Jackpot™ Bonus Game te activeren"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Win tot <!--dtext:winUpTo--> uw inzet!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "<!--dtext:bonusGrandCount--> meer Bonus-symbolen voor GRAND Bonus",
+            "o": "<!--dtext:bonusGrandCount--> meer Bonus-symbolen voor GRAND Jackpot"
+          }
+        }
+      ]
+    },
+    {
+      "l": "tr",
+      "e": [
+        {
+          "c": "gambling",
+          "v": {
+            "o": "Bahis Etkinliği deneyin"
+          },
+          "ex": "uk_mode"
+        },
+        {
+          "c": "volatility",
+          "v": {
+            "o": "3 Volatility Levels™ Deneyin"
+          }
+        },
+        {
+          "c": "shop",
+          "v": {
+            "lm_de": "Hold & Collect™ Bonus Game'i beklemeyin - satın alın",
+            "o": "Hold the Jackpot™ Bonus Game'i beklemeyin - satın alın"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "lm_de": "Hold & Collect™ Bonus Game'i tetiklemek için orta sırada 5 Bonus sembolü yakalayın",
+            "o": "Hold the Jackpot™ Bonus Game'i tetiklemek için orta sırada 5 Bonus sembolü yakalayın"
+          }
+        },
+        {
+          "c": "normal",
+          "v": {
+            "o": "Bahsinizin <!--dtext:winUpTo--> katına kadar kazanın!"
+          },
+          "ex": "bg_mode"
+        },
+        {
+          "c": "free_spins",
+          "v": {
+            "lm_de": "GRAND Bonus'a <!--dtext:bonusGrandCount--> daha fazla Bonus sembolü",
+            "o": "GRAND Jackpot için <!--dtext:bonusGrandCount--> daha fazla Bonus sembolü"
+          }
+        }
+      ]
+    }
+  ]
+}
