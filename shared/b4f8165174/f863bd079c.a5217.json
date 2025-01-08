@@ -1,0 +1,16 @@
+{
+    "CommonRulesShared": {
+        "InGameCurrency": "La divisa dentro del juego es %{configuredValue}.",
+        "CashWallet": "La \"Cartera de efectivo\" muestra el dinero en efectivo disponible para apostar.",
+        "WinShownInCash": "Todos los premios se muestran en dinero.",
+        "BackAction": "Pulsa para salir del juego y volver a la página anterior.",
+        "GameLobbyAction": "Pulsa para salir del juego e ir al PG Game Lobby.",
+        "GameHistoryDescription": "Muestra detalles sobre las rondas de juego que se han jugado previamente. Desplázate hacia abajo y hasta el final para cargar más registros.",
+        "GameHistoryActionWithIcon": "Pulsa<img src='ic_nav_calender'/>para seleccionar las fechas de las partidas que se mostrarán en el Historial.",
+        "ReturnToPlayerDescription": "El porcentaje teórico de reintegro al jugador (RTP) en este juego es del %{rtpValue}. Este RTP representa el reintegro teórico al jugador a largo plazo.",
+        "AdditionInfoMalfunctionDescription": "Los fallos de funcionamiento anulan todas las jugadas y todos los pagos.",
+        "AdditionInfoInactiveGameSessions": "El juego volverá automáticamente a su estado inicial al estar inactivo tras: %{dayCount} días. No se conservarán el progreso ni el estado de las partidas donde se hayan recopilado símbolos, de las partidas gratis inacabadas, de las funciones de juegos sin terminar, etc.",
+        "AdditionInfoInactiveGameSessionsHour": "El juego volverá automáticamente a su estado inicial al estar inactivo tras: %{hourCount} horas. No se conservarán el progreso ni el estado de las partidas donde se hayan recopilado símbolos, de las partidas gratis inacabadas, de las funciones de juegos sin terminar, etc.",
+        "AdditionInfoDisputeHistoryDescription": "En el caso de disputas sobre resultados del juego, todos los resultados del juego que se muestran en la página del historial del juego serán ciertos y definitivos."
+    }
+}
