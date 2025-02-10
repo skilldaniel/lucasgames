@@ -21375,7 +21375,7 @@ var LogLevel = {
         rcSettings: null,
         amountType: null,
         TournamentURLs: {
-            tournaments: "/gs2c/promo/active/",
+            tournaments: "/api/gs2c/promo/active/",
             details: "/gs2c/promo/tournament/details/",
             leaderboards: "/gs2c/promo/tournament/v3/leaderboard/",
             raceDetails: "/gs2c/promo/race/details/",
